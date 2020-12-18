@@ -58,7 +58,8 @@ You only have to setup once unless there are new features added.
 ```bash
 $ cd api # Locate to the api/ folder
 $ python -m virtualenv venv # Create a virtual env for python
-$ . venv/bin/activate # Activate the virutal env use don't forget to use 'deactivate' to exit venv
+$ . venv/bin/activate # Activate the virtual env use don't forget to use 'deactivate' to exit venv
+$ source venv/bin/activate # Mac users should use this to activate the virtual env
 $ pip install -r requirements.txt # Install python dependencies
 ```
 
