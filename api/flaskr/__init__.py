@@ -1,6 +1,7 @@
 import os
 
-from flask import Flask
+from flask import Flask, request
+from flask import jsonify
 from flask_cors import CORS
 
 
@@ -33,7 +34,8 @@ def create_app(test_config=None):
 
     @app.route('/uploadProductImage', methods=(['POST']))
     def uploadProductImage():
-        print('Upload Image')
+        file = request.files['image']
+        # Return more meaningful data maybe
         return 'Upload Image'
-    
+
     return app

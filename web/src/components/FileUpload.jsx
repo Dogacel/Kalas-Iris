@@ -31,16 +31,18 @@ export default function FileUpload() {
         if (percent === 100) {
           setTimeout(() => setProgress(0), 1000);
         }
+        // What does this do?
         onProgress({ percent: (event.loaded / event.total) * 100 });
       },
     };
 
     axios
       .post("http://localhost:5000/uploadProductImage", fmData, config)
-      .then(f => console.log(f))
-      .catch(e => console.error(e));
+      .then(f => onSuccess(f))
+      .catch(e => onError(e));
   };
 
+  // Do we need those 2 functions? Can't we use anonymous functions for one liners?
   const handleOnChange = ({ file, fileList }) => {
     setDefaultFileList(fileList);
   };
