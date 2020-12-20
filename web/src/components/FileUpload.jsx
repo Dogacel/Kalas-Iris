@@ -1,6 +1,7 @@
 import { Upload, Progress, Modal, Button } from "antd";
 import React, { useState } from "react";
 import axios from "axios";
+import FileModal from "./FileModal";
 
 function getBase64(file) {
   return new Promise((resolve, reject) => {
@@ -68,16 +69,11 @@ export default function FileUpload() {
       >
         {defaultFileList.length >= 8 ? null : <div>Upload Button</div>}
       </Upload>
-      <Modal
-        visible={previewVisible}
-        footer={[
-          <Button key="back" onClick={handleCancel}>
-            Return
-          </Button>,
-        ]}
-      >
-        <img alt="example" style={{ width: "100%" }} src={previewImage} />
-      </Modal>
+      <FileModal
+        onCancel={handleCancel}
+        previewImage={previewImage}
+        previewVisible={previewVisible}
+      />
       {progress > 0 ? <Progress percent={progress} /> : null}
     </div>
   );
