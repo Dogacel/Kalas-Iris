@@ -1,4 +1,4 @@
-import { Upload, Progress, Modal, Button } from "antd";
+import { Upload, Progress } from "antd";
 import React, { useState } from "react";
 import axios from "axios";
 import FileModal from "./FileModal";

@@ -34,7 +34,10 @@ def create_app(test_config=None):
 
     @app.route('/uploadProductImage', methods=(['POST']))
     def uploadProductImage():
-        file = request.files['image']
+        file = request.files.get('image')
+        with open('last_output.png', 'wb') as f:
+            f.write(file.stream.read())
+        
         # Return more meaningful data maybe
         return 'Upload Image'
 
