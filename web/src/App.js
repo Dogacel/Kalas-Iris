@@ -1,28 +1,51 @@
 import FileUpload from "./components/FileUpload";
 import { Layout, Menu, Breadcrumb } from "antd";
 
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useLocation,
+} from "react-router-dom";
+
 const { Header, Content, Footer } = Layout;
 
 function App() {
+  const location = useLocation();
+
+  console.log(location.pathname);
+
+  const menuLinks = [
+    { to: "/", text: "Kalas-Iris" },
+    { to: "/annotate", text: "Image Annotation" },
+    { to: "/integrations", text: "Kalas-Iris" },
+  ];
+
   return (
     <Layout className="layout">
       <Header>
         <div className="logo" />
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
-          <Menu.Item key="1">nav 1</Menu.Item>
-          <Menu.Item key="2">nav 2</Menu.Item>
-          <Menu.Item key="3">nav 3</Menu.Item>
+        <Menu
+          theme="dark"
+          mode="horizontal"
+          defaultSelectedKeys={[location.pathname]}
+        >
+          {menuLinks.map(e => (
+            <Menu.Item key={e.to}>
+              <Link to={e.to}>{e.text}</Link>
+            </Menu.Item>
+          ))}
         </Menu>
       </Header>
       <Content style={{ padding: "0 50px" }}>
-        <Breadcrumb style={{ margin: "16px 0" }}>
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>List</Breadcrumb.Item>
-          <Breadcrumb.Item>App</Breadcrumb.Item>
-        </Breadcrumb>
         <div className="site-layout-content">
           <div className="App">
-            <FileUpload></FileUpload>
+            <Route path="/annotate">
+              <FileUpload />
+            </Route>
+            <Route path="/integrations"></Route>
+            <Route path="/"></Route>
           </div>
         </div>
       </Content>
