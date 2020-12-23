@@ -3,16 +3,25 @@ import os
 from flask import Flask, request
 from flask import jsonify
 from flask_cors import CORS
+from flask_pymongo import PyMongo
+from dotenv import load_dotenv
 
 
 def create_app(test_config=None):
     # create and configure the app
+    load_dotenv()
     app = Flask(__name__, instance_relative_config=True)
     CORS(app)
+    USERNAME = os.getenv("DATABASE_USERNAME")
+    PASSWORD = os.getenv("DATABASE_PASSWORD")
+
     app.config.from_mapping(
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
+        MONGO_URI="mongodb+srv://" + USERNAME + ":" + PASSWORD + "@cluster0.ee0zf.mongodb.net/fashion_images?retryWrites=true&w=majority"
     )
+
+    mongo = PyMongo(app)
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -35,10 +44,15 @@ def create_app(test_config=None):
     @app.route('/uploadProductImage', methods=(['POST']))
     def uploadProductImage():
         file = request.files.get('image')
-        with open('last_output.png', 'wb') as f:
-            f.write(file.stream.read())
-        
+        fashion_image_collection = mongo.db.images    
+        mongo.save_file(file.filename, file)
+        fashion_image_collection.insert({'photo_name': file.filename})    
         # Return more meaningful data maybe
-        return 'Upload Image'
+        #print(file.name)
+        return 'Done!'
 
+    @app.route('/file/<filename>')
+    def file(filename):
+        return mongo.send_file(filename)
+    
     return app
