@@ -1,13 +1,7 @@
-import FileUpload from "./components/FileUpload";
-import { Layout, Menu, Breadcrumb } from "antd";
+import { Layout, Menu } from "antd";
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useLocation,
-} from "react-router-dom";
+import { Route, Link, useLocation } from "react-router-dom";
+import AnnotateView from "./views/AnnotateView";
 
 const { Header, Content, Footer } = Layout;
 
@@ -38,16 +32,12 @@ function App() {
           ))}
         </Menu>
       </Header>
-      <Content style={{ padding: "0 50px" }}>
-        <div className="site-layout-content">
-          <div className="App">
-            <Route path="/annotate">
-              <FileUpload />
-            </Route>
-            <Route path="/integrations"></Route>
-            <Route path="/"></Route>
-          </div>
-        </div>
+      <Content style={{ padding: "25px 50px" }}>
+        <Route path="/annotate">
+          <AnnotateView />
+        </Route>
+        <Route path="/integrations"></Route>
+        <Route path="/"></Route>
       </Content>
       <Footer style={{ textAlign: "center" }}>
         Ant Design ©2018 Created by Ant UED

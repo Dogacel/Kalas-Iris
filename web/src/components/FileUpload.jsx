@@ -67,7 +67,7 @@ export default function FileUpload() {
         onPreview={handlePreview}
         fileList={defaultFileList}
       >
-        {defaultFileList.length >= 8 ? null : <div>Upload Button</div>}
+        {defaultFileList.length >= 8 ? null : <div>Upload Image</div>}
       </Upload>
       <FileModal
         onCancel={handleCancel}
