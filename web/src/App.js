@@ -2,6 +2,7 @@ import { Layout, Menu } from "antd";
 
 import { Route, Link, useLocation } from "react-router-dom";
 import AnnotateView from "./views/AnnotateView";
+import IntegrationsView from "./views/IntegrationsView";
 
 const { Header, Content, Footer } = Layout;
 
@@ -13,7 +14,7 @@ function App() {
   const menuLinks = [
     { to: "/", text: "Kalas-Iris" },
     { to: "/annotate", text: "Image Annotation" },
-    { to: "/integrations", text: "Kalas-Iris" },
+    { to: "/integrations", text: "Integrations" },
   ];
 
   return (
@@ -36,7 +37,9 @@ function App() {
         <Route path="/annotate">
           <AnnotateView />
         </Route>
-        <Route path="/integrations"></Route>
+        <Route path="/integrations">
+          <IntegrationsView />
+        </Route>
         <Route path="/"></Route>
       </Content>
       <Footer style={{ textAlign: "center" }}>
