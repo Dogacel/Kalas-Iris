@@ -116,3 +116,4 @@ If you are having troubles using git on command line, I highly suggest you to us
 - [React](https://reactjs.org/tutorial/tutorial.html)
 - [Flask](https://flask.palletsprojects.com/en/1.1.x/tutorial/) (Ignore blueprints, we have react)
 - [MMFashion](https://github.com/open-mmlab/mmfashion)
+- [MongoDb](https://www.mongodb.com)
