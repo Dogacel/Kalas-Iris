@@ -12,13 +12,14 @@ def create_app(test_config=None):
     load_dotenv()
     app = Flask(__name__, instance_relative_config=True)
     CORS(app)
-    USERNAME = os.getenv("DATABASE_USERNAME")
-    PASSWORD = os.getenv("DATABASE_PASSWORD")
+
+    DATABASE_USERNAME = os.getenv("DATABASE_USERNAME")
+    DATABASE_PASSWORD = os.getenv("DATABASE_PASSWORD")
 
     app.config.from_mapping(
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
-        MONGO_URI="mongodb+srv://" + USERNAME + ":" + PASSWORD + "@cluster0.ee0zf.mongodb.net/fashion_images?retryWrites=true&w=majority"
+        MONGO_URI=f'mongodb+srv://{DATABASE_USERNAME}:{DATABASE_PASSWORD}@cluster0.ee0zf.mongodb.net/fashion_images?retryWrites=true&w=majority'
     )
 
     mongo = PyMongo(app)
@@ -48,7 +49,7 @@ def create_app(test_config=None):
         mongo.save_file(file.filename, file)
         fashion_image_collection.insert({'photo_name': file.filename})    
         # Return more meaningful data maybe
-        #print(file.name)
+        
         return 'Done!'
 
     @app.route('/file/<filename>')
