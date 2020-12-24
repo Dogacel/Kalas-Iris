@@ -58,7 +58,8 @@ You only have to setup once unless there are new features added.
 ```bash
 $ cd api # Locate to the api/ folder
 $ python -m virtualenv venv # Create a virtual env for python
-$ . venv/bin/activate # Activate the virutal env use don't forget to use 'deactivate' to exit venv
+$ . venv/bin/activate # Activate the virtual env use don't forget to use 'deactivate' to exit venv
+$ source venv/bin/activate # Mac users should use this to activate the virtual env
 $ pip install -r requirements.txt # Install python dependencies
 ```
 
@@ -85,6 +86,14 @@ $ npm start # This might take a while on the first run. It will install dependen
 ```bash
 $ echo "WIP"
 ```
+
+#### MongoDB 
+After gaining permission to the database, create a .env file containing your username and password. It should have the following format. 
+```bash
+$ DATABASE_USERNAME = "yourusername"
+$ DATABASE_PASSWORD = "yourpassword"
+```
+For more on .env files, you can visit [here](https://pypi.org/project/python-dotenv/) and [here](https://www.ibm.com/support/knowledgecenter/ssw_aix_72/osmanagement/env_file.html)
 
 ### About Git and Github
 
