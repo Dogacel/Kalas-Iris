@@ -87,6 +87,14 @@ $ npm start # This might take a while on the first run. It will install dependen
 $ echo "WIP"
 ```
 
+#### MongoDB 
+After gaining permission to the database, create a .env file containing your username and password. It should have the following format. 
+```bash
+$ DATABASE_USERNAME = "yourusername"
+$ DATABASE_PASSWORD = "yourpassword"
+```
+For more on .env files, you can visit [here](https://pypi.org/project/python-dotenv/) and [here](https://www.ibm.com/support/knowledgecenter/ssw_aix_72/osmanagement/env_file.html)
+
 ### About Git and Github
 
 If you are having troubles using git on command line, I highly suggest you to use [GitKraken](https://www.gitkraken.com/). You can also see their [tutorials](https://www.gitkraken.com/learn/git) they are short. But still I will try to explain some about the workflow.
