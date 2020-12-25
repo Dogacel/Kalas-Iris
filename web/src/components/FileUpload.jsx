@@ -16,11 +16,10 @@ export default function FileUpload({ setPreviewImage, setPreviewJSON }) {
   const [defaultFileList, setDefaultFileList] = useState([]);
   const [progress, setProgress] = useState(0);
   const [annotationResult, setAnnotationResult] = useState({})
-  const [submissionTime, setSubmissionTime] = useState({})
   const [previewImages, setPreviewImages] = useState({})
 
   const uploadImageToServer = async options => {
-    const { onSuccess, onError, file, onProgress } = options;
+    const { onSuccess, onError, file } = options;
 
     const config = {
       onUploadProgress: event => {
@@ -29,8 +28,6 @@ export default function FileUpload({ setPreviewImage, setPreviewJSON }) {
         if (percent === 100) {
           setTimeout(() => setProgress(0), 1000);
         }
-        // What does this do?
-        onProgress({ percent: (event.loaded / event.total) * 100 });
       },
     };
 
@@ -65,13 +62,11 @@ export default function FileUpload({ setPreviewImage, setPreviewJSON }) {
       .catch(e => onError(e));
   };
 
-  // Do we need those 2 functions? Can't we use anonymous functions for one liners?
   const handleOnChange = ({ file, fileList }) => {
     setDefaultFileList(fileList);
   };
 
   const handlePreview = async file => {
-    //getBase64(file.originFileObj).then(f => setPreviewImage(previewImages[f.uid]))
     setPreviewImage(previewImages[file.originFileObj.uid])
     setPreviewJSON(annotationResult[file.originFileObj.uid])
   };
