@@ -4,7 +4,7 @@ import { WarningOutlined, CheckOutlined } from "@ant-design/icons";
 import { Route, Link, useLocation } from "react-router-dom";
 import AnnotateView from "./views/AnnotateView";
 import IntegrationsView from "./views/IntegrationsView";
-import { isServerUp, upServer } from "./api/api";
+import { isServerUp, upServer, downServer } from "./api/api";
 
 const { Header, Content, Footer } = Layout;
 
@@ -18,9 +18,21 @@ function App() {
   ];
 
   const [switchState, setSwitchState] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    isServerUp().then(r => setSwitchState(r));
+    setLoading(true);
+    isServerUp().then(r => {
+      setLoading(false);
+      setSwitchState(r);
+    });
+    setInterval(() => {
+      setLoading(true);
+      isServerUp().then(r => {
+        setSwitchState(r);
+        setLoading(false);
+      });
+    }, 30000);
   }, []);
 
   return (
@@ -40,10 +52,13 @@ function App() {
           <div style={{ float: "right", backgroundColor: "rgba(0,0,0,0.5);" }}>
             Server Status{" "}
             <Switch
+              loading={loading}
               style={{ margin: "0px 4px 4px 4px" }}
               onChange={() => {
-                upServer().then(r => {
-                  isServerUp().then(r => setSwitchState(r));
+                setLoading(true);
+                isServerUp().then(r => {
+                  if (!r) upServer();
+                  else downServer();
                 });
               }}
               checked={switchState}
