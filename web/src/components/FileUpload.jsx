@@ -58,7 +58,8 @@ export default function FileUpload({ setPreviewImage, setPreviewJSON }) {
         setPreviewJSON(data);
         setAnnotationResult(prevState => ({
           ...prevState,
-          [file]: data
+          [md5(file.name)]: data
+          //[(getBase64(file)).then(f => md5(f))]: data
        }));
       })
       .catch(e => onError(e));
@@ -75,8 +76,9 @@ export default function FileUpload({ setPreviewImage, setPreviewJSON }) {
 
   const handlePreview = async file => {
     setPreviewVisible(true)
-    setPreviewJSON(annotationResult[file])
     getBase64(file.originFileObj).then(f => setPreviewImage(f));
+    //getBase64(file.originFileObj).then(f => setPreviewJSON(annotationResult[md5(f)]));
+    setPreviewJSON(annotationResult[md5(file.name)])
   };
 
   return (
