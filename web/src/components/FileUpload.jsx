@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import FileModal from "./FileModal";
 import "../api/api";
 import { annotateImage, uploadImage } from "../api/api";
+import FilePreview from "./FilePreview";
+import md5 from 'md5-hash';
 
 function getBase64(file) {
   return new Promise((resolve, reject) => {
@@ -16,7 +18,7 @@ function getBase64(file) {
 export default function FileUpload({ setPreviewImage, setPreviewJSON }) {
   const [defaultFileList, setDefaultFileList] = useState([]);
   const [progress, setProgress] = useState(0);
-
+  const [annotationResult, setAnnotationResult] = useState({})
   const [previewVisible, setPreviewVisible] = useState(false);
   const [miniPreviewImage, setMiniPreviewImage] = useState("");
 
@@ -54,6 +56,10 @@ export default function FileUpload({ setPreviewImage, setPreviewJSON }) {
           .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
 
         setPreviewJSON(data);
+        setAnnotationResult(prevState => ({
+          ...prevState,
+          [file]: data
+       }));
       })
       .catch(e => onError(e));
   };
@@ -68,8 +74,9 @@ export default function FileUpload({ setPreviewImage, setPreviewJSON }) {
   };
 
   const handlePreview = async file => {
-    setPreviewVisible(true);
-    getBase64(file.originFileObj).then(f => setMiniPreviewImage(f));
+    setPreviewVisible(true)
+    setPreviewJSON(annotationResult[file])
+    getBase64(file.originFileObj).then(f => setPreviewImage(f));
   };
 
   return (
@@ -84,11 +91,6 @@ export default function FileUpload({ setPreviewImage, setPreviewJSON }) {
       >
         {defaultFileList.length >= 8 ? null : <div>Upload Image</div>}
       </Upload>
-      <FileModal
-        onCancel={handleCancel}
-        previewImage={miniPreviewImage}
-        previewVisible={previewVisible}
-      />
       {progress > 0 ? <Progress percent={progress} /> : null}
     </div>
   );
