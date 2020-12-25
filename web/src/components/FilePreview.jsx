@@ -4,19 +4,16 @@ import React, { useState } from "react";
 import FileUpload from "../components/FileUpload";
 import ReactJson from "react-json-view";
 
-export default function FilePreview({ previewImage, annotation }) {
+export default function FilePreview({ previewImage, previewJSON }) {
   return (
     <div>
       <Row gutter={32}>
         <Col>
-          <Image
-            width={400}
-            src="https://assets.ajio.com/medias/sys_master/root/h2f/he2/15678454366238/-473Wx593H-461001523-multi-MODEL.jpg"
-          />
+          <Image width={400} src={previewImage} />
         </Col>
         <Col>
           <Divider orientation="left">Results</Divider>
-          <ReactJson src={annotation} />
+          <ReactJson src={previewJSON} />
         </Col>
       </Row>
     </div>
