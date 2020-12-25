@@ -32,7 +32,7 @@ function App() {
         setSwitchState(r);
         setLoading(false);
       });
-    }, 30000);
+    }, 10000);
   }, []);
 
   return (

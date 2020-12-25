@@ -21,12 +21,19 @@ export function annotateImage(image, config = null) {
 
 export async function isServerUp() {
   try {
-    const result = await axios.get(
-      `${mmfashionAPIAddress}/`,
-      {},
-      { timeout: 2 }
-    );
-    return result.status === 200;
+    const source = axios.CancelToken.source();
+
+    setTimeout(() => {
+      // alert("Cancelled!");
+      // source.cancel();
+    }, 3000);
+
+    const response = await axios.get(`${mmfashionAPIAddress}/`, {
+      timeout: 2,
+      cancelToken: source.cancel,
+    });
+
+    return response.status === 200;
   } catch {
     return false;
   }
@@ -34,15 +41,33 @@ export async function isServerUp() {
 
 export function upServer() {
   alert("Starting server might take 1 to 2 minutes.");
-  return axios.post(`${functionAddress}/startInstance`, {
-    zone: "europe-west3-a",
-    label: "env=dev",
-  });
+  return axios.post(
+    `${functionAddress}/startInstance`,
+    {
+      zone: "europe-west3-a",
+      label: "env=dev",
+    },
+    {
+      timeout: 90,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 }
 
 export function downServer() {
-  return axios.post(`${functionAddress}/stopInstance`, {
-    zone: "europe-west3-a",
-    label: "env=dev",
-  });
+  return axios.post(
+    `${functionAddress}/stopInstance`,
+    {
+      zone: "europe-west3-a",
+      label: "env=dev",
+    },
+    {
+      timeout: 90,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 }
