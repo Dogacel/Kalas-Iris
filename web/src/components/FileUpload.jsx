@@ -1,9 +1,7 @@
 import { Upload, Progress } from "antd";
 import React, { useState } from "react";
-import FileModal from "./FileModal";
 import "../api/api";
 import { annotateImage, uploadImage } from "../api/api";
-import FilePreview from "./FilePreview";
 import md5 from 'md5-hash';
 
 function getBase64(file) {
@@ -19,8 +17,6 @@ export default function FileUpload({ setPreviewImage, setPreviewJSON }) {
   const [defaultFileList, setDefaultFileList] = useState([]);
   const [progress, setProgress] = useState(0);
   const [annotationResult, setAnnotationResult] = useState({})
-  const [previewVisible, setPreviewVisible] = useState(false);
-  const [miniPreviewImage, setMiniPreviewImage] = useState("");
 
   const uploadImageToServer = async options => {
     const { onSuccess, onError, file, onProgress } = options;
@@ -70,12 +66,7 @@ export default function FileUpload({ setPreviewImage, setPreviewJSON }) {
     setDefaultFileList(fileList);
   };
 
-  const handleCancel = () => {
-    setPreviewVisible(false);
-  };
-
   const handlePreview = async file => {
-    setPreviewVisible(true)
     getBase64(file.originFileObj).then(f => setPreviewImage(f));
     /**  If you call getBase64(file) you get parameter must be 'blob'. 
      * If you try to store it with [getBase64(file.originFileObj)] you get the same result on line 62
