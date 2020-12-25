@@ -17,6 +17,7 @@ export default function FileUpload({ setPreviewImage, setPreviewJSON }) {
   const [progress, setProgress] = useState(0);
   const [annotationResult, setAnnotationResult] = useState({})
   const [submissionTime, setSubmissionTime] = useState({})
+  const [previewImages, setPreviewImages] = useState({})
 
   const uploadImageToServer = async options => {
     const { onSuccess, onError, file, onProgress } = options;
@@ -37,10 +38,10 @@ export default function FileUpload({ setPreviewImage, setPreviewJSON }) {
       .then(f => {
         onSuccess(f);
         getBase64(file).then(e => setPreviewImage(e));
-        setSubmissionTime(prevState => ({
+        getBase64(file).then(e => setPreviewImages(prevState => ({
           ...prevState,
-          [f.name]: Date().toLocaleString()
-        }))
+          [file.uid]: e
+        })))
       })
       .catch(e => onError(e));
 
@@ -58,7 +59,7 @@ export default function FileUpload({ setPreviewImage, setPreviewJSON }) {
         setPreviewJSON(data);
         setAnnotationResult(prevState => ({
           ...prevState,
-          [file.name + "-" + submissionTime[file.name]]: data
+          [file.uid]: data
        }));
       })
       .catch(e => onError(e));
@@ -70,8 +71,9 @@ export default function FileUpload({ setPreviewImage, setPreviewJSON }) {
   };
 
   const handlePreview = async file => {
-    getBase64(file.originFileObj).then(f => setPreviewImage(f))
-    setPreviewJSON(annotationResult[file.originFileObj.name + "-" + submissionTime[file.originFileObj.name]])
+    //getBase64(file.originFileObj).then(f => setPreviewImage(previewImages[f.uid]))
+    setPreviewImage(previewImages[file.originFileObj.uid])
+    setPreviewJSON(annotationResult[file.originFileObj.uid])
   };
 
   return (
