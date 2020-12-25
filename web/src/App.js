@@ -19,20 +19,23 @@ function App() {
 
   const [switchState, setSwitchState] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [stall, setStall] = useState(false);
 
   useEffect(() => {
     setLoading(true);
     isServerUp().then(r => {
       setLoading(false);
       setSwitchState(r);
+      setInterval(() => {
+        setLoading(true);
+        if (!stall) {
+          isServerUp().then(r => {
+            setSwitchState(r);
+            setLoading(false);
+          });
+        }
+      }, 30000);
     });
-    setInterval(() => {
-      setLoading(true);
-      isServerUp().then(r => {
-        setSwitchState(r);
-        setLoading(false);
-      });
-    }, 10000);
   }, []);
 
   return (
@@ -57,8 +60,8 @@ function App() {
               onChange={() => {
                 setLoading(true);
                 isServerUp().then(r => {
-                  if (!r) upServer();
-                  else downServer();
+                  if (!r) upServer().then(setStall(false));
+                  else downServer().then(setStall(false));
                 });
               }}
               checked={switchState}
