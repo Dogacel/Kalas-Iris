@@ -2,7 +2,6 @@ import { Upload, Progress } from "antd";
 import React, { useState } from "react";
 import "../api/api";
 import { annotateImage, uploadImage } from "../api/api";
-import md5 from 'md5-hash';
 
 function getBase64(file) {
   return new Promise((resolve, reject) => {
@@ -17,6 +16,7 @@ export default function FileUpload({ setPreviewImage, setPreviewJSON }) {
   const [defaultFileList, setDefaultFileList] = useState([]);
   const [progress, setProgress] = useState(0);
   const [annotationResult, setAnnotationResult] = useState({})
+  const [submissionTime, setSubmissionTime] = useState({})
 
   const uploadImageToServer = async options => {
     const { onSuccess, onError, file, onProgress } = options;
@@ -37,6 +37,10 @@ export default function FileUpload({ setPreviewImage, setPreviewJSON }) {
       .then(f => {
         onSuccess(f);
         getBase64(file).then(e => setPreviewImage(e));
+        setSubmissionTime(prevState => ({
+          ...prevState,
+          [f.name]: Date().toLocaleString()
+        }))
       })
       .catch(e => onError(e));
 
@@ -54,8 +58,7 @@ export default function FileUpload({ setPreviewImage, setPreviewJSON }) {
         setPreviewJSON(data);
         setAnnotationResult(prevState => ({
           ...prevState,
-          [md5(file.name)]: data
-          //[(getBase64(file)).then(f => md5(f))]: data
+          [file.name + "-" + submissionTime[file.name]]: data
        }));
       })
       .catch(e => onError(e));
@@ -67,13 +70,8 @@ export default function FileUpload({ setPreviewImage, setPreviewJSON }) {
   };
 
   const handlePreview = async file => {
-    getBase64(file.originFileObj).then(f => setPreviewImage(f));
-    /**  If you call getBase64(file) you get parameter must be 'blob'. 
-     * If you try to store it with [getBase64(file.originFileObj)] you get the same result on line 62
-     * The commented out lines do not throw exceptions but they do not produce the same key, thus you get an empty result
-     */
-    //TODO: getBase64(file.originFileObj).then(f => setPreviewJSON(annotationResult[md5(f)]));
-    setPreviewJSON(annotationResult[md5(file.name)])
+    getBase64(file.originFileObj).then(f => setPreviewImage(f))
+    setPreviewJSON(annotationResult[file.originFileObj.name + "-" + submissionTime[file.originFileObj.name]])
   };
 
   return (
