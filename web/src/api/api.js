@@ -21,16 +21,8 @@ export function annotateImage(image, config = null) {
 
 export async function isServerUp() {
   try {
-    const source = axios.CancelToken.source();
-
-    setTimeout(() => {
-      // alert("Cancelled!");
-      // source.cancel();
-    }, 3000);
-
     const response = await axios.get(`${mmfashionAPIAddress}/`, {
-      timeout: 2,
-      cancelToken: source.cancel,
+      timeout: 2000,
     });
 
     return response.status === 200;
@@ -48,7 +40,7 @@ export function upServer() {
       label: "env=dev",
     },
     {
-      timeout: 90,
+      timeout: 90000,
       headers: {
         "Content-Type": "application/json",
       },
@@ -64,7 +56,7 @@ export function downServer() {
       label: "env=dev",
     },
     {
-      timeout: 90,
+      timeout: 90000,
       headers: {
         "Content-Type": "application/json",
       },
