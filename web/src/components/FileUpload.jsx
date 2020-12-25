@@ -1,7 +1,8 @@
 import { Upload, Progress } from "antd";
 import React, { useState } from "react";
-import axios from "axios";
 import FileModal from "./FileModal";
+import "../api/api";
+import { annotateImage, uploadImage } from "../api/api";
 
 function getBase64(file) {
   return new Promise((resolve, reject) => {
@@ -12,18 +13,15 @@ function getBase64(file) {
   });
 }
 
-export default function FileUpload() {
+export default function FileUpload({ setPreviewImage, setPreviewJSON }) {
   const [defaultFileList, setDefaultFileList] = useState([]);
   const [progress, setProgress] = useState(0);
 
   const [previewVisible, setPreviewVisible] = useState(false);
-  const [previewImage, setPreviewImage] = useState("");
+  const [miniPreviewImage, setMiniPreviewImage] = useState("");
 
-  const uploadImage = async options => {
+  const uploadImageToServer = async options => {
     const { onSuccess, onError, file, onProgress } = options;
-
-    const fmData = new FormData();
-    fmData.append("image", file);
 
     const config = {
       onUploadProgress: event => {
@@ -37,9 +35,26 @@ export default function FileUpload() {
       },
     };
 
-    axios
-      .post("http://localhost:5000/uploadProductImage", fmData, config)
-      .then(f => onSuccess(f))
+    uploadImage(file, config)
+      .then(f => {
+        onSuccess(f);
+        getBase64(file).then(e => setPreviewImage(e));
+      })
+      .catch(e => onError(e));
+
+    annotateImage(file, config)
+      .then(f => {
+        const data = f.data;
+
+        data.attributes = Object.entries(data.attributes)
+          .sort(([, a], [, b]) => b - a)
+          .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
+        data.categories = Object.entries(data.categories)
+          .sort(([, a], [, b]) => b - a)
+          .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
+
+        setPreviewJSON(data);
+      })
       .catch(e => onError(e));
   };
 
@@ -54,7 +69,7 @@ export default function FileUpload() {
 
   const handlePreview = async file => {
     setPreviewVisible(true);
-    getBase64(file.originFileObj).then(f => setPreviewImage(f));
+    getBase64(file.originFileObj).then(f => setMiniPreviewImage(f));
   };
 
   return (
@@ -62,7 +77,7 @@ export default function FileUpload() {
       <Upload
         accept="image/*"
         listType="picture-card"
-        customRequest={uploadImage}
+        customRequest={uploadImageToServer}
         onChange={handleOnChange}
         onPreview={handlePreview}
         fileList={defaultFileList}
@@ -71,7 +86,7 @@ export default function FileUpload() {
       </Upload>
       <FileModal
         onCancel={handleCancel}
-        previewImage={previewImage}
+        previewImage={miniPreviewImage}
         previewVisible={previewVisible}
       />
       {progress > 0 ? <Progress percent={progress} /> : null}
