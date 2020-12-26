@@ -12,9 +12,9 @@ Kalas-Iris CS491/2 Senior Design Project, Clothes recognition and rich attribute
 
 ### TODO:
 
-- [ ] Determine a CSS Framework (Material, Ant...)
-- [ ] Add database connection (decide NoSQL vs SQL)
-- [ ] Create single image upload page
+- [:white_check_mark:] Determine a CSS Framework (Material, Ant...)
+- [:white_check_mark:] Add database connection (decide NoSQL vs SQL)
+- [:white_check_mark:] Create single image upload page
 - [ ] Fix MMFashion codebase
 - [ ] Add documentation for MMFashion
 - [ ] Add more tasks
@@ -116,4 +116,5 @@ If you are having troubles using git on command line, I highly suggest you to us
 - [React](https://reactjs.org/tutorial/tutorial.html)
 - [Flask](https://flask.palletsprojects.com/en/1.1.x/tutorial/) (Ignore blueprints, we have react)
 - [MMFashion](https://github.com/open-mmlab/mmfashion)
-- [MongoDb](https://www.mongodb.com)
+- [MongoDB](https://www.mongodb.com)
+- [AntDesign](https://ant.design/)
