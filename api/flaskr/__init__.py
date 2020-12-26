@@ -15,10 +15,9 @@ def create_app(test_config=None):
 
     DATABASE_USERNAME = os.getenv("DATABASE_USERNAME")
     DATABASE_PASSWORD = os.getenv("DATABASE_PASSWORD")
-
+    
     app.config.from_mapping(
         SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
         MONGO_URI=f'mongodb+srv://{DATABASE_USERNAME}:{DATABASE_PASSWORD}@cluster0.ee0zf.mongodb.net/fashion_images?retryWrites=true&w=majority'
     )
 
