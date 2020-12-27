@@ -12,9 +12,9 @@ Kalas-Iris CS491/2 Senior Design Project, Clothes recognition and rich attribute
 
 ### TODO:
 
-- [:white_check_mark:] Determine a CSS Framework (Material, Ant...)
-- [:white_check_mark:] Add database connection (decide NoSQL vs SQL)
-- [:white_check_mark:] Create single image upload page
+- [x] Determine a CSS Framework (Material, Ant...)
+- [x] Add database connection (decide NoSQL vs SQL)
+- [x] Create single image upload page
 - [ ] Fix MMFashion codebase
 - [ ] Add documentation for MMFashion
 - [ ] Add more tasks
