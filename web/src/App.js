@@ -52,7 +52,7 @@ function App() {
               <Link to={e.to}>{e.text}</Link>
             </Menu.Item>
           ))}
-          <div style={{ float: "right", backgroundColor: "rgba(0,0,0,0.5);" }}>
+          <div style={{ float: "right", backgroundColor: "rgba(0,0,0,0.5)" }}>
             Server Status{" "}
             <Switch
               loading={loading}
