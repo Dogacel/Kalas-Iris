@@ -1,0 +1,6 @@
+#cloud-menu-item{
+    float: right;
+    background-color: rgba(0,0,0,0.5);
+    color: white !important;
+    cursor: default;
+}
