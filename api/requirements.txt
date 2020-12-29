@@ -1,11 +1,15 @@
+bcrypt==3.2.0
+cffi==1.14.4
 click==7.1.2
 dnspython==2.0.0
 Flask==1.1.2
+Flask-Bcrypt==0.7.1
 Flask-Cors==3.0.9
 Flask-PyMongo==2.3.0
 itsdangerous==1.1.0
 Jinja2==2.11.2
 MarkupSafe==1.1.1
+pycparser==2.20
 pymongo==3.11.2
 python-dotenv==0.15.0
 six==1.15.0
