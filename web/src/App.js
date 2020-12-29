@@ -5,6 +5,7 @@ import { Route, Link, useLocation } from "react-router-dom";
 import AnnotateView from "./views/AnnotateView";
 import IntegrationsView from "./views/IntegrationsView";
 import { isServerUp, upServer, downServer } from "./api/api";
+import "./css/app.css";
 
 const { Header, Content, Footer } = Layout;
 
@@ -22,20 +23,23 @@ function App() {
   const [stall, setStall] = useState(false);
 
   useEffect(() => {
+    const intervalCheck = () => {
+      setLoading(true);
+      if (!stall) {
+        isServerUp().then(r => {
+          setSwitchState(r);
+          setLoading(false);
+        });
+      }
+    };
+
     setLoading(true);
     isServerUp().then(r => {
       setLoading(false);
       setSwitchState(r);
-      setInterval(() => {
-        setLoading(true);
-        if (!stall) {
-          isServerUp().then(r => {
-            setSwitchState(r);
-            setLoading(false);
-          });
-        }
-      }, 30000);
+      setInterval(intervalCheck, 30000);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -52,7 +56,7 @@ function App() {
               <Link to={e.to}>{e.text}</Link>
             </Menu.Item>
           ))}
-          <div style={{ float: "right", backgroundColor: "rgba(0,0,0,0.5);" }}>
+          <Menu.Item id="cloud-menu-item" key="cloud-menu-item" disabled={true}>
             Server Status{" "}
             <Switch
               loading={loading}
@@ -70,7 +74,7 @@ function App() {
               defaultChecked
             />
             (Server shuts down every hour at xx:00)
-          </div>
+          </Menu.Item>
         </Menu>
       </Header>
       <Content style={{ padding: "25px 50px" }}>
