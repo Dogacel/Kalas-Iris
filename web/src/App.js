@@ -23,20 +23,23 @@ function App() {
   const [stall, setStall] = useState(false);
 
   useEffect(() => {
+    const intervalCheck = () => {
+      setLoading(true);
+      if (!stall) {
+        isServerUp().then(r => {
+          setSwitchState(r);
+          setLoading(false);
+        });
+      }
+    };
+
     setLoading(true);
     isServerUp().then(r => {
       setLoading(false);
       setSwitchState(r);
-      setInterval(() => {
-        setLoading(true);
-        if (!stall) {
-          isServerUp().then(r => {
-            setSwitchState(r);
-            setLoading(false);
-          });
-        }
-      }, 30000);
+      setInterval(intervalCheck, 30000);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
