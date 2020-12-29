@@ -5,6 +5,7 @@ import { Route, Link, useLocation } from "react-router-dom";
 import AnnotateView from "./views/AnnotateView";
 import IntegrationsView from "./views/IntegrationsView";
 import { isServerUp, upServer, downServer } from "./api/api";
+import "./css/app.css";
 
 const { Header, Content, Footer } = Layout;
 
@@ -36,6 +37,8 @@ function App() {
         }
       }, 30000);
     });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -52,8 +55,8 @@ function App() {
               <Link to={e.to}>{e.text}</Link>
             </Menu.Item>
           ))}
-          <div style={{ float: "right", backgroundColor: "rgba(0,0,0,0.5)" }}>
-            Server Status{" "}
+          <Menu.Item disabled={true} key="cloud" id="cloud-menu-item">
+            Server Status
             <Switch
               loading={loading}
               style={{ margin: "0px 4px 4px 4px" }}
@@ -70,7 +73,7 @@ function App() {
               defaultChecked
             />
             (Server shuts down every hour at xx:00)
-          </div>
+          </Menu.Item>
         </Menu>
       </Header>
       <Content style={{ padding: "25px 50px" }}>

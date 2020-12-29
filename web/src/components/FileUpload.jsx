@@ -2,7 +2,7 @@ import { Upload, Progress } from "antd";
 import React, { useState } from "react";
 import "../api/api";
 import { annotateImage, uploadImage } from "../api/api";
-import md5 from 'md5-hash';
+import md5 from "md5-hash";
 
 function getBase64(file) {
   return new Promise((resolve, reject) => {
@@ -16,7 +16,7 @@ function getBase64(file) {
 export default function FileUpload({ setPreviewImage, setPreviewJSON }) {
   const [defaultFileList, setDefaultFileList] = useState([]);
   const [progress, setProgress] = useState(0);
-  const [annotationResult, setAnnotationResult] = useState({})
+  const [annotationResult, setAnnotationResult] = useState({});
 
   const uploadImageToServer = async options => {
     const { onSuccess, onError, file, onProgress } = options;
@@ -54,9 +54,9 @@ export default function FileUpload({ setPreviewImage, setPreviewJSON }) {
         setPreviewJSON(data);
         setAnnotationResult(prevState => ({
           ...prevState,
-          [md5(file.name)]: data
+          [md5(file.name)]: data,
           //[(getBase64(file)).then(f => md5(f))]: data
-       }));
+        }));
       })
       .catch(e => onError(e));
   };
@@ -68,12 +68,12 @@ export default function FileUpload({ setPreviewImage, setPreviewJSON }) {
 
   const handlePreview = async file => {
     getBase64(file.originFileObj).then(f => setPreviewImage(f));
-    /**  If you call getBase64(file) you get parameter must be 'blob'. 
+    /**  If you call getBase64(file) you get parameter must be 'blob'.
      * If you try to store it with [getBase64(file.originFileObj)] you get the same result on line 62
      * The commented out lines do not throw exceptions but they do not produce the same key, thus you get an empty result
      */
     //TODO: getBase64(file.originFileObj).then(f => setPreviewJSON(annotationResult[md5(f)]));
-    setPreviewJSON(annotationResult[md5(file.name)])
+    setPreviewJSON(annotationResult[md5(file.name)]);
   };
 
   return (

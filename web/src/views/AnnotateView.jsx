@@ -1,5 +1,4 @@
 import { Row, Col } from "antd";
-import Modal from "antd/lib/modal/Modal";
 import React, { useState } from "react";
 import FilePreview from "../components/FilePreview";
 import FileUpload from "../components/FileUpload";
