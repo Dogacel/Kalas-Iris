@@ -1,8 +1,8 @@
 import { Form, Input, Button, Checkbox, Col, Row } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
-export default function LoginView() {
+export default function SignupView() {
   const onFinish = values => {
     console.log("Received values of form: ", values);
   };
@@ -20,17 +20,45 @@ export default function LoginView() {
           onFinish={onFinish}
         >
           <Form.Item
-            name="username"
+            name="name"
             rules={[
               {
                 required: true,
-                message: "Please input your Username!",
+                message: "Please input your Name!",
               },
             ]}
           >
             <Input
               prefix={<UserOutlined className="site-form-item-icon" />}
-              placeholder="Username"
+              placeholder="Name"
+            />
+          </Form.Item>
+          <Form.Item
+            name="name"
+            rules={[
+              {
+                required: true,
+                message: "Please input your Surname!",
+              },
+            ]}
+          >
+            <Input
+              prefix={<UserOutlined className="site-form-item-icon" />}
+              placeholder="Surname"
+            />
+          </Form.Item>
+          <Form.Item
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: "Please input your E-mail address!",
+              },
+            ]}
+          >
+            <Input
+              prefix={<MailOutlined className="site-form-item-icon" />}
+              placeholder="E-mail"
             />
           </Form.Item>
           <Form.Item
@@ -48,14 +76,21 @@ export default function LoginView() {
               placeholder="Password"
             />
           </Form.Item>
-          <Form.Item>
-            <Form.Item name="remember" valuePropName="checked" noStyle>
-              <Checkbox>Remember me</Checkbox>
-            </Form.Item>
 
-            <a className="login-form-forgot" href="">
-              Forgot password
-            </a>
+          <Form.Item
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: "Please input your Password!",
+              },
+            ]}
+          >
+            <Input
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              type="password"
+              placeholder="Repeat Password"
+            />
           </Form.Item>
 
           <Form.Item>
@@ -65,9 +100,8 @@ export default function LoginView() {
               className="login-form-button"
               id="login-button"
             >
-              Log in
+              Signup
             </Button>
-            Or <Link to="/signup"> register now!</Link>
           </Form.Item>
         </Form>
       </Col>
