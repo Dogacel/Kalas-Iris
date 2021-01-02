@@ -47,7 +47,7 @@ def create_app(test_config=None):
         if 'username' in session:
             return 'You are logged in as ' + session['username']
 
-        # return render_template('index.html')
+        return "Hello"
 
     @app.route('/uploadProductImage', methods=(['POST']))
     def uploadProductImage():
@@ -65,12 +65,13 @@ def create_app(test_config=None):
 
     @app.route('/signup', methods=(['POST']))
     def signup():
-
+        print(request.form)
         # Receive the form info
         username = request.form['username']
         password = request.form['password']
         email = request.form['email']
-
+        name = request.form['name']
+        surname = request.form['surname']
         # Get the users collection
         users = userInformation_mongo.db.users
 
@@ -84,7 +85,7 @@ def create_app(test_config=None):
                 pw_hash = bcrypt.generate_password_hash(
                     password).decode('utf-8')
                 users.insert(
-                    {'username': username, 'email': email, 'password': pw_hash})
+                    {'username': username, 'email': email, 'password': pw_hash, 'name': name, 'surname': surname})
                 session['username'] = username
 
                 return redirect(url_for('index'))
