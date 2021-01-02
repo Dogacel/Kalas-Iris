@@ -63,6 +63,7 @@ function App() {
               style={{ margin: "0px 4px 4px 4px" }}
               onChange={() => {
                 setLoading(true);
+                setStall(true);
                 isServerUp().then(r => {
                   if (!r) upServer().then(setStall(false));
                   else downServer().then(setStall(false));
