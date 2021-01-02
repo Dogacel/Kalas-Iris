@@ -19,6 +19,20 @@ export function annotateImage(image, config = null) {
   return axios.post(`${mmfashionAPIAddress}/annotate`, fmData, config);
 }
 
+export function signUpUser(form, config = null) {
+  const fmData = new FormData();
+  fmData.append("form", form);
+
+  return axios.post(`${flaskAPIAdress}/signup`, fmData, config);
+}
+
+export function login(form, config = null) {
+  const fmData = new FormData();
+  fmData.append("form", form);
+
+  return axios.post(`${flaskAPIAdress}/login`, fmData, config);
+}
+
 export async function isServerUp() {
   try {
     const response = await axios.get(`${mmfashionAPIAddress}/`, {
