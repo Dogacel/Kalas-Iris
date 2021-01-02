@@ -1,11 +1,15 @@
-import { Layout, Menu, Switch } from "antd";
+import { Divider, Layout, Menu, Switch } from "antd";
 import { useEffect, useState } from "react";
 import { WarningOutlined, CheckOutlined } from "@ant-design/icons";
 import { Route, Link, useLocation } from "react-router-dom";
+import { Redirect } from "react-router-dom"; ////added new
 import AnnotateView from "./views/AnnotateView";
 import IntegrationsView from "./views/IntegrationsView";
 import { isServerUp, upServer, downServer } from "./api/api";
 import "./css/app.css";
+import LoginView from "./views/LoginView";
+import RegistrationForm from "./views/SignupView";
+import HomepageView from "./views/HomepageView";
 
 const { Header, Content, Footer } = Layout;
 
@@ -13,9 +17,10 @@ function App() {
   const location = useLocation();
 
   const menuLinks = [
-    { to: "/", text: "Kalas-Iris" },
+    { to: "/homepage", text: "Kalas-Iris" },
     { to: "/annotate", text: "Image Annotation" },
     { to: "/integrations", text: "Integrations" },
+    { to: "/login", text: "Login" },
   ];
 
   const [switchState, setSwitchState] = useState(false);
@@ -42,17 +47,29 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const menuBarStyle = {
+    primaryColor: "#986515",
+    backgroundColor: "#986515",
+    //color: "#bd8e02",
+    color: "#fffff"
+  };
+
   return (
     <Layout className="layout">
-      <Header>
+      <Header style={menuBarStyle}>
         <div className="logo" />
         <Menu
           theme="dark"
           mode="horizontal"
           defaultSelectedKeys={[location.pathname]}
+          style={menuBarStyle}
         >
           {menuLinks.map(e => (
-            <Menu.Item key={e.to}>
+            <Menu.Item
+              key={e.to} id="hover-item"
+              key="hover-item"
+              style={menuBarStyle}
+            >
               <Link to={e.to}>{e.text}</Link>
             </Menu.Item>
           ))}
@@ -84,10 +101,22 @@ function App() {
         <Route path="/integrations">
           <IntegrationsView />
         </Route>
-        <Route path="/"></Route>
+        <Route path="/login">
+          <LoginView />
+        </Route>
+        <Route path="/signup">
+          <RegistrationForm />
+        </Route>
+        <Route path="/homepage">
+          <HomepageView />
+        </Route>
+        <Route path="/">
+          <Redirect to="/homepage" />
+        </Route>
       </Content>
+      <Divider />
       <Footer style={{ textAlign: "center" }}>
-        Ant Design ©2018 Created by Ant UED
+        Kalas Iris ©2021 Created by Kalas Iris Team
       </Footer>
     </Layout>
   );
