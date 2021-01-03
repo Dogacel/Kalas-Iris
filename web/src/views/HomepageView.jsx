@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Carousel } from "antd";
-import { Divider } from "antd";
-import { Space } from "antd";
+import { Divider, Image } from "antd";
 
 const contentStyle = {
-    height: '160px',
+    height: '600px',
     color: '#6B33A1',
     lineHeight: '160px',
     textAlign: 'center',
@@ -16,20 +15,26 @@ export default function HomepageView() {
         console.log("Received values of form: ", values);
     };
 
+
+
     return (
         <>
-            <Carousel autoplay>
+            <Carousel autoplay style={contentStyle}>
                 <div>
-                    <h3 style={contentStyle}>1</h3>
+                    <Image 
+                        width = {400}
+                        src={process.env.PUBLIC_URL + '/Kalas-Iris-split-didot.jpg'}
+                    />
+                    <h3>1</h3>
                 </div>
                 <div>
-                    <h3 style={contentStyle}>2</h3>
+                    <h3>2</h3>
                 </div>
                 <div>
-                    <h3 style={contentStyle}>3</h3>
+                    <h3>3</h3>
                 </div>
                 <div>
-                    <h3 style={contentStyle}>4</h3>
+                    <h3>4</h3>
                 </div>
             </Carousel>
             <Divider />
