@@ -3,7 +3,7 @@ import os
 from flask import Flask, request, url_for, redirect, render_template, session
 from flask import jsonify
 from werkzeug.wrappers import CommonRequestDescriptorsMixin
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from flask_pymongo import PyMongo
 from dotenv import load_dotenv
 from flask_bcrypt import Bcrypt
@@ -13,7 +13,7 @@ def create_app(test_config=None):
     # create and configure the app
     load_dotenv()
     app = Flask(__name__, instance_relative_config=True)
-    CORS(app)
+    CORS(app, support_credentials=True)
     bcrypt = Bcrypt(app)
 
     DATABASE_USERNAME = os.getenv("DATABASE_USERNAME")
@@ -64,14 +64,15 @@ def create_app(test_config=None):
         return fashionImages_mongo.send_file(filename)
 
     @app.route('/signup', methods=(['POST']))
+    @cross_origin(support_credentials=True)
     def signup():
-        print(request.form)
         # Receive the form info
         username = request.form['username']
         password = request.form['password']
         email = request.form['email']
         name = request.form['name']
         surname = request.form['surname']
+
         # Get the users collection
         users = userInformation_mongo.db.users
 
@@ -95,6 +96,7 @@ def create_app(test_config=None):
             return 'That username already exists!'
 
     @app.route('/login', methods=(['POST']))
+    @cross_origin(support_credentials=True)
     def login():
         # Receive the form info
         username = request.form['username']

@@ -21,7 +21,11 @@ export function annotateImage(image, config = null) {
 
 export function signUpUser(form, config = null) {
   const fmData = new FormData();
-  fmData.append("form", form);
+  fmData.append('username', form['username']);
+  fmData.append('password', form['password']);
+  fmData.append('email', form['email']);
+  fmData.append('name', form['name']);
+  fmData.append('surname', form['surname']); 
 
   return axios.post(`${flaskAPIAdress}/signup`, fmData, config);
 }
