@@ -7,6 +7,7 @@ from flask_cors import CORS, cross_origin
 from flask_pymongo import PyMongo
 from dotenv import load_dotenv
 from flask_bcrypt import Bcrypt
+from flask_jwt_extended import create_access_token
 
 
 def create_app(test_config=None):
@@ -110,7 +111,9 @@ def create_app(test_config=None):
         if login_user:
             if bcrypt.check_password_hash(login_user['password'], password):
                 session['username'] = username
-
+                session['access_token'] = create_access_token(identity=username)
+                session['refresh_token'] = create_access_token(identity=username)
+                
                 return redirect(url_for('index'))
 
         return 'Username and password do not match'
