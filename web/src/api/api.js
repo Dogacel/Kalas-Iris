@@ -32,7 +32,8 @@ export function signUpUser(form, config = null) {
 
 export function login(form, config = null) {
   const fmData = new FormData();
-  fmData.append("form", form);
+  fmData.append('username', form['username']);
+  fmData.append('password', form['password']);
 
   return axios.post(`${flaskAPIAdress}/login`, fmData, config);
 }
