@@ -32,7 +32,6 @@ export async function isServerUp() {
 }
 
 export function upServer() {
-  alert("Starting server might take 1 to 2 minutes.");
   return axios.post(
     `${functionAddress}/startInstance`,
     {
