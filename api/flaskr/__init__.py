@@ -118,4 +118,9 @@ def create_app(test_config=None):
 
         return 'Username and password do not match'
 
+    @app.route('/getSession', methods=(['GET']))
+    @cross_origin(support_credentials=True)
+    def getCurrentSession():
+        return session
+
     return app
