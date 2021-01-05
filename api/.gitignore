@@ -14,3 +14,7 @@ build/
 *.egg-info/
 
 mmfashion/
+
+static/
+templates/
+.DS_Store

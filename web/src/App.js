@@ -6,6 +6,8 @@ import AnnotateView from "./views/AnnotateView";
 import IntegrationsView from "./views/IntegrationsView";
 import { isServerUp, upServer, downServer } from "./api/api";
 import "./css/app.css";
+import LoginView from "./views/LoginView";
+import RegistrationForm from "./views/SignupView";
 
 const { Header, Content, Footer } = Layout;
 
@@ -16,6 +18,7 @@ function App() {
     { to: "/", text: "Kalas-Iris" },
     { to: "/annotate", text: "Image Annotation" },
     { to: "/integrations", text: "Integrations" },
+    { to: "/login", text: "Login" },
   ];
 
   const [switchState, setSwitchState] = useState(false);
@@ -84,6 +87,12 @@ function App() {
         </Route>
         <Route path="/integrations">
           <IntegrationsView />
+        </Route>
+        <Route path="/login">
+          <LoginView />
+        </Route>
+        <Route path="/signup">
+          <RegistrationForm />
         </Route>
         <Route path="/"></Route>
       </Content>

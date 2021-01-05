@@ -4,3 +4,8 @@
     color: white !important;
     cursor: default;
 }
+
+
+#login-button {
+    width: 100%;
+}
