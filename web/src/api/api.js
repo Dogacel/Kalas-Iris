@@ -19,6 +19,25 @@ export function annotateImage(image, config = null) {
   return axios.post(`${mmfashionAPIAddress}/annotate`, fmData, config);
 }
 
+export function signUpUser(form, config = null) {
+  const fmData = new FormData();
+  fmData.append('username', form['username']);
+  fmData.append('password', form['password']);
+  fmData.append('email', form['email']);
+  fmData.append('name', form['name']);
+  fmData.append('surname', form['surname']); 
+
+  return axios.post(`${flaskAPIAdress}/signup`, fmData, config);
+}
+
+export function login(form, config = null) {
+  const fmData = new FormData();
+  fmData.append('username', form['username']);
+  fmData.append('password', form['password']);
+
+  return axios.post(`${flaskAPIAdress}/login`, fmData, config);
+}
+
 export async function isServerUp() {
   try {
     const response = await axios.get(`${mmfashionAPIAddress}/`, {
@@ -32,7 +51,6 @@ export async function isServerUp() {
 }
 
 export function upServer() {
-  alert("Starting server might take 1 to 2 minutes.");
   return axios.post(
     `${functionAddress}/startInstance`,
     {

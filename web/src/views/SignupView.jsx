@@ -1,12 +1,15 @@
 import { Form, Input, Button, Checkbox, Col, Row } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import { signUpUser } from "../api/api";
 
 export default function SignupView() {
   const onFinish = values => {
     console.log("Received values of form: ", values);
+    signUpUser(values);
   };
 
+  const [form] = Form.useForm();
   return (
     <Row type="flex" align="center">
       <Col md={18} lg={6}>
@@ -14,6 +17,7 @@ export default function SignupView() {
           name="normal_login"
           className="login-form"
           id="login-form"
+          form={form}
           initialValues={{
             remember: true,
           }}
@@ -34,7 +38,7 @@ export default function SignupView() {
             />
           </Form.Item>
           <Form.Item
-            name="name"
+            name="surname"
             rules={[
               {
                 required: true,
@@ -45,6 +49,20 @@ export default function SignupView() {
             <Input
               prefix={<UserOutlined className="site-form-item-icon" />}
               placeholder="Surname"
+            />
+          </Form.Item>
+          <Form.Item
+            name="username"
+            rules={[
+              {
+                required: true,
+                message: "Please input your Username!",
+              },
+            ]}
+          >
+            <Input
+              prefix={<UserOutlined className="site-form-item-icon" />}
+              placeholder="Username"
             />
           </Form.Item>
           <Form.Item
@@ -78,18 +96,26 @@ export default function SignupView() {
           </Form.Item>
 
           <Form.Item
-            name="password"
+            name="confirmPassword"
             rules={[
               {
                 required: true,
-                message: "Please input your Password!",
+                message: "Please confirm your Password!",
               },
+              ({ getFieldValue }) => ({
+                validator(rule, value) {
+                  if (!value || getFieldValue('password') === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject('The two passwords that you entered do not match!');
+                },
+              }),
             ]}
           >
             <Input
               prefix={<LockOutlined className="site-form-item-icon" />}
               type="password"
-              placeholder="Repeat Password"
+              placeholder="Confirm Password"
             />
           </Form.Item>
 
