@@ -1,4 +1,4 @@
-import { Form, Input, Button, Checkbox, Col, Row } from "antd";
+import { Form, Input, Button, Checkbox, Col, Row, Image } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { login } from "../api/api";
@@ -12,6 +12,14 @@ export default function LoginView() {
   return (
     <Row type="flex" align="center">
       <Col md={18} lg={6}>
+      <div>
+        <Image
+          width={380}
+          height={110}
+          src={process.env.PUBLIC_URL + '/ki-black-on-white-logo.jpeg'}
+          preview={false}
+        />
+      </div>
         <Form
           name="normal_login"
           className="login-form"

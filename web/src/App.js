@@ -49,14 +49,12 @@ function App() {
   }, []);
 
   const menuBarStyle = {
-    primaryColor: "#f7c873",
-    backgroundColor: "#f7c873",
+    // primaryColor: "#f7c873",
+    // backgroundColor: "#f7c873",
     //color: "#bd8e02",
     color: '#434343',
     textColor: '#434343',
-    "&:hover": {
-      background: "#434343"
-    }
+    backgroundColor: "#001529"
   };
 
   const [isShown, setIsShown] = useState(false);
@@ -64,10 +62,9 @@ function App() {
 
   return (
     <Layout className="layout">
-      <Header style={menuBarStyle}>
+      <Header>
         <div className="logo" />
         <Menu
-          style={menuBarStyle}
           theme="dark"
           mode="horizontal"
           defaultSelectedKeys={[location.pathname]}
@@ -78,8 +75,8 @@ function App() {
             <img
               width={189}
               height={43}
-              src={process.env.PUBLIC_URL + '/ki-homepage-logo.png'}
-              style={menuBarStyle}
+              src={process.env.PUBLIC_URL + '/ki-logo-white.png'}
+              style={{width:190, height:55}}
             />
             </Link>
           </Menu.Item>
@@ -88,11 +85,8 @@ function App() {
           {menuLinks.map(e => (
             <Menu.Item
               key={e.to} 
-              id = "hover-item"
-              key="hover-item"
-              style={menuBarStyle}
             >
-              <Link to={e.to} id = "Link" key="Link" style={{color:"#434343"}}>{e.text}{isShown}</Link>
+              <Link to={e.to} id = "Link" key="Link">{e.text}{isShown}</Link>
             </Menu.Item>
           ))}
           </>

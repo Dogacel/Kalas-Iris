@@ -3,11 +3,13 @@ import { Carousel } from "antd";
 import { Divider, Image } from "antd";
 
 const contentStyle = {
-    height: '600px',
-    color: '#6B33A1',
+    height: '675px',
+    witdh:'1200px',
+    background: '#FFFFFF',
     lineHeight: '160px',
     textAlign: 'center',
-    background: '#F1B236',
+    // alignment: 'center'
+    // background: '#F1B236',
 };
 
 export default function HomepageView() {
@@ -19,41 +21,34 @@ export default function HomepageView() {
 
     return (
         <>
-            <Carousel autoplay style={contentStyle}>
+            <Carousel autoplay effect="fade" style={contentStyle}>
                 <div>
                     <Image 
-                        width = {400}
-                        src={process.env.PUBLIC_URL + '/Kalas-Iris-split-didot.jpg'}
+                        width={1200}
+                        height={675}
+                        src={process.env.PUBLIC_URL + '/carousel-1-image.jpeg'}
+                        preview={false}
                     />
-                    <h3>1</h3>
+                    {/* <h1>Retail Image Annotation and Retail Product Search API</h1> */}
                 </div>
+                
                 <div>
-                    <h3>2</h3>
+                    <Image 
+                        width={1200}
+                        height={675}
+                        src={process.env.PUBLIC_URL + '/carousel-2-image.jpeg'}
+                        preview={false}
+                    />
                 </div>
-                <div>
+                
+                {/* <div>
                     <h3>3</h3>
                 </div>
                 <div>
                     <h3>4</h3>
-                </div>
+                </div> */}
             </Carousel>
-            {/* <div>
-                <img src={ProcessingInstruction.env.PUBLIC_URL + '/PATATA.jpeg'} />
-                <h1>
-                    Introducing
-                </h1>
-                <h1>
-                    Clothing Retail Product Labeling Platform
-                </h1>
-            </div> */}
             <Divider />
-            <h1 style={{ textAlign: 'center' }}>
-                We are Kalas-Iris! Welcome...
-            </h1>
-            <Divider />
-            <h1 style={{ textAlign: 'center' }}>
-                Here will be info about our services.
-            </h1>
         </>
     );
 }
