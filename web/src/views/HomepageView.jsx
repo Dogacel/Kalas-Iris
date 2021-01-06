@@ -37,6 +37,15 @@ export default function HomepageView() {
                     <h3>4</h3>
                 </div>
             </Carousel>
+            {/* <div>
+                <img src={ProcessingInstruction.env.PUBLIC_URL + '/PATATA.jpeg'} />
+                <h1>
+                    Introducing
+                </h1>
+                <h1>
+                    Clothing Retail Product Labeling Platform
+                </h1>
+            </div> */}
             <Divider />
             <h1 style={{ textAlign: 'center' }}>
                 We are Kalas-Iris! Welcome...
