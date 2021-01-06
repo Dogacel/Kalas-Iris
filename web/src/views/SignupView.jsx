@@ -10,7 +10,6 @@ export default function SignupView() {
   };
 
   const [form] = Form.useForm();
-
   return (
     <Row type="flex" align="center">
       <Col md={18} lg={6}>
@@ -24,7 +23,6 @@ export default function SignupView() {
           }}
           onFinish={onFinish}
         >
-       
           <Form.Item
             name="name"
             rules={[

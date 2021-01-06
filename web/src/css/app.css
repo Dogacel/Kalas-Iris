@@ -1,6 +1,6 @@
 #cloud-menu-item{
     float: right;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     color: white !important;
     cursor: default;
 }
@@ -8,4 +8,9 @@
 
 #login-button {
     width: 100%;
+}
+
+
+#hover-item :hover {
+    background-color: #434343;
 }
