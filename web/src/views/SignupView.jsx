@@ -1,12 +1,20 @@
-import { Form, Input, Button, Checkbox, Col, Row } from "antd";
+import { Form, Input, Button, Col, Row, message } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
 import { signUpUser } from "../api/api";
+import { useHistory } from "react-router-dom";
 
 export default function SignupView() {
+  const history = useHistory();
+
   const onFinish = values => {
-    console.log("Received values of form: ", values);
-    signUpUser(values);
+    console.log("Sent values of form: ", values);
+    signUpUser(values)
+      .then(r => {
+        history.push("/login", { message: "Successfully signed up!" });
+      })
+      .catch(r => {
+        if (r.response) message.error(r.response.data);
+      });
   };
 
   const [form] = Form.useForm();
@@ -103,11 +111,13 @@ export default function SignupView() {
                 message: "Please confirm your Password!",
               },
               ({ getFieldValue }) => ({
-                validator(rule, value) {
-                  if (!value || getFieldValue('password') === value) {
+                validator(_, value) {
+                  if (!value || getFieldValue("password") === value) {
                     return Promise.resolve();
                   }
-                  return Promise.reject('The two passwords that you entered do not match!');
+                  return Promise.reject(
+                    "The two passwords that you entered do not match!"
+                  );
                 },
               }),
             ]}

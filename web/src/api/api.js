@@ -38,6 +38,18 @@ export function login(form, config = null) {
   return axios.post(`${flaskAPIAdress}/login`, fmData, config);
 }
 
+export async function getSession() {
+  try {
+    const response = await axios.get(`${flaskAPIAdress}/getCurrentSession`);
+    if (response.status === 200) {
+      return response.data
+    }
+  }
+   catch {
+    return false
+  }
+}
+
 export async function isServerUp() {
   try {
     const response = await axios.get(`${mmfashionAPIAddress}/`, {

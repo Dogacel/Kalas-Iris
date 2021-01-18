@@ -2,7 +2,7 @@ import os
 
 from flask import Flask, request, url_for, redirect, render_template, session
 from flask import jsonify
-from werkzeug.wrappers import CommonRequestDescriptorsMixin
+from werkzeug.wrappers import CommonRequestDescriptorsMixin, Response
 from flask_cors import CORS, cross_origin
 from flask_pymongo import PyMongo
 from dotenv import load_dotenv
@@ -92,9 +92,9 @@ def create_app(test_config=None):
 
                 return redirect(url_for('index'))
             else:
-                return 'That email already exists!'
+                return Response('That email already exists!', status=403)
         else:
-            return 'That username already exists!'
+            return Response('That username already exists!', status=403)
 
     @app.route('/login', methods=(['POST']))
     @cross_origin(support_credentials=True)
@@ -116,6 +116,11 @@ def create_app(test_config=None):
                 
                 return redirect(url_for('index'))
 
-        return 'Username and password do not match'
+        return Response('Username and password do not match', status=401)
+
+    @app.route('/getSession', methods=(['GET']))
+    @cross_origin(support_credentials=True)
+    def getCurrentSession():
+        return session
 
     return app
