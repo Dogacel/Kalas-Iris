@@ -7,8 +7,12 @@ from flask_cors import CORS, cross_origin
 from flask_pymongo import PyMongo
 from dotenv import load_dotenv
 from flask_bcrypt import Bcrypt
-from flask_jwt_extended import create_access_token
-
+from flask_jwt_extended import ( 
+    JWTManager, create_access_token, create_refresh_token, 
+    jwt_required, get_jwt_identity, jwt_refresh_token_required,
+    get_raw_jwt
+)
+import datetime
 
 def create_app(test_config=None):
     # create and configure the app
@@ -16,13 +20,17 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     CORS(app, support_credentials=True)
     bcrypt = Bcrypt(app)
-
-    DATABASE_USERNAME = os.getenv("DATABASE_USERNAME")
-    DATABASE_PASSWORD = os.getenv("DATABASE_PASSWORD")
+    jwt = JWTManager(app)
 
     app.config.from_mapping(
         SECRET_KEY='dev',
+        JWT_SECRET_KEY = 'super-secret',
+        JWT_BLACKLIST_ENABLED = True,
+        JWT_BLACKLIST_TOKEN_CHECKS = ['access', 'refresh']
     )
+    blacklist = set()
+    DATABASE_USERNAME = os.getenv("DATABASE_USERNAME")
+    DATABASE_PASSWORD = os.getenv("DATABASE_PASSWORD")
 
     # Create the MongoDB instances
     fashionImages_mongo = PyMongo(
@@ -111,16 +119,52 @@ def create_app(test_config=None):
         if login_user:
             if bcrypt.check_password_hash(login_user['password'], password):
                 session['username'] = username
-                session['access_token'] = create_access_token(identity=username)
-                session['refresh_token'] = create_access_token(identity=username)
-                
-                return redirect(url_for('index'))
+                expires = datetime.timedelta(hours=1)
+                tokens = { 
+                    'access_token': create_access_token(identity=username, expires_delta=expires),
+                    'refresh_token': create_refresh_token(identity=username) 
+                }
+                return jsonify(tokens), 200
 
         return Response('Username and password do not match', status=401)
 
-    @app.route('/getSession', methods=(['GET']))
+    @app.route('/refresh', methods=['POST'])
+    @jwt_refresh_token_required
+    def refresh():
+        current_user = get_jwt_identity()
+        ret = {
+            'access_token': create_access_token(identity=current_user)
+        }
+        return jsonify(ret), 200
+
+    # Endpoint for revoking the current users access token
+    @app.route('/logout', methods=['DELETE'])
+    @jwt_required
+    def logout():
+        jti = get_raw_jwt()['jti']
+        blacklist.add(jti)
+        return jsonify({"msg": "Successfully logged out"}), 200
+
+
+    # Endpoint for revoking the current users refresh token
+    @app.route('/logout2', methods=['DELETE'])
+    @jwt_refresh_token_required
+    def logout2():
+        jti = get_raw_jwt()['jti']
+        blacklist.add(jti)
+        return jsonify({"msg": "Successfully logged out"}), 200
+
+    @app.route('/getCurrentUser', methods=(['GET']))
     @cross_origin(support_credentials=True)
-    def getCurrentSession():
-        return session
+    @jwt_required
+    def getCurrentUser():
+        current_user = get_jwt_identity()
+        print(current_user)
+        return jsonify(logged_in_as=current_user), 200
+
+    @jwt.token_in_blacklist_loader
+    def check_if_token_in_blacklist(decrypted_token):
+        jti = decrypted_token['jti']
+        return jti in blacklist
 
     return app
