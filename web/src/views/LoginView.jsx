@@ -1,29 +1,28 @@
 import { Form, Input, Button, Checkbox, Col, Row, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { Link, useLocation } from "react-router-dom";
-import { login } from "../api/api";
-import { useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { login, getCurrentUser } from "../api/api";
+import { useState } from "react";
 
 export default function LoginView() {
+  const history = useHistory();
+
   const onFinish = values => {
     console.log("Sent values of form: ", values);
     login(values)
-      .then(() => {
+      .then(r => {
         message.success("Ok!");
+        getCurrentUser(r.data.access_token).then(r => {
+          history.push("/homepage", { message: "Logged in as " + r.data['logged_in_as'].username });
+        }).catch(r => {
+          if (r.response) message.error(r.response.data)
+        })
       })
       .catch(r => {
         if (r.response) message.error(r.response.data);
       });
-    // const user = getUserInformation()
   };
 
-  const location = useLocation();
-
-  useEffect(() => {
-    if (location.state && location.state.message) {
-      message.info(location.state.message);
-    }
-  }, [location]);
 
   return (
     <Row type="flex" align="center">
