@@ -18,7 +18,6 @@ function App() {
   const location = useLocation();
 
   const menuLinks = [
-    //{ to: "/homepage", text: "Kalas-Iris" },
     { to: "/annotate", text: "Image Annotation" },
     { to: "/integrations", text: "Integrations" },
     { to: "/login", text: "Login" },
@@ -49,9 +48,6 @@ function App() {
   }, []);
 
   const menuBarStyle = {
-    // primaryColor: "#f7c873",
-    // backgroundColor: "#f7c873",
-    //color: "#bd8e02",
     color: '#434343',
     textColor: '#434343',
     backgroundColor: "#001529"
