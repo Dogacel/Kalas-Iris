@@ -59,7 +59,7 @@ function App() {
     }
   };
 
-  const [isShown, setIsShown] = useState(false);
+  // const [isShown, setIsShown] = useState(false);
 
 
   return (
@@ -94,7 +94,7 @@ function App() {
                   id="hover-item"
                   style={menuBarStyle}
                 >
-                  <Link to={e.to} id="Link" key="Link" style={{ color: "#434343" }}>{e.text}{isShown}</Link>
+                  <Link to={e.to} id="Link" key="Link" style={{ color: "#434343" }}>{e.text}{false}</Link>
                 </Menu.Item>
               ))}
             </>
