@@ -5,5 +5,5 @@ frontend:
   - web/**/*
 
 documentation:
-  - *.md
+  - README.md
   - docs/*
