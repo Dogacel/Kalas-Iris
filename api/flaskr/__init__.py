@@ -121,7 +121,7 @@ def create_app(test_config=None):
                 session['username'] = username
                 expires = datetime.timedelta(hours=1)
                 tokens = { 
-                    'access_token': create_access_token(identity=username, expires_delta=expires),
+                    'access_token': create_access_token(identity=username, expires_delta=False),
                     'refresh_token': create_refresh_token(identity=username) 
                 }
                 return jsonify(tokens), 200
