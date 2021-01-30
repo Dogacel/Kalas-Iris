@@ -1,0 +1,8 @@
+backend:
+- api/**/*
+
+frontend:
+- web/**/*
+
+documentation:
+- **/*.md
