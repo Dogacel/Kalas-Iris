@@ -12,13 +12,12 @@ const contentStyle = {
 };
 
 export default function HomepageView() {
-   
     const location = useLocation();
     useEffect(() => {
       if (location.state && location.state.message) {
         message.info(location.state.message);
       }
-    }, [location]);
+    })
 
     return (
         <>

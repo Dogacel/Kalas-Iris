@@ -2,18 +2,28 @@ import { Form, Input, Button, Checkbox, Col, Row, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { Link, useHistory } from "react-router-dom";
 import { login, getCurrentUser } from "../api/api";
-import { useState } from "react";
+import { useUserContext } from "../components/UserContext";
 
 export default function LoginView() {
+
   const history = useHistory();
+  const {
+    username, 
+    setUsername,
+    accessToken, 
+    setAccessToken
+  } = useUserContext();
 
   const onFinish = values => {
     console.log("Sent values of form: ", values);
     login(values)
       .then(r => {
         message.success("Ok!");
+        setAccessToken(r.data.access_token);
         getCurrentUser(r.data.access_token).then(r => {
-          history.push("/homepage", { message: "Logged in as " + r.data['logged_in_as'].username });
+          console.log("Received " + r.data['logged_in_as']);
+          setUsername(r.data['logged_in_as']);
+          history.push("/homepage", {message: "Logged in as " + username});
         }).catch(r => {
           if (r.response) message.error(r.response.data)
         })
