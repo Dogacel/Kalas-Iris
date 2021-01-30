@@ -10,7 +10,6 @@ export default function LoginView() {
   const {
     username, 
     setUsername,
-    accessToken, 
     setAccessToken
   } = useUserContext();
 
@@ -79,12 +78,10 @@ export default function LoginView() {
             <Form.Item name="remember" valuePropName="checked" noStyle>
               <Checkbox>Remember me</Checkbox>
             </Form.Item>
-
-            <a className="login-form-forgot" href="">
-              Forgot password
-            </a>
           </Form.Item>
-
+          <Form.Item>
+            <Link to="/forgotPassword">Forgot Password</Link>
+          </Form.Item>
           <Form.Item>
             <Button
               type="primary"

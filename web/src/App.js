@@ -1,4 +1,4 @@
-import { Divider, Layout, Menu, Switch, Image } from "antd";
+import { Divider, Layout, Menu, Switch } from "antd";
 import { useEffect, useState } from "react";
 import { WarningOutlined, CheckOutlined } from "@ant-design/icons";
 import { Route, Link, useLocation } from "react-router-dom";
@@ -78,6 +78,7 @@ function App() {
               <Menu.Item style={menuBarStyle}>
                 <Link to={"/homepage"}>
                   <img
+                    alt="homepage_logo"
                     width={189}
                     height={43}
                     src={process.env.PUBLIC_URL + '/ki-homepage-logo.png'}
@@ -91,7 +92,6 @@ function App() {
                 <Menu.Item
                   key={e.to}
                   id="hover-item"
-                  key="hover-item"
                   style={menuBarStyle}
                 >
                   <Link to={e.to} id="Link" key="Link" style={{ color: "#434343" }}>{e.text}{isShown}</Link>
