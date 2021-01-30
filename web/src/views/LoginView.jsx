@@ -1,29 +1,37 @@
 import { Form, Input, Button, Checkbox, Col, Row, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { Link, useLocation } from "react-router-dom";
-import { login } from "../api/api";
-import { useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { login, getCurrentUser } from "../api/api";
+import { useUserContext } from "../components/UserContext";
 
 export default function LoginView() {
+
+  const history = useHistory();
+  const {
+    username, 
+    setUsername,
+    setAccessToken
+  } = useUserContext();
+
   const onFinish = values => {
     console.log("Sent values of form: ", values);
     login(values)
-      .then(() => {
+      .then(r => {
         message.success("Ok!");
+        setAccessToken(r.data.access_token);
+        getCurrentUser(r.data.access_token).then(r => {
+          console.log("Received " + r.data['logged_in_as']);
+          setUsername(r.data['logged_in_as']);
+          history.push("/homepage", {message: "Logged in as " + username});
+        }).catch(r => {
+          if (r.response) message.error(r.response.data)
+        })
       })
       .catch(r => {
         if (r.response) message.error(r.response.data);
       });
-    // const user = getUserInformation()
   };
 
-  const location = useLocation();
-
-  useEffect(() => {
-    if (location.state && location.state.message) {
-      message.info(location.state.message);
-    }
-  }, [location]);
 
   return (
     <Row type="flex" align="center">
@@ -70,12 +78,10 @@ export default function LoginView() {
             <Form.Item name="remember" valuePropName="checked" noStyle>
               <Checkbox>Remember me</Checkbox>
             </Form.Item>
-
-            <a className="login-form-forgot" href="">
-              Forgot password
-            </a>
           </Form.Item>
-
+          <Form.Item>
+            <Link to="/forgotPassword">Forgot Password</Link>
+          </Form.Item>
           <Form.Item>
             <Button
               type="primary"

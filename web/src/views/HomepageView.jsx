@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Carousel } from "antd";
-import { Divider, Image } from "antd";
+import { Divider, Image, message } from "antd";
 
 const contentStyle = {
     height: '600px',
@@ -11,11 +12,12 @@ const contentStyle = {
 };
 
 export default function HomepageView() {
-    const onFinish = values => {
-        console.log("Received values of form: ", values);
-    };
-
-
+    const location = useLocation();
+    useEffect(() => {
+      if (location.state && location.state.message) {
+        message.info(location.state.message);
+      }
+    }, [location])
 
     return (
         <>
