@@ -17,7 +17,7 @@ export default function HomepageView() {
       if (location.state && location.state.message) {
         message.info(location.state.message);
       }
-    })
+    }, [location])
 
     return (
         <>
