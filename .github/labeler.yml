@@ -5,4 +5,4 @@ frontend:
   - web/**/*
 
 documentation:
-  - ./**/*.md
+  - **/*.md
