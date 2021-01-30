@@ -12,7 +12,6 @@ itsdangerous==1.1.0
 Jinja2==2.11.2
 MarkupSafe==1.1.1
 pycparser==2.20
-PyJWT==1.4.2
 pymongo==3.11.2
 python-dotenv==0.15.0
 six==1.15.0
