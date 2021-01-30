@@ -2,6 +2,8 @@
 
 [Link to website](https://dogacel.wixsite.com/website) Created using Wix website builder. This is a free-tier website. The website is created as online clothing retail template.
 
+![ezgif-3-c3a7cc416818](https://user-images.githubusercontent.com/7023385/106370212-e7b3c900-6368-11eb-9559-8e8318ab4a48.gif)
+
 ## Creating An App
 
 In order to use webhooks, we should create an app for wix platform and the user can add that app to their website using "Manage Apps" tab under website builder.
