@@ -12,7 +12,7 @@ function getBase64(file) {
   });
 }
 
-export default function FileUpload({ setPreviewImage, setPreviewJSON }) {
+export default function FileUpload({ previewImage, setPreviewImage, setPreviewJSON }) {
   const [defaultFileList, setDefaultFileList] = useState([]);
   const [progress, setProgress] = useState(0);
   const [annotationResult, setAnnotationResult] = useState({})
@@ -71,6 +71,25 @@ export default function FileUpload({ setPreviewImage, setPreviewJSON }) {
     setPreviewJSON(annotationResult[file.originFileObj.uid])
   };
 
+  const handleRemove = async file => {
+    if (file.originFileObj.uid !== previewImage.uid){
+      if (defaultFileList.length > 1) {
+        if (file.uid !== defaultFileList[0].uid) {
+          setPreviewImage(previewImages[defaultFileList[0].originFileObj.uid])
+          setPreviewJSON(annotationResult[defaultFileList[0].originFileObj.uid])
+        }
+        else {
+          setPreviewImage(previewImages[defaultFileList[defaultFileList.length -1].originFileObj.uid])
+          setPreviewJSON(annotationResult[defaultFileList[defaultFileList.length - 1].originFileObj.uid])
+        }
+      }
+      else {
+        setPreviewImage("https://i.stack.imgur.com/y9DpT.jpg")
+        setPreviewJSON([""])
+      }
+    }
+  }
+
   return (
     <div className="container">
       <Upload
@@ -80,6 +99,7 @@ export default function FileUpload({ setPreviewImage, setPreviewJSON }) {
         onChange={handleOnChange}
         onPreview={handlePreview}
         fileList={defaultFileList}
+        onRemove={handleRemove}
       >
         {defaultFileList.length >= 8 ? null : <div>Upload Image</div>}
       </Upload>

@@ -20,6 +20,7 @@ export default function AnnotateView() {
         <FileUpload
           setPreviewImage={setPreviewImage}
           setPreviewJSON={setPreviewJSON}
+          previewImage={previewImage}
         />
       </Col>
     </Row>
