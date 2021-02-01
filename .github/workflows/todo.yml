@@ -1,4 +1,4 @@
-name: "Workflow"
+name: "Create To do issues"
 on: ["push"]
 jobs:
   build:
