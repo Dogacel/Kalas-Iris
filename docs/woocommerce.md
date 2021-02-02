@@ -6,6 +6,8 @@ The API is documented in detail, thus for even detailed information, refer to th
 
 All of the links in this document are from the Python Wrapper. 
 
+[Here is the link to the template website I launched using WooCommerce](https://wooatasoy.wpcomstaging.com/)
+
 ## Creating An App
 In order to use webhooks, we need to create install the "WooCommerce" plugin to our WordPress website. 
 
