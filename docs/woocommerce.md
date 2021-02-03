@@ -47,8 +47,6 @@ The parameters are:
 * `return_url` (string) : URL the user will be redirected to after authentication
 * `callback_url` (string) : URL that will receive the generated API key. Note: this URL should be over HTTPS
 
-## Creating an authentication endpoint URL
-
 Must use `/wc-auth/v1/authorize` endpoint and pass the above parameters as a query string.
 
 Example of how to build an authentication URL:
