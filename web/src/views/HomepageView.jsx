@@ -20,8 +20,7 @@ export default function HomepageView() {
         <Carousel autoplay effect="fade" style={contentStyle}>
             <div>
                 <Image 
-                    width={1200}
-                    height={675}
+                    style={contentStyle}
                     src={process.env.PUBLIC_URL + '/carousel-1-image.jpeg'}
                     preview={false}
                 />
@@ -29,8 +28,7 @@ export default function HomepageView() {
 
             <div>
                 <Image 
-                    width={1200}
-                    height={675}
+                    style={contentStyle}
                     src={process.env.PUBLIC_URL + '/carousel-2-image.jpeg'}
                     preview={false}
                 />
