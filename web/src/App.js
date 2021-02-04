@@ -1,4 +1,5 @@
-import { Divider, Layout, Menu, Switch, Image } from "antd";
+import { Divider, Layout, Menu, Switch, Dropdown, Button } from "antd";
+import { DownOutlined } from '@ant-design/icons';
 import { useEffect, useState } from "react";
 import { WarningOutlined, CheckOutlined } from "@ant-design/icons";
 import { Route, Link, useLocation } from "react-router-dom";
@@ -10,6 +11,8 @@ import "./css/app.css";
 import LoginView from "./views/LoginView";
 import RegistrationForm from "./views/SignupView";
 import HomepageView from "./views/HomepageView";
+import FashionAnnotationInfoView from "./views/FashionAnnotationInfoView";
+import MenuItem from "antd/lib/menu/MenuItem";
 
 
 const { Header, Content, Footer } = Layout;
@@ -55,6 +58,21 @@ function App() {
 
   const [isShown, setIsShown] = useState(false);
 
+  const dropdown1 = (
+    <Menu>
+      <Menu.Item>
+        <Link to="/annotation-info">
+          What is Fashion Annotation?
+        </Link>
+      </Menu.Item>
+      <MenuItem>
+        <Link to="/annotation-info">
+          How it works
+        </Link>
+      </MenuItem>
+    </Menu>
+  );
+
 
   return (
     <Layout className="layout">
@@ -66,26 +84,33 @@ function App() {
           defaultSelectedKeys={[location.pathname]}
         >
           <>
-          <Menu.Item style={menuBarStyle}>
-            <Link to={"/homepage"}>
-            <img
-              width={189}
-              height={43}
-              src={process.env.PUBLIC_URL + '/ki-logo-white.png'}
-              style={{width:190, height:55}}
-            />
-            </Link>
-          </Menu.Item>
+            <Menu.Item style={menuBarStyle}>
+              <Link to={"/homepage"}>
+                <img
+                  width={189}
+                  height={43}
+                  src={process.env.PUBLIC_URL + '/ki-logo-white.png'}
+                  style={{ width: 190, height: 55 }}
+                />
+              </Link>
+            </Menu.Item>
           </>
           <>
-          {menuLinks.map(e => (
-            <Menu.Item
-              key={e.to} 
-            >
-              <Link to={e.to} id = "Link" key="Link">{e.text}{isShown}</Link>
-            </Menu.Item>
-          ))}
+            {menuLinks.map(e => (
+              <Menu.Item
+                key={e.to}
+              >
+                <Link to={e.to} id="Link" key="Link">{e.text}{isShown}</Link>
+              </Menu.Item>
+            ))}
           </>
+          <MenuItem>
+          <Dropdown overlay={dropdown1} placement="bottomCenter">
+              <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                Fashion Annotation <DownOutlined/>
+              </a>
+          </Dropdown>
+          </MenuItem>
           <Menu.Item id="cloud-menu-item" key="cloud-menu-item" disabled={true}>
             Server Status{" "}
             <Switch
@@ -120,6 +145,9 @@ function App() {
         </Route>
         <Route path="/signup">
           <RegistrationForm />
+        </Route>
+        <Route path="/annotation-info">
+          <FashionAnnotationInfoView />
         </Route>
         <Route path="/homepage">
           <HomepageView />
