@@ -1,4 +1,4 @@
-# WooCommerce Kalas-Iris Integration Report 
+# WooCommerce Kalas-Iris Integration Report
 
 WooCommerce is a plug-in for WordPress websites. In order to use it, it requries a "Business Plan" Wordpress subscription.
 
@@ -411,3 +411,116 @@ print(wcapi.post("products/attributes/batch", data).json())
 ## Product tags
 
 [Ref](https://woocommerce.github.io/woocommerce-rest-api-docs/?python#product-tags)
+
+### Create a product tag
+
+```http
+POST /wp-json/wc/v3/products/tags
+```
+
+Example Code:
+
+```python
+data = {
+    "name": "Leather Shoes"
+}
+
+wcapi.post("products/tags", data).json()
+```
+
+### Retrieve a product tag
+
+```http
+GET /wp-json/wc/v3/products/tags/<id>
+```
+
+```python
+wcapi.get("products/tags/34").json()
+```
+
+### Update a product tag
+
+```http
+PUT /wp-json/wc/v3/products/tags/<id>
+```
+
+```python
+data = {
+    "description": "Genuine leather."
+}
+
+wcapi.put("products/tags/34", data).json()
+```
+
+### Delete a product tag
+
+```http
+DELETE /wp-json/wc/v3/products/tags/<id>
+```
+
+```python
+wcapi.delete("products/tags/34", params={"force": True}).json()
+```
+
+* `force`(string) is required to be true, as resource does not support trashing.
+
+## Product categories
+
+[Ref](https://woocommerce.github.io/woocommerce-rest-api-docs/#product-category-properties)
+
+### Create a product category
+
+```http
+POST /wp-json/wc/v3/products/categories
+```
+
+```python
+data = {
+    "name": "Clothing",
+    "image": {
+        "src": "http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_2_front.jpg"
+    }
+}
+
+wcapi.post("products/categories", data).json()
+```
+
+### Retrieve a product category
+
+```http
+GET /wp-json/wc/v3/products/categories/<id>
+```
+
+```python
+wcapi.get("products/categories/9").json()
+```
+
+### Update a product category
+
+```http
+PUT /wp-json/wc/v3/products/categories/<id>
+```
+
+```python
+data = {
+    "description": "All kinds of clothes."
+}
+
+wcapi.put("products/categories/9", data).json()
+```
+
+### Delete a product category
+
+```http
+DELETE /wp-json/wc/v3/products/categories/<id>
+```
+
+```python
+wcapi.delete("products/categories/9", params={"force": True}).json()
+```
+
+* `force`parameter is required to be true, as resource does not support trashing.
+
+### Difference between Product Categories, Tags and Attributes
+
+Categories, Tags and Attributes are familiar with each other. For understanging how they differ in WooCommerce, I recommend you to read this [article.](https://code.tutsplus.com/articles/the-beginners-guide-to-woocommerce-product-tags-categories-attributes--cms-22622)
