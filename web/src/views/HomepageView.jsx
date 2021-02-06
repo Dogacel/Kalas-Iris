@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Carousel, Row, Column } from "antd";
-import { Divider, Image } from "antd";
+import React from "react";
+import { Carousel } from "antd";
+import { Image } from "antd";
 
 const contentStyle = {
     height: '675px',
@@ -11,12 +11,7 @@ const contentStyle = {
 };
 
 export default function HomepageView() {
-    const onFinish = values => {
-        console.log("Received values of form: ", values);
-    };
-
     return (
-
         <Carousel autoplay effect="fade" style={contentStyle}>
             <div>
                 <Image 
