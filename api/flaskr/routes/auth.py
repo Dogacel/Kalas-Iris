@@ -70,7 +70,7 @@ def login():
                 'access_token': create_access_token(identity=username, expires_delta=False),
                 'refresh_token': create_refresh_token(identity=username)
             }
-            return jsonify(tokens), 200
+            return Response(jsonify(tokens))
 
     return Response('Username and password do not match', status=401)
 
@@ -82,7 +82,7 @@ def refresh():
     ret = {
         'access_token': create_access_token(identity=current_user)
     }
-    return jsonify(ret), 200
+    return Response(jsonify(ret))
 
 # Endpoint for revoking the current users access token
 
@@ -92,7 +92,7 @@ def refresh():
 def logout():
     jti = get_raw_jwt()['jti']
     blacklist.add(jti)
-    return jsonify({"msg": "Successfully logged out"}), 200
+    return Response(jsonify({"msg": "Successfully logged out"}))
 
 
 # Endpoint for revoking the current users refresh token
@@ -101,7 +101,7 @@ def logout():
 def logout2():
     jti = get_raw_jwt()['jti']
     blacklist.add(jti)
-    return jsonify({"msg": "Successfully logged out"}), 200
+    return Response(jsonify({"msg": "Successfully logged out"}))
 
 
 @auth_route.route('/getCurrentUser', methods=(['GET']))
@@ -110,10 +110,10 @@ def logout2():
 def getCurrentUser():
     current_user = get_jwt_identity()
     print(current_user)
-    return jsonify(logged_in_as=current_user), 200
+    return Response(jsonify(logged_in_as=current_user), 200)
 
 
 @jwt.token_in_blacklist_loader
 def check_if_token_in_blacklist(decrypted_token):
     jti = decrypted_token['jti']
-    return jti in blacklist
+    return Response(jti in blacklist)

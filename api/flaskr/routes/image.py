@@ -1,4 +1,5 @@
 from flask import Blueprint, request, url_for, redirect, session, current_app, jsonify
+from flask.wrappers import Response
 from ..db import mongo
 
 image_route = Blueprint('image_route', __name__)
@@ -12,7 +13,7 @@ def uploadProductImage():
     fashion_image_collection.insert({'photo_name': file.filename})
     # Return more meaningful data maybe
 
-    return 'Done!'
+    return Response('Done!')
 
 
 @image_route.route('/file/<filename>')
