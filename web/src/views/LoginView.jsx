@@ -1,17 +1,12 @@
 import { Form, Input, Button, Checkbox, Col, Row, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { login, getCurrentUser } from "../api/api";
 import { useUserContext } from "../components/UserContext";
 
 export default function LoginView() {
-
-  const history = useHistory();
-  const {
-    username, 
-    setUsername,
-    setAccessToken
-  } = useUserContext();
+  const navigate = useNavigate();
+  const { username, setUsername, setAccessToken } = useUserContext();
 
   const onFinish = values => {
     console.log("Sent values of form: ", values);
@@ -19,19 +14,20 @@ export default function LoginView() {
       .then(r => {
         message.success("Ok!");
         setAccessToken(r.data.access_token);
-        getCurrentUser(r.data.access_token).then(r => {
-          console.log("Received " + r.data['logged_in_as']);
-          setUsername(r.data['logged_in_as']);
-          history.push("/homepage", {message: "Logged in as " + username});
-        }).catch(r => {
-          if (r.response) message.error(r.response.data)
-        })
+        getCurrentUser(r.data.access_token)
+          .then(r => {
+            console.log("Received " + r.data["logged_in_as"]);
+            setUsername(r.data["logged_in_as"]);
+            navigate("/", { message: "Logged in as " + username });
+          })
+          .catch(r => {
+            if (r.response) message.error(r.response.data);
+          });
       })
       .catch(r => {
         if (r.response) message.error(r.response.data);
       });
   };
-
 
   return (
     <Row type="flex" align="center">

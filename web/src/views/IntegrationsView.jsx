@@ -1,171 +1,77 @@
 import React, { useState } from "react";
-import ReactFlow, {
-  addEdge,
-  Background,
-  Controls,
-  MiniMap,
-  removeElements,
-} from "react-flow-renderer";
 import Title from "antd/lib/typography/Title";
+import { Col, Menu, Row } from "antd";
+import {
+  AppstoreOutlined,
+  MailOutlined,
+  SettingOutlined,
+} from "@ant-design/icons";
+import { Route, Routes, Link } from "react-router-dom";
 
-const initialElements = [
-  {
-    id: "1",
-    type: "input",
-    data: {
-      label: (
-        <>
-          Welcome to <strong>React Flow!</strong>
-        </>
-      ),
-    },
-    position: { x: 250, y: 0 },
-  },
-  {
-    id: "2",
-    data: {
-      label: (
-        <>
-          This is a <strong>default node</strong>
-        </>
-      ),
-    },
-    position: { x: 100, y: 100 },
-  },
-  {
-    id: "3",
-    data: {
-      label: (
-        <>
-          This one has a <strong>custom style</strong>
-        </>
-      ),
-    },
-    position: { x: 400, y: 100 },
-    style: {
-      background: "#D6D5E6",
-      color: "#333",
-      border: "1px solid #222138",
-      width: 180,
-    },
-  },
-  {
-    id: "4",
-    position: { x: 250, y: 200 },
-    data: {
-      label: "Another default node",
-    },
-  },
-  {
-    id: "5",
-    data: {
-      label: "Node id: 5",
-    },
-    position: { x: 250, y: 325 },
-  },
-  {
-    id: "6",
-    type: "output",
-    data: {
-      label: (
-        <>
-          An <strong>output node</strong>
-        </>
-      ),
-    },
-    position: { x: 100, y: 480 },
-  },
-  {
-    id: "7",
-    type: "output",
-    data: { label: "Another output node" },
-    position: { x: 400, y: 450 },
-  },
-  { id: "e1-2", source: "1", target: "2", label: "this is an edge label" },
-  { id: "e1-3", source: "1", target: "3" },
-  {
-    id: "e3-4",
-    source: "3",
-    target: "4",
-    animated: true,
-    label: "animated edge",
-  },
-  {
-    id: "e4-5",
-    source: "4",
-    target: "5",
-    arrowHeadType: "arrowclosed",
-    label: "edge with arrow head",
-  },
-  {
-    id: "e5-6",
-    source: "5",
-    target: "6",
-    type: "smoothstep",
-    label: "smooth step edge",
-  },
-  {
-    id: "e5-7",
-    source: "5",
-    target: "7",
-    type: "step",
-    style: { stroke: "#f6ab6c" },
-    label: "a step edge",
-    animated: true,
-    labelStyle: { fill: "#f6ab6c", fontWeight: 700 },
-  },
-];
-
-const onLoad = reactFlowInstance => {
-  console.log("flow loaded:", reactFlowInstance);
-  reactFlowInstance.fitView();
-};
+const { SubMenu } = Menu;
 
 export default function IntegrationsView() {
-  const [elements, setElements] = useState(initialElements);
-  const onElementsRemove = elementsToRemove =>
-    setElements(els => removeElements(elementsToRemove, els));
-  const onConnect = params => setElements(els => addEdge(params, els));
-
   return (
-    <>
-      <Title>Server Integrations</Title>
-      <div
-        style={{
-          height: 600,
-          backgroundColor: "#FFFFFF",
-          borderColor: "#00000070",
-          borderWidth: "2px",
-          borderStyle: "dashed",
-        }}
-      >
-        <ReactFlow
-          elements={elements}
-          onElementsRemove={onElementsRemove}
-          onConnect={onConnect}
-          onLoad={onLoad}
-          deleteKeyCode={46}
-          snapToGrid={true}
-          snapGrid={[15, 15]}
+    <Row>
+      <Col>
+        <Menu
+          mode="inline"
+          defaultOpenKeys={["subcred", "subapp"]}
+          style={{ width: 256, marginRight: 32 }}
         >
-          <MiniMap
-            nodeStrokeColor={n => {
-              if (n.style?.background) return n.style.background;
-              if (n.type === "input") return "#0041d0";
-              if (n.type === "output") return "#ff0072";
-              if (n.type === "default") return "#1a192b";
-              return "#eee";
-            }}
-            nodeColor={n => {
-              if (n.style?.background) return n.style.background;
-              return "#fff";
-            }}
-            nodeBorderRadius={2}
-          />
-          <Controls />
-          <Background color="#aaa" gap={16} />
-        </ReactFlow>
-      </div>
-    </>
+          <SubMenu key="subcred" icon={<MailOutlined />} title="Credentials">
+            <Menu.ItemGroup key="g1" title="Item 1">
+              <Menu.Item key="1">Option 1</Menu.Item>
+              <Menu.Item key="2">Option 2</Menu.Item>
+            </Menu.ItemGroup>
+            <Menu.ItemGroup key="g2" title="Item 2">
+              <Menu.Item key="3">Option 3</Menu.Item>
+              <Menu.Item key="4">Option 4</Menu.Item>
+            </Menu.ItemGroup>
+          </SubMenu>
+          <SubMenu
+            key="subapp"
+            icon={<AppstoreOutlined />}
+            title="Apps & Platforms"
+          >
+            <Menu.Item key="woo">
+              <Link to="woo">WooCommerce</Link>
+            </Menu.Item>
+            <Menu.Item key="nop">
+              <Link to="nop">NopCommerce</Link>
+            </Menu.Item>
+            <Menu.Item key="wix">
+              <Link to="wix">Wix</Link>
+            </Menu.Item>
+            <Menu.Item key="shopyify">
+              <Link to="shopify">Shopify</Link>
+            </Menu.Item>
+          </SubMenu>
+          <SubMenu
+            key="sub4"
+            icon={<SettingOutlined />}
+            title="Custom Integrations"
+          >
+            <SubMenu key="sub3" title="Submenu">
+              <Menu.Item key="7">Option 7</Menu.Item>
+              <Menu.Item key="8">Option 8</Menu.Item>
+            </SubMenu>
+            <Menu.Item key="9">Option 9</Menu.Item>
+            <Menu.Item key="10">Option 10</Menu.Item>
+            <Menu.Item key="11">Option 11</Menu.Item>
+            <Menu.Item key="12">Option 12</Menu.Item>
+          </SubMenu>
+        </Menu>
+      </Col>
+      <Col>
+        <Title>Server Integrations</Title>
+        <Routes>
+          <Route path="woo" element={<div> Woo</div>} />
+          <Route path="nop" element={<div>Nop</div>} />
+          <Route path="wix" element={<div>Wix</div>} />
+          <Route path="shopify" element={<div>Shopify</div>} />
+        </Routes>
+      </Col>
+    </Row>
   );
 }
