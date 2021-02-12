@@ -1,4 +1,3 @@
-import React from "react";
 import { Carousel } from "antd";
 import { Image } from "antd";
 import React, { useEffect } from "react";
