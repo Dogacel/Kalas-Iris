@@ -14,6 +14,8 @@ The Documentation for WooCommerce REST API can be found [here](https://woocommer
 
 There is also a [Python Wrapper](https://pypi.org/project/WooCommerce/) for the WooCommerce REST API.
 
+:warning: For every element in the API, the `id` attribute is read-only. The API auto-assigns `id` values for *Products*, *Product Category* and *Product Tags*.  
+
 ## Getting Started
 
 ```python
