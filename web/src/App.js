@@ -1,4 +1,4 @@
-import { Divider, Layout, Menu, Switch, Dropdown, Button } from "antd";
+import { Divider, Layout, Menu, Switch, Dropdown } from "antd";
 import { DownOutlined } from '@ant-design/icons';
 import { useEffect, useState } from "react";
 import { WarningOutlined, CheckOutlined } from "@ant-design/icons";
@@ -57,7 +57,7 @@ function App() {
     backgroundColor: "#001529"
   };
 
-  const [isShown, setIsShown] = useState(false);
+  const [isShown] = useState(false);
 
   const dropdown1 = (
     <Menu>
@@ -89,7 +89,7 @@ function App() {
           <>
             <Menu.Item style={menuBarStyle}>
               <Link to={"/homepage"}>
-                <img
+                <Image
                   width={189}
                   height={43}
                   src={process.env.PUBLIC_URL + '/ki-logo-white.png'}
@@ -107,13 +107,13 @@ function App() {
               </Menu.Item>
             ))}
           </>
-          <MenuItem>
+          <>
           <Dropdown overlay={dropdown1} placement="bottomCenter">
               <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                 Fashion Annotation <DownOutlined/>
               </a>
           </Dropdown>
-          </MenuItem>
+          </>
           <Menu.Item id="cloud-menu-item" key="cloud-menu-item" disabled={true}>
             Server Status{" "}
             <Switch
