@@ -11,6 +11,7 @@ import "./css/app.css";
 import LoginView from "./views/LoginView";
 import RegistrationForm from "./views/SignupView";
 import HomepageView from "./views/HomepageView";
+import DashboardView from "./views/DashboardView";
 import FashionAnnotationInfoView from "./views/FashionAnnotationInfoView";
 import MenuItem from "antd/lib/menu/MenuItem";
 import { UserProvider } from "./components/UserContext";
@@ -25,6 +26,7 @@ function App() {
     { to: "/annotate", text: "Image Annotation" },
     { to: "/integrations", text: "Integrations" },
     { to: "/login", text: "Login" },
+    { to: "/dashboard", text: "Dashboard" },
   ];
 
   const [switchState, setSwitchState] = useState(false);
@@ -135,36 +137,38 @@ function App() {
             />
             (Server shuts down every hour at xx:00)
           </Menu.Item>
-        </Menu>
-      </Header>
-      <Content style={{ padding: "25px 50px" }}>
-        <Route path="/annotate">
-          <AnnotateView />
-        </Route>
-        <Route path="/integrations">
-          <IntegrationsView />
-        </Route>
-        <Route path="/login">
-          <LoginView />
-        </Route>
-        <Route path="/signup">
-          <RegistrationForm />
-        </Route>
+          </Menu>
+        </Header>
+        <Content style={{ padding: "25px 50px" }}>
+          <Route path="/annotate">
+            <AnnotateView />
+          </Route>
+          <Route path="/integrations">
+            <IntegrationsView />
+          </Route>
+          <Route path="/login">
+            <LoginView />
+          </Route>
+          <Route path="/dashboard">
+            <DashboardView />
+          </Route>
+          <Route path="/signup">
+            <RegistrationForm />
+          </Route>
         <Route path="/annotation-info">
           <FashionAnnotationInfoView />
         </Route>
-        <Route path="/homepage">
-          <HomepageView />
-        </Route>
-        <Route path="/">
-          <Redirect to="/homepage" />
-        </Route>
-        <Route path="/"></Route>
-      </Content>
-      <Divider />
-      <Footer style={{ textAlign: "center" }}>
-        Kalas Iris ©2021 Created by Kalas Iris Team
-
+          <Route path="/homepage">
+            <HomepageView />
+          </Route>
+          <Route path="/">
+            <Redirect to="/homepage" />
+          </Route>
+          <Route path="/"></Route>
+        </Content>
+        <Divider />
+        <Footer style={{ textAlign: "center" }}>
+          Kalas Iris ©2021 Created by Kalas Iris Team
       </Footer>
       </Layout>
     </UserProvider>
