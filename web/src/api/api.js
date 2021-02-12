@@ -38,6 +38,22 @@ export function login(form, config = null) {
   return axios.post(`${flaskAPIAdress}/login`, fmData, config);
 }
 
+export async function getCurrentUser(access_token) {
+  try {
+    const authStr = 'Bearer '.concat(access_token)
+    const config = {
+      headers: {Authorization: authStr}
+    }
+    const response = await axios.get(`${flaskAPIAdress}/getCurrentUser`, config);
+    if (response.status === 200) {
+      return response
+    }
+  }
+   catch {
+    return false
+  }
+}
+
 export async function isServerUp() {
   try {
     const response = await axios.get(`${mmfashionAPIAddress}/`, {

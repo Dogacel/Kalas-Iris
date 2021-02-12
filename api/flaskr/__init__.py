@@ -1,13 +1,7 @@
-import os
-
-from flask import Flask, request, url_for, redirect, render_template, session
-from flask import jsonify
-from werkzeug.wrappers import CommonRequestDescriptorsMixin
-from flask_cors import CORS, cross_origin
-from flask_pymongo import PyMongo
+from flask import Flask, session
+from flask_cors import CORS
 from dotenv import load_dotenv
-from flask_bcrypt import Bcrypt
-from flask_jwt_extended import create_access_token
+import os
 
 
 def create_app(test_config=None):
@@ -15,20 +9,13 @@ def create_app(test_config=None):
     load_dotenv()
     app = Flask(__name__, instance_relative_config=True)
     CORS(app, support_credentials=True)
-    bcrypt = Bcrypt(app)
-
-    DATABASE_USERNAME = os.getenv("DATABASE_USERNAME")
-    DATABASE_PASSWORD = os.getenv("DATABASE_PASSWORD")
 
     app.config.from_mapping(
         SECRET_KEY='dev',
+        JWT_SECRET_KEY='super-secret',
+        JWT_BLACKLIST_ENABLED=True,
+        JWT_BLACKLIST_TOKEN_CHECKS=['access', 'refresh']
     )
-
-    # Create the MongoDB instances
-    fashionImages_mongo = PyMongo(
-        app, uri=f'mongodb+srv://{DATABASE_USERNAME}:{DATABASE_PASSWORD}@cluster0.ee0zf.mongodb.net/fashion_images?retryWrites=true&w=majority')
-    userInformation_mongo = PyMongo(
-        app, uri=f'mongodb+srv://{DATABASE_USERNAME}:{DATABASE_PASSWORD}@cluster0.ee0zf.mongodb.net/user_information?retryWrites=true&w=majority')
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -43,79 +30,18 @@ def create_app(test_config=None):
     except OSError:
         pass
 
+    with app.app_context():
+        from .routes.auth import auth_route
+        from .routes.image import image_route
+
+    app.register_blueprint(auth_route)
+    app.register_blueprint(image_route)
+
     @app.route('/')
     def index():
         if 'username' in session:
             return 'You are logged in as ' + session['username']
 
         return "Hello"
-
-    @app.route('/uploadProductImage', methods=(['POST']))
-    def uploadProductImage():
-        file = request.files.get('image')
-        fashion_image_collection = fashionImages_mongo.db.images
-        fashionImages_mongo.save_file(file.filename, file)
-        fashion_image_collection.insert({'photo_name': file.filename})
-        # Return more meaningful data maybe
-
-        return 'Done!'
-
-    @app.route('/file/<filename>')
-    def file(filename):
-        return fashionImages_mongo.send_file(filename)
-
-    @app.route('/signup', methods=(['POST']))
-    @cross_origin(support_credentials=True)
-    def signup():
-        # Receive the form info
-        username = request.form['username']
-        password = request.form['password']
-        email = request.form['email']
-        name = request.form['name']
-        surname = request.form['surname']
-
-        # Get the users collection
-        users = userInformation_mongo.db.users
-
-        # Check for duplicates
-        existing_user = users.find_one({'username': username})
-        existing_email = users.find_one({'email': email})
-
-        if (existing_user is None):
-            if (existing_email is None):
-                # encrypt the password
-                pw_hash = bcrypt.generate_password_hash(
-                    password).decode('utf-8')
-                users.insert(
-                    {'username': username, 'email': email, 'password': pw_hash, 'name': name, 'surname': surname})
-                session['username'] = username
-
-                return redirect(url_for('index'))
-            else:
-                return 'That email already exists!'
-        else:
-            return 'That username already exists!'
-
-    @app.route('/login', methods=(['POST']))
-    @cross_origin(support_credentials=True)
-    def login():
-        # Receive the form info
-        username = request.form['username']
-        password = request.form['password']
-        # email = request.form['email']
-
-        # Get the users collection
-        users = userInformation_mongo.db.users
-
-        login_user = users.find_one({'username': username})
-        if login_user:
-            if bcrypt.check_password_hash(login_user['password'], password):
-                session['username'] = username
-                session['access_token'] = create_access_token(identity=username)
-                session['refresh_token'] = create_access_token(identity=username)
-                
-                return redirect(url_for('index'))
-
-        return 'Username and password do not match'
 
     return app

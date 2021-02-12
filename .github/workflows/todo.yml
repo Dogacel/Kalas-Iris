@@ -1,0 +1,19 @@
+name: "Create To do issues"
+on: ["push"]
+jobs:
+  build:
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: "actions/checkout@master"
+      - name: "Python TODO to Issue"
+        uses: "alstr/todo-to-issue-action@v2.4.1"
+        id: "todo-py"
+        with:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: "Javascript TODO to Issue"
+        uses: "alstr/todo-to-issue-action@v2.4.1"
+        id: "todo-js"
+        with:
+          LABEL: "// TODO"
+          COMMENT_MARKER: "//"
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}

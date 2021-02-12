@@ -1,0 +1,3 @@
+[submodule "mmfashion"]
+	path = mmfashion
+	url = git@github.com:Dogacel/mmfashion.git

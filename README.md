@@ -1,4 +1,6 @@
-# Kalas-Iris
+# Kalas-Iris ![Python application](https://github.com/Dogacel/Kalas-Iris/workflows/Python%20application/badge.svg) ![Node.js CI](https://github.com/Dogacel/Kalas-Iris/workflows/Node.js%20CI/badge.svg)
+
+https://www.kalas-iris.com
 
 Feel free to edit this document.
 

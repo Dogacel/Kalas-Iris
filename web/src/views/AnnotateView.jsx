@@ -6,6 +6,7 @@ import FileUpload from "../components/FileUpload";
 export default function AnnotateView() {
   const dummyJSON = ["Upload an image to start the process."];
 
+  // TODO: Filter shown annotations by count or confidence
   const [previewJSON, setPreviewJSON] = useState(dummyJSON);
   const [previewImage, setPreviewImage] = useState(
     "https://i.stack.imgur.com/y9DpT.jpg"
@@ -20,6 +21,7 @@ export default function AnnotateView() {
         <FileUpload
           setPreviewImage={setPreviewImage}
           setPreviewJSON={setPreviewJSON}
+          previewImage={previewImage}
         />
       </Col>
     </Row>

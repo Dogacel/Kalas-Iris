@@ -13,6 +13,7 @@ import RegistrationForm from "./views/SignupView";
 import HomepageView from "./views/HomepageView";
 import FashionAnnotationInfoView from "./views/FashionAnnotationInfoView";
 import MenuItem from "antd/lib/menu/MenuItem";
+import { UserProvider } from "./components/UserContext";
 
 
 const { Header, Content, Footer } = Layout;
@@ -56,7 +57,7 @@ function App() {
     backgroundColor: "#001529"
   };
 
-  const [isShown, setIsShown] = useState(false);
+  // const [isShown, setIsShown] = useState(false);
 
   const dropdown1 = (
     <Menu>
@@ -75,6 +76,8 @@ function App() {
 
 
   return (
+
+    <UserProvider>
     <Layout className="layout">
       <Header>
         <div className="logo" />
@@ -160,8 +163,10 @@ function App() {
       <Divider />
       <Footer style={{ textAlign: "center" }}>
         Kalas Iris ©2021 Created by Kalas Iris Team
+
       </Footer>
-    </Layout>
+      </Layout>
+    </UserProvider>
   );
 }
 

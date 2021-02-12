@@ -10,7 +10,11 @@
     width: 100%;
 }
 
-/* 
-#hover-item :hover {
-    background-color: #434343;
-} */
+
+
+
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
