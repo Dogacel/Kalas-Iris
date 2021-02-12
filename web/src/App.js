@@ -93,6 +93,7 @@ function App() {
                   width={189}
                   height={43}
                   src={process.env.PUBLIC_URL + '/ki-logo-white.png'}
+                  alt="logo"
                   style={{ width: 190, height: 55 }}
                 />
               </Link>
@@ -109,7 +110,7 @@ function App() {
           </>
           <>
           <Dropdown overlay={dropdown1} placement="bottomCenter">
-              <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+              <a className="ant-dropdown-link" onClick={e => e.preventDefault()} href="/homepage">
                 Fashion Annotation <DownOutlined/>
               </a>
           </Dropdown>
