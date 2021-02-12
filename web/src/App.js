@@ -10,6 +10,7 @@ import "./css/app.css";
 import LoginView from "./views/LoginView";
 import RegistrationForm from "./views/SignupView";
 import HomepageView from "./views/HomepageView";
+import DashboardView from "./views/DashboardView";
 import { UserProvider } from "./components/UserContext";
 
 const { Header, Content, Footer } = Layout;
@@ -22,6 +23,7 @@ function App() {
     { to: "/annotate", text: "Image Annotation" },
     { to: "/integrations", text: "Integrations" },
     { to: "/login", text: "Login" },
+    { to: "/dashboard", text: "Dashboard" },
   ];
 
   const [switchState, setSwitchState] = useState(false);
@@ -129,6 +131,9 @@ function App() {
           </Route>
           <Route path="/login">
             <LoginView />
+          </Route>
+          <Route path="/dashboard">
+            <DashboardView />
           </Route>
           <Route path="/signup">
             <RegistrationForm />
