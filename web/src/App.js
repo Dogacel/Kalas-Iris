@@ -155,6 +155,9 @@ function App() {
           <Route path="/signup">
             <RegistrationForm />
           </Route>
+        <Route path="/annotation-info">
+          <FashionAnnotationInfoView />
+        </Route>
           <Route path="/homepage">
             <HomepageView />
           </Route>
