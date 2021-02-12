@@ -2,7 +2,7 @@ import { Carousel } from "antd";
 import { Image } from "antd";
 import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { Divider, message } from "antd";
+import { message } from "antd";
 
 
 const contentStyle = {
