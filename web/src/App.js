@@ -89,7 +89,7 @@ function App() {
           <>
             <Menu.Item style={menuBarStyle}>
               <Link to={"/homepage"}>
-                <Image
+                <img
                   width={189}
                   height={43}
                   src={process.env.PUBLIC_URL + '/ki-logo-white.png'}
