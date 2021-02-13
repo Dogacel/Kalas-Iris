@@ -33,9 +33,11 @@ def create_app(test_config=None):
     with app.app_context():
         from .routes.auth import auth_route
         from .routes.image import image_route
+        from .routes.woocommerce import woocommerce_route
 
     app.register_blueprint(auth_route)
     app.register_blueprint(image_route)
+    app.register_blueprint(woocommerce_route)
 
     @app.route('/')
     def index():
