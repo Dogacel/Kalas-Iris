@@ -51,6 +51,7 @@ def signup():
         return Response('That username already exists!', status=403)
 
 
+
 @auth_route.route('/login', methods=(['POST']))
 def login():
     # Receive the form info
@@ -70,7 +71,7 @@ def login():
                 'access_token': create_access_token(identity=username, expires_delta=False),
                 'refresh_token': create_refresh_token(identity=username)
             }
-            return Response(jsonify(tokens))
+            return jsonify(tokens)
 
     return Response('Username and password do not match', status=401)
 
@@ -103,6 +104,10 @@ def logout2():
     blacklist.add(jti)
     return Response(jsonify({"msg": "Successfully logged out"}))
 
+@jwt.token_in_blacklist_loader
+def check_if_token_in_blacklist(decrypted_token):
+    jti = decrypted_token['jti']
+    return jti in blacklist
 
 @auth_route.route('/getCurrentUser', methods=(['GET']))
 @cross_origin(support_credentials=True)
@@ -110,10 +115,6 @@ def logout2():
 def getCurrentUser():
     current_user = get_jwt_identity()
     print(current_user)
-    return Response(jsonify(logged_in_as=current_user), 200)
+    return jsonify(logged_in_as=current_user), 200
 
 
-@jwt.token_in_blacklist_loader
-def check_if_token_in_blacklist(decrypted_token):
-    jti = decrypted_token['jti']
-    return Response(jti in blacklist)

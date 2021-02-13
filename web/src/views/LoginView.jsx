@@ -10,7 +10,8 @@ export default function LoginView() {
   const {
     username, 
     setUsername,
-    setAccessToken
+    setAccessToken,
+    setRefreshToken
   } = useUserContext();
 
   const onFinish = values => {
@@ -19,6 +20,7 @@ export default function LoginView() {
       .then(r => {
         message.success("Ok!");
         setAccessToken(r.data.access_token);
+        setRefreshToken(r.data.refresh_token)
         getCurrentUser(r.data.access_token).then(r => {
           console.log("Received " + r.data['logged_in_as']);
           setUsername(r.data['logged_in_as']);
