@@ -17,6 +17,8 @@ Do not forget that you need the [C# extension](https://marketplace.visualstudio.
 ### Manipulating Solution Files
 Start VSCode. Open the **Terminal** from **View** > **Terminal** from the main menu.
 
+> *DISCLAIMER: The below items are purely for demonstrating the manipulation of solutions with VSCode, they have nothing to do with the Plugin we will create. Do not add these to the actual Kalas Iris plugin.*
+
 To create a new solution file in your current working directory named SwcApi:
 ```shell
 dotnet new sln --name SwcApi
@@ -83,7 +85,14 @@ dotnet sln add Plugins/Nop.Plugin.KalasIris/KalasIris.csproj
 </Project>
 ```
 
-Create this into `\Plugins` directory in the root of your solution (do not mix up with `\Plugins` subdirectory located in `\Nop.Web\` directory which is used for already deployed plugins). Name the plugin `Nop.Plugin.KalasIris`.
+4. Next, create a `plugin.json` file for KalasIris plugin. (I will specify its contents here later.)
+
+5. Create a class which implements IPlugin interface (Nop.Services.Plugins namespace). nopCommerce has BasePlugin class which already implements some IPlugin methods and allows you to avoid source code duplication. 
+
+> **IMPORTANT** Important note: After each project build, clean the solution before making changes. Some resources will be cached and can lead to developer insanity.
+> You may need to rebuild your solution after adding your plugin. If you do not see DLLs for your plugin under Nop.Web\Plugins\PLUGIN_OUTPUT_DIRECTORY, you need to rebuild your solution. nopCommerce will not list your plugin in the Local Plugins page if your DLLs do not exist in the correct folder in Nop.Web.
+
+____________________________________________________________________________
 
 
-
+The rest of this document is to be completed when the entire plugin for Kalas Iris on NopCommerce is fully created and integrated.
