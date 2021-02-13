@@ -89,7 +89,7 @@ dotnet sln add Plugins/Nop.Plugin.KalasIris/KalasIris.csproj
 
 5. Create a class which implements IPlugin interface (Nop.Services.Plugins namespace). nopCommerce has BasePlugin class which already implements some IPlugin methods and allows you to avoid source code duplication. 
 
-> **IMPORTANT** Important note: After each project build, clean the solution before making changes. Some resources will be cached and can lead to developer insanity.
+> **IMPORTANT** Important note: After each project build, clean the solution before making changes. Some resources will be cached and can lead to *developer insanity*.
 > You may need to rebuild your solution after adding your plugin. If you do not see DLLs for your plugin under Nop.Web\Plugins\PLUGIN_OUTPUT_DIRECTORY, you need to rebuild your solution. nopCommerce will not list your plugin in the Local Plugins page if your DLLs do not exist in the correct folder in Nop.Web.
 
 ____________________________________________________________________________
