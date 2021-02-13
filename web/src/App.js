@@ -8,6 +8,7 @@ import AnnotateView from "./views/AnnotateView";
 import IntegrationsView from "./views/IntegrationsView";
 import { isServerUp, upServer, downServer } from "./api/api";
 import "./css/app.css";
+import "./css/menuBarStyle.css";
 import LoginView from "./views/LoginView";
 import RegistrationForm from "./views/SignupView";
 import HomepageView from "./views/HomepageView";
@@ -52,12 +53,6 @@ function App() {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const menuBarStyle = {
-    color: '#434343',
-    textColor: '#434343',
-    backgroundColor: "#001529"
-  };
 
   const [isShown] = useState(false);
 
