@@ -5,12 +5,15 @@ export const UserContext = createContext();
 export const UserProvider = props => {
     const [username, setUsername] = useState('');
     const [accessToken, setAccessToken] = useState('');
+    const [refreshToken, setRefreshToken] = useState('');
 
     const value = {
         username, 
         setUsername,
         accessToken,
-        setAccessToken
+        setAccessToken,
+        refreshToken,
+        setRefreshToken
     };
 
     return (
