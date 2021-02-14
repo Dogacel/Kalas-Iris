@@ -1,16 +1,20 @@
 import React from "react";
 import Title from "antd/lib/typography/Title";
-import { Col, Menu, Row } from "antd";
+import { Button, Col, Menu, Row } from "antd";
 import {
   AppstoreOutlined,
   MailOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
 import { Route, Routes, Link } from "react-router-dom";
+import { createIntegration } from "../api/api";
+import { useUserContext } from "../components/UserContext";
 
 const { SubMenu } = Menu;
 
 export default function IntegrationsView() {
+  const { accessToken } = useUserContext();
+
   return (
     <Row>
       <Col>
@@ -65,6 +69,11 @@ export default function IntegrationsView() {
       </Col>
       <Col>
         <Title>Server Integrations</Title>
+        <Button
+          onClick={() => createIntegration(accessToken, { name: new Date() })}
+        >
+          Create random integration.
+        </Button>
         <Routes>
           <Route path="woo" element={<div> Woo</div>} />
           <Route path="nop" element={<div>Nop</div>} />
