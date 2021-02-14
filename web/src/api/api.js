@@ -66,9 +66,17 @@ export async function createIntegration(access_token, data) {
     data,
     config
   );
-  if (response.status === 200) {
-    return response;
-  }
+  return response;
+}
+
+export async function getIntegrations(access_token) {
+  const authStr = "Bearer ".concat(access_token);
+  const config = {
+    headers: { Authorization: authStr },
+  };
+  const response = await axios.get(`${flaskAPIAdress}/integrations`, config);
+
+  return response;
 }
 
 export async function isServerUp() {

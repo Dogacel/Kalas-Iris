@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Title from "antd/lib/typography/Title";
 import { Button, Col, Menu, Row } from "antd";
 import {
@@ -7,13 +7,23 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 import { Route, Routes, Link } from "react-router-dom";
-import { createIntegration } from "../api/api";
+import { createIntegration, getIntegrations } from "../api/api";
 import { useUserContext } from "../components/UserContext";
+import ReactJson from "react-json-view";
 
 const { SubMenu } = Menu;
 
 export default function IntegrationsView() {
   const { accessToken } = useUserContext();
+
+  const [integrations, setIntegrations] = useState([]);
+
+  useEffect(() => {
+    getIntegrations(accessToken).then(r => {
+      console.log(r.data);
+      setIntegrations(r.data);
+    });
+  }, [accessToken]);
 
   return (
     <Row>
@@ -74,6 +84,7 @@ export default function IntegrationsView() {
         >
           Create random integration.
         </Button>
+        <ReactJson src={{ integrations }} />
         <Routes>
           <Route path="woo" element={<div> Woo</div>} />
           <Route path="nop" element={<div>Nop</div>} />
