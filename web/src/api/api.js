@@ -21,37 +21,62 @@ export function annotateImage(image, config = null) {
 
 export function signUpUser(form, config = null) {
   const fmData = new FormData();
-  fmData.append('username', form['username']);
-  fmData.append('password', form['password']);
-  fmData.append('email', form['email']);
-  fmData.append('name', form['name']);
-  fmData.append('surname', form['surname']); 
+  fmData.append("username", form["username"]);
+  fmData.append("password", form["password"]);
+  fmData.append("email", form["email"]);
+  fmData.append("name", form["name"]);
+  fmData.append("surname", form["surname"]);
 
   return axios.post(`${flaskAPIAdress}/signup`, fmData, config);
 }
 
 export function login(form, config = null) {
   const fmData = new FormData();
-  fmData.append('username', form['username']);
-  fmData.append('password', form['password']);
+  fmData.append("username", form["username"]);
+  fmData.append("password", form["password"]);
 
   return axios.post(`${flaskAPIAdress}/login`, fmData, config);
 }
 
 export async function getCurrentUser(access_token) {
   try {
-    const authStr = 'Bearer '.concat(access_token)
+    const authStr = "Bearer ".concat(access_token);
     const config = {
-      headers: {Authorization: authStr}
-    }
-    const response = await axios.get(`${flaskAPIAdress}/getCurrentUser`, config);
+      headers: { Authorization: authStr },
+    };
+    const response = await axios.get(
+      `${flaskAPIAdress}/getCurrentUser`,
+      config
+    );
     if (response.status === 200) {
-      return response
+      return response;
     }
+  } catch {
+    return false;
   }
-   catch {
-    return false
-  }
+}
+
+export async function createIntegration(access_token, data) {
+  const authStr = "Bearer ".concat(access_token);
+  const config = {
+    headers: { Authorization: authStr },
+  };
+  const response = await axios.post(
+    `${flaskAPIAdress}/integrations`,
+    data,
+    config
+  );
+  return response;
+}
+
+export async function getIntegrations(access_token) {
+  const authStr = "Bearer ".concat(access_token);
+  const config = {
+    headers: { Authorization: authStr },
+  };
+  const response = await axios.get(`${flaskAPIAdress}/integrations`, config);
+
+  return response;
 }
 
 export async function isServerUp() {
