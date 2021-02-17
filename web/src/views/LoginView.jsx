@@ -1,12 +1,12 @@
 import { Form, Input, Button, Checkbox, Col, Row, Image, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { login, getCurrentUser } from "../api/api";
 import { useUserContext } from "../components/UserContext";
 
 export default function LoginView() {
+  const navigate = useNavigate();
 
-  const history = useHistory();
   const {
     username, 
     setUsername,
@@ -24,7 +24,7 @@ export default function LoginView() {
         getCurrentUser(r.data.access_token).then(r => {
           console.log("Received " + r.data['logged_in_as']);
           setUsername(r.data['logged_in_as']);
-          history.push("/homepage", {message: "Logged in as " + username});
+          navigate("/", { message: "Logged in as " + username });
         }).catch(r => {
           if (r.response) message.error(r.response.data)
         })
@@ -33,7 +33,6 @@ export default function LoginView() {
         if (r.response) message.error(r.response.data);
       });
   };
-
 
   return (
     <Row type="flex" align="center">

@@ -1,16 +1,16 @@
 import { Form, Input, Button, Col, Row, message } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import { signUpUser } from "../api/api";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function SignupView() {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const onFinish = values => {
     console.log("Sent values of form: ", values);
     signUpUser(values)
       .then(r => {
-        history.push("/login", { message: "Successfully signed up!" });
+        navigate("/login", { message: "Successfully signed up!" });
       })
       .catch(r => {
         if (r.response) message.error(r.response.data);
