@@ -23,18 +23,31 @@ def updateProduct(id):
 def listAllProducts():
     return jsonify(woocommerce.wcapi.get("products").json())
 
+@woocommerce_route.route("/newProductCreated", methods=['POST'])
+def newProductCreated():
+    payload = request.get_json()
+
+    name = payload['name']
+    id = payload['id']
+    categories = payload['categories']
+    tags = payload['tags']
+    permalink = payload['permalink']
+    images = payload['images']
+
+    return jsonify({'name': name, 'id': id, 'categories': categories, 'tags': tags, 'permalink': permalink, 'images': images})
+
 # Product Categories 
-@woocommerce_route("/createProductCategory", methods=['POST'])
+@woocommerce_route.route("/createProductCategory", methods=['POST'])
 def createProductCategory():
     category_data = request.form.get('category_data')
     return jsonify(woocommerce.wcapi.post("products/categories", category_data).json())
 
-@woocommerce_route("/retrieveProductCategory/<id>", methods=['GET'])
+@woocommerce_route.route("/retrieveProductCategory/<id>", methods=['GET'])
 def retrieveProductCategory(id):
         return jsonify(woocommerce.wcapi.get(f'products/categories/{id}').json())
 
 @woocommerce_route.route("/updateProductCategory/<id>", methods=['POST'])
-def updateProduct(id):
+def updateProductCategory(id):
     category_data = request.form.get('category_data')
     return jsonify(woocommerce.wcapi.put(f'products/categories/{id}', category_data).json())
 
@@ -63,19 +76,19 @@ def listAllProductAttributes():
 
 # Product Tags
 @woocommerce_route.route("/createProductTag", methods=['POST'])
-def createProductAttribute():
+def createProductTag():
     tag_data = request.form.get('tag_data')
     return jsonify(woocommerce.api.post("products/tags", tag_data).json())
 
 @woocommerce_route.route("/retrieveProductTag/<id>", methods=['GET'])
-def retrieveProductAttribute(id):
+def retrieveProductTag(id):
     return jsonify(woocommerce.wcapi.get(f'products/tags/{id}').json())
 
 @woocommerce_route.route("/updateProductTag/<id>", methods=['PUT'])
-def updateProductAttribute(id):
+def updateProductTag(id):
     tag_data = request.form.get('tag_data')
     return jsonify(woocommerce.wcapi.put(f'products/tags/{id}', tag_data).json())
 
 @woocommerce_route.route("/listAllProductTags", methods=['GET'])
-def listAllProductAttributes():
+def listAllProducTags():
     return jsonify(woocommerce.wcapi.get("products/tags").json())
