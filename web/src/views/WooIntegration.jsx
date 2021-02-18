@@ -1,11 +1,20 @@
 import React from 'react';
 import { Form, Input, Button } from 'antd';
+import { createIntegration } from '../api/api';
+import { useUserContext } from "../components/UserContext";
 
 export default function WooIntegration() {
+    const { accessToken } = useUserContext();
 
-    const onFinish = (values) => {
+    const onFinish = values => {
         console.log('Received values: ', values)
         // Send request to backend
+        const data = {
+            'websiteURL': values["websiteURL"],
+            'consumerKey': values["consumerKey"],
+            'consumerSecret': values["consumerSecret"]
+        }
+        createIntegration(accessToken, data);
     }
 
     return (
@@ -15,10 +24,13 @@ export default function WooIntegration() {
                 initialValues={{
                     remember: true,
                   }}>
-                <Form.Item label="consumer-key">
+                <Form.Item name="websiteURL">
+                    <Input type="url" placeholder="Website URL" />
+                </Form.Item>
+                <Form.Item name="consumerKey">
                     <Input type="text" placeholder="Consumer Key" />
                 </Form.Item>
-                <Form.Item label="consumer-secret">
+                <Form.Item name="consumerSecret">
                     <Input type="text" placeholder="Consumer Secret" />
                 </Form.Item>
                 <Form.Item>
