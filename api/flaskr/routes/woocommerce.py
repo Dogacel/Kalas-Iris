@@ -4,6 +4,9 @@ from ..wcapi import woocommerce
 
 woocommerce_route = Blueprint('woocommerce_route', __name__)
 
+# TODO: Check authentication status and if user has permission to this integration
+# TODO: Update to use integration id @A
+
 # Products
 @woocommerce_route.route("/createProduct", methods=['POST'])
 def createProduct():
