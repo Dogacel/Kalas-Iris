@@ -7,12 +7,13 @@ export default function WooIntegration() {
     const { accessToken } = useUserContext();
 
     const onFinish = values => {
-        console.log('Received values: ', values)
+        console.log("Received values: ", values)
         // Send request to backend
         const data = {
-            'websiteURL': values["websiteURL"],
-            'consumerKey': values["consumerKey"],
-            'consumerSecret': values["consumerSecret"]
+            "type": "woo",
+            "websiteURL": values["websiteURL"],
+            "consumerKey": values["consumerKey"],
+            "consumerSecret": values["consumerSecret"]
         }
         createIntegration(accessToken, data);
     }
