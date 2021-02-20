@@ -56,80 +56,92 @@ function App() {
 
   const [isShown] = useState(false);
 
-  const dropdown1 = (
-    <Menu>
-      <Menu.Item>
-        <Link to="/annotation-info">
-          What is Fashion Annotation?
-        </Link>
-      </Menu.Item>
-      <MenuItem>
-        <Link to="/annotation-info">
-          How it works
-        </Link>
-      </MenuItem>
-    </Menu>
-  );
-
 
   return (
 
     <UserProvider>
-    <Layout className="layout">
-      <Header>
-        <div className="logo" />
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={[location.pathname]}
-        >
-          <>
-            <Menu.Item style={menuBarStyle}>
-              <Link to={"/homepage"}>
-                <img
-                  width={189}
-                  height={43}
-                  src={process.env.PUBLIC_URL + '/ki-logo-white.png'}
-                  alt="logo"
-                  style={{ width: 190, height: 55 }}
-                />
-              </Link>
-            </Menu.Item>
-          </>
-          <>
-            {menuLinks.map(e => (
-              <Menu.Item
-                key={e.to}
-              >
-                <Link to={e.to} id="Link" key="Link">{e.text}{isShown}</Link>
+      <Layout className="layout">
+        <Header>
+          <div className="logo" />
+          <Menu
+            theme="dark"
+            mode="horizontal"
+            defaultSelectedKeys={[location.pathname]}
+          >
+            <>
+              <Menu.Item id="menuBarStyle" key="menuBarStyle">
+                <Link to={"/homepage"}>
+                  <a >
+                    <img
+                      width={189}
+                      height={43}
+                      src={process.env.PUBLIC_URL + '/ki-logo-white.png'}
+                      alt="logo"
+                      style={{ width: 190, height: 55 }}
+                    />
+                  </a>
+                </Link>
               </Menu.Item>
-            ))}
-          </>
-          <>
-          <Dropdown overlay={dropdown1} placement="bottomCenter">
-              <a className="ant-dropdown-link" onClick={e => e.preventDefault()} href="/homepage">
-                Fashion Annotation <DownOutlined/>
-              </a>
-          </Dropdown>
-          </>
-          <Menu.Item id="cloud-menu-item" key="cloud-menu-item" disabled={true}>
-            Server Status{" "}
-            <Switch
-              loading={loading}
-              style={{ margin: "0px 4px 4px 4px" }}
-              onChange={() => {
-                setLoading(true);
-                setStall(true);
-                isServerUp().then(r => {
-                  if (!r) upServer().then(setStall(false));
-                  else downServer().then(setStall(false));
-                });
-              }}
-              checked={switchState}
-              checkedChildren={<CheckOutlined />}
-              unCheckedChildren={<WarningOutlined />}
-              defaultChecked
-            />
+            </>
+            <>
+              {menuLinks.map(e => (
+                <Menu.Item
+                  key={e.to}
+                >
+                  <Link to={e.to} id="Link" key="Link">{e.text}{isShown}</Link>
+                </Menu.Item>
+              ))}
+            </>
+
+            {/* <Menu.Item>
+              <Dropdown overlay={dropdown1} placement="bottomCenter">
+                
+                  <a className="ant-dropdown-link" onClick={e => e.preventDefault()} href="/homepage">
+                    Fashion Annotation <DownOutlined />
+                  </a>
+                
+              </Dropdown>
+
+            </Menu.Item> */}
+
+            <Menu.SubMenu
+              title={
+                <>
+                  <span>Fashion Annotation </span>
+                  <DownOutlined />
+                </>
+              }
+            >
+              <Menu.Item>
+                <Link to="/annotation-info">
+                  What is Fashion Annotation?
+              </Link>
+              </Menu.Item>
+              <Menu.Item>
+                <Link to = "/annotation-info">
+                  How it works
+                </Link>
+              </Menu.Item>
+            </Menu.SubMenu>
+
+            <Menu.Item id="cloud-menu-item" key="cloud-menu-item" disabled={true}>
+              Server Status{" "}
+              <Switch
+                loading={loading}
+                style={{ margin: "0px 4px 4px 4px" }}
+                onChange={() => {
+                  setLoading(true);
+                  setStall(true);
+                  isServerUp().then(r => {
+                    if (!r) upServer().then(setStall(false));
+                    else downServer().then(setStall(false));
+                  });
+                }}
+                checked={switchState}
+                checkedChildren={<CheckOutlined />}
+                unCheckedChildren={<WarningOutlined />}
+                defaultChecked
+              />
             (Server shuts down every hour at xx:00)
           </Menu.Item>
           </Menu>
@@ -150,9 +162,9 @@ function App() {
           <Route path="/signup">
             <RegistrationForm />
           </Route>
-        <Route path="/annotation-info">
-          <FashionAnnotationInfoView />
-        </Route>
+          <Route path="/annotation-info">
+            <FashionAnnotationInfoView />
+          </Route>
           <Route path="/homepage">
             <HomepageView />
           </Route>
