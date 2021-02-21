@@ -2,8 +2,7 @@ import { Divider, Layout, Menu, Switch, Dropdown } from "antd";
 import { DownOutlined } from '@ant-design/icons';
 import { useEffect, useState } from "react";
 import { WarningOutlined, CheckOutlined } from "@ant-design/icons";
-import { Route, Link, useLocation } from "react-router-dom";
-import { Redirect } from "react-router-dom"; ////added new
+import { Route, Link, useLocation, Routes } from "react-router-dom";
 import AnnotateView from "./views/AnnotateView";
 import IntegrationsView from "./views/IntegrationsView";
 import { isServerUp, upServer, downServer } from "./api/api";
@@ -56,9 +55,7 @@ function App() {
 
   const [isShown] = useState(false);
 
-
   return (
-
     <UserProvider>
       <Layout className="layout">
         <Header>
@@ -147,36 +144,19 @@ function App() {
           </Menu>
         </Header>
         <Content style={{ padding: "25px 50px" }}>
-          <Route path="/annotate">
-            <AnnotateView />
-          </Route>
-          <Route path="/integrations">
-            <IntegrationsView />
-          </Route>
-          <Route path="/login">
-            <LoginView />
-          </Route>
-          <Route path="/dashboard">
-            <DashboardView />
-          </Route>
-          <Route path="/signup">
-            <RegistrationForm />
-          </Route>
-          <Route path="/annotation-info">
-            <FashionAnnotationInfoView />
-          </Route>
-          <Route path="/homepage">
-            <HomepageView />
-          </Route>
-          <Route path="/">
-            <Redirect to="/homepage" />
-          </Route>
-          <Route path="/"></Route>
+          <Routes>
+            <Route path="/annotate" element={<AnnotateView />} />
+            <Route path="/integrations/*" element={<IntegrationsView />} />
+            <Route path="/login" element={<LoginView />} />
+            <Route path="/signup" element={<RegistrationForm />} />
+            <Route path="/" element={<HomepageView />} />  
+            <Route path="/dashboard" element={<DashboardView />} />
+            <Route path="/annotation-info" element={<FashionAnnotationInfoView />} />
         </Content>
         <Divider />
         <Footer style={{ textAlign: "center" }}>
           Kalas Iris ©2021 Created by Kalas Iris Team
-      </Footer>
+        </Footer>
       </Layout>
     </UserProvider>
   );
