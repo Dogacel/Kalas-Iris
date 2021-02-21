@@ -16,7 +16,7 @@ export function annotateImage(image, config = null) {
   const fmData = new FormData();
   fmData.append("image", image);
 
-  return axios.post(`${mmfashionAPIAddress}/annotate`, fmData, config);
+  return axios.post(`${flaskAPIAdress}/annotateImage`, fmData, config);
 }
 
 export function signUpUser(form, config = null) {

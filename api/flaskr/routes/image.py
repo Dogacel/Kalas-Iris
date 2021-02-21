@@ -1,8 +1,12 @@
+import base64
 from flask import Blueprint, request, url_for, redirect, session, current_app, jsonify
 from flask.wrappers import Response
+from base64 import b64encode
 from ..db import mongo
+import requests
 
 image_route = Blueprint('image_route', __name__)
+mmfashionAPIAddress = "http://34.107.125.106"
 
 
 @image_route.route('/uploadProductImage', methods=(['POST']))
@@ -13,9 +17,18 @@ def uploadProductImage():
     fashion_image_collection.insert({'photo_name': file.filename})
     # Return more meaningful data maybe
 
-    return Response('Done!')
+    return jsonify('Done!')
 
 
 @image_route.route('/file/<filename>')
 def file(filename):
     return mongo.fashionImages.send_file(filename)
+
+
+@image_route.route('/annotateImage', methods=['POST'])
+def annotate():
+    image = request.files.get('image')
+    dictToSend = {'image': image.read()}
+
+    return jsonify(requests.post(f'{mmfashionAPIAddress}/annotate',
+                                 files=dictToSend).json())
