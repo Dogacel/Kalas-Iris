@@ -22,7 +22,7 @@ def createIntegration():
     content['user'] = user
     integrations_collection.insert(content)
 
-    return Response('Gathered ' + content['name'])
+    return Response('Gathered ' + content['websiteURL'])
 
 
 @integrations_route.route('/integrations', methods=(['GET']))
