@@ -33,13 +33,16 @@ def create_app(test_config=None):
     with app.app_context():
         from .routes.auth import auth_route
         from .routes.image import image_route
-        from .routes.integrations import integrations_route        
+        from .routes.integrations import integrations_route
         from .routes.woocommerce import woocommerce_route
-        
+        from .routes.wix import wix_route
+
     app.register_blueprint(auth_route)
     app.register_blueprint(image_route)
     app.register_blueprint(woocommerce_route)
     app.register_blueprint(integrations_route)
+    app.register_blueprint(wix_route
+                           )
 
     @app.route('/')
     def index():
