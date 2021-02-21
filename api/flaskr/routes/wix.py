@@ -5,7 +5,7 @@ import os
 import requests
 from requests_oauthlib import OAuth2Session
 
-wix_route = Blueprint('wix_route', __name__)
+wix_route = Blueprint('wix_route', __name__, url_prefix='/wix')
 
 # TODO: Add authentication and user permission
 
@@ -26,6 +26,11 @@ def setCredentials(id):
     return jsonify("Ok")
 
 
+@wix_route.route("/", methods=['GET'])
+def index():
+    return jsonify("Ok")
+
+
 def annotateProduct(id, annotation):
     integrations_collection = mongo.integrations.db.integrations
 
@@ -37,3 +42,10 @@ def annotateProduct(id, annotation):
                             authorization_response=request.url)
 
     # app.post(update product URL with correct parameters)
+
+
+# /integrations/<type> -> FORWARD TO <type>
+# --> /<type>/<id>/oauth
+# /integrations/<id> GET
+# /integrations?type=type GET
+# /integrations?

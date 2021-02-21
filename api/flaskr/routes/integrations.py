@@ -1,3 +1,4 @@
+from .wix import wix_route
 from flask.blueprints import Blueprint
 
 from flask import Blueprint, request, jsonify
@@ -8,10 +9,11 @@ from ..db import mongo
 from bson.json_util import dumps
 import os
 
-integrations_route = Blueprint('integrations_route', __name__)
+integrations_route = Blueprint(
+    'integrations_route', __name__, url_prefix='/integrations')
 
 
-@integrations_route.route('/integrations', methods=(['POST']))
+@integrations_route.route('/', methods=(['POST']))
 @jwt_required
 def createIntegration():
     integrations_collection = mongo.integrations.db.integrations
@@ -25,7 +27,7 @@ def createIntegration():
     return Response('Gathered ' + content['name'])
 
 
-@integrations_route.route('/integrations', methods=(['GET']))
+@integrations_route.route('/', methods=(['GET']))
 @jwt_required
 def getIntegrations():
     integrations_collection = mongo.integrations.db.integrations
@@ -37,7 +39,7 @@ def getIntegrations():
     return jsonify(dumps(integrations))
 
 
-@integrations_route.route('/integrations/<id>/webhooks/product/created', methods=(['GET']))
+@integrations_route.route('/<id>/webhooks/product/created', methods=(['GET']))
 @jwt_required
 def getWebhookProductCreatedURL(id):
     base_url = os.getenv('BASE_URL')
