@@ -66,15 +66,13 @@ function App() {
             <>
               <Menu.Item id="menuBarStyle" key="menuBarStyle">
                 <Link to={"/homepage"}>
-                  <a href="#">
-                    <img
-                      width={189}
-                      height={43}
-                      src={process.env.PUBLIC_URL + "/ki-logo-white.png"}
-                      alt="logo"
-                      style={{ width: 190, height: 55 }}
-                    />
-                  </a>
+                  <img
+                    width={189}
+                    height={43}
+                    src={process.env.PUBLIC_URL + "/ki-logo-white.png"}
+                    alt="logo"
+                    style={{ width: 190, height: 55 }}
+                  />
                 </Link>
               </Menu.Item>
             </>
