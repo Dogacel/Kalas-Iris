@@ -1,5 +1,5 @@
-import { Divider, Layout, Menu, Switch, Dropdown } from "antd";
-import { DownOutlined } from '@ant-design/icons';
+import { Divider, Layout, Menu, Switch } from "antd";
+import { DownOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import { WarningOutlined, CheckOutlined } from "@ant-design/icons";
 import { Route, Link, useLocation, Routes } from "react-router-dom";
@@ -13,9 +13,7 @@ import RegistrationForm from "./views/SignupView";
 import HomepageView from "./views/HomepageView";
 import DashboardView from "./views/DashboardView";
 import FashionAnnotationInfoView from "./views/FashionAnnotationInfoView";
-import MenuItem from "antd/lib/menu/MenuItem";
 import { UserProvider } from "./components/UserContext";
-
 
 const { Header, Content, Footer } = Layout;
 
@@ -68,11 +66,11 @@ function App() {
             <>
               <Menu.Item id="menuBarStyle" key="menuBarStyle">
                 <Link to={"/homepage"}>
-                  <a >
+                  <a>
                     <img
                       width={189}
                       height={43}
-                      src={process.env.PUBLIC_URL + '/ki-logo-white.png'}
+                      src={process.env.PUBLIC_URL + "/ki-logo-white.png"}
                       alt="logo"
                       style={{ width: 190, height: 55 }}
                     />
@@ -82,10 +80,11 @@ function App() {
             </>
             <>
               {menuLinks.map(e => (
-                <Menu.Item
-                  key={e.to}
-                >
-                  <Link to={e.to} id="Link" key="Link">{e.text}{isShown}</Link>
+                <Menu.Item key={e.to}>
+                  <Link to={e.to} id="Link" key="Link">
+                    {e.text}
+                    {isShown}
+                  </Link>
                 </Menu.Item>
               ))}
             </>
@@ -110,18 +109,18 @@ function App() {
               }
             >
               <Menu.Item>
-                <Link to="/annotation-info">
-                  What is Fashion Annotation?
-              </Link>
+                <Link to="/annotation-info">What is Fashion Annotation?</Link>
               </Menu.Item>
               <Menu.Item>
-                <Link to = "/annotation-info">
-                  How it works
-                </Link>
+                <Link to="/annotation-info">How it works</Link>
               </Menu.Item>
             </Menu.SubMenu>
 
-            <Menu.Item id="cloud-menu-item" key="cloud-menu-item" disabled={true}>
+            <Menu.Item
+              id="cloud-menu-item"
+              key="cloud-menu-item"
+              disabled={true}
+            >
               Server Status{" "}
               <Switch
                 loading={loading}
@@ -139,8 +138,8 @@ function App() {
                 unCheckedChildren={<WarningOutlined />}
                 defaultChecked
               />
-            (Server shuts down every hour at xx:00)
-          </Menu.Item>
+              (Server shuts down every hour at xx:00)
+            </Menu.Item>
           </Menu>
         </Header>
         <Content style={{ padding: "25px 50px" }}>
@@ -149,9 +148,13 @@ function App() {
             <Route path="/integrations/*" element={<IntegrationsView />} />
             <Route path="/login" element={<LoginView />} />
             <Route path="/signup" element={<RegistrationForm />} />
-            <Route path="/" element={<HomepageView />} />  
+            <Route path="/" element={<HomepageView />} />
             <Route path="/dashboard" element={<DashboardView />} />
-            <Route path="/annotation-info" element={<FashionAnnotationInfoView />} />
+            <Route
+              path="/annotation-info"
+              element={<FashionAnnotationInfoView />}
+            />
+          </Routes>
         </Content>
         <Divider />
         <Footer style={{ textAlign: "center" }}>
