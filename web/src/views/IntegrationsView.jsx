@@ -10,6 +10,7 @@ import { Route, Routes, Link } from "react-router-dom";
 import { createIntegration, getIntegrations } from "../api/api";
 import { useUserContext } from "../components/UserContext";
 import ReactJson from "react-json-view";
+import  WooIntegration from "./WooIntegration";
 
 const { SubMenu } = Menu;
 
@@ -86,7 +87,7 @@ export default function IntegrationsView() {
         </Button>
         <ReactJson src={{ integrations }} />
         <Routes>
-          <Route path="woo" element={<div> Woo</div>} />
+          <Route path="woo" element={<WooIntegration/>} />
           <Route path="nop" element={<div>Nop</div>} />
           <Route path="wix" element={<div>Wix</div>} />
           <Route path="shopify" element={<div>Shopify</div>} />
