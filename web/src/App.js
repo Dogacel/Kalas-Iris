@@ -66,7 +66,7 @@ function App() {
             <>
               <Menu.Item id="menuBarStyle" key="menuBarStyle">
                 <Link to={"/homepage"}>
-                  <a>
+                  <a href="#">
                     <img
                       width={189}
                       height={43}
