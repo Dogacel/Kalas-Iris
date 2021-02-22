@@ -1,5 +1,4 @@
 from flask import Blueprint, json, request, url_for, redirect, session, current_app, jsonify
-from flask.wrappers import Response
 from ..wcapi import woocommerce
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from ..db import mongo
@@ -10,12 +9,17 @@ woocommerce_route = Blueprint('woocommerce_route', __name__)
 # Authenticate
 def withAuthWC(currentUser):
     integrations = mongo.integrations.db.integrations
-
-    integration_info = integrations.find_one({"user": currentUser, "type": "woo"})
+    try:
+        integration_info = integrations.find_one({"user": currentUser, "type": "woo"})
+    except:
+        return jsonify("Could not find integration for the user")
     
-    websiteURL = integration_info["websiteURL"]
-    consumerKey = integration_info["consumerKey"]
-    consumerSecret = integration_info["consumerSecret"]
+    try:
+        websiteURL = integration_info["websiteURL"]
+        consumerKey = integration_info["consumerKey"]
+        consumerSecret = integration_info["consumerSecret"]
+    except:
+        return jsonify("Could not fetch user credentials for woocommerce")
 
     wcapi = API(
             url=websiteURL,
@@ -24,6 +28,7 @@ def withAuthWC(currentUser):
             wp_api = True,
             version = "wc/v3"
         )
+        
     return wcapi
         
 # Products
@@ -104,7 +109,7 @@ def listAllProductCategories():
 def createProductAttribute():
     attribute_data = request.form.get('attribute_data')
     currentUser = get_jwt_identity()
-    return jsonify(woocommerce.api.post("products/attributes", attribute_data).json())
+    return jsonify(withAuthWC(currentUser).post("products/attributes", attribute_data).json())
 
 @woocommerce_route.route("/retrieveProductAttribute/<id>", methods=['GET'])
 @jwt_required
@@ -131,7 +136,7 @@ def listAllProductAttributes():
 def createProductTag():
     tag_data = request.form.get('tag_data')
     currentUser = get_jwt_identity()
-    return jsonify(woocommerce.api.post("products/tags", tag_data).json())
+    return jsonify(withAuthWC(currentUser).post("products/tags", tag_data).json())
 
 @woocommerce_route.route("/retrieveProductTag/<id>", methods=['GET'])
 @jwt_required
