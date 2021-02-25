@@ -72,7 +72,7 @@ def newProductCreated():
         permalink = payload['permalink']
         images = payload['images']
     except: 
-        return("An error occured on the payload")
+        return jsonify("An error occured on the payload"), 422
 
     return jsonify({'name': name, 'id': id, 'categories': categories, 'tags': tags, 'permalink': permalink, 'images': images})
 
