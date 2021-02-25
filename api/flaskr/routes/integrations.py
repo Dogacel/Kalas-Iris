@@ -35,3 +35,14 @@ def getIntegrations():
     integrations = integrations_collection.find({'user': user})
 
     return jsonify(dumps(integrations))
+
+@integrations_route.route('/integrations/<type>', methods=(['GET']))
+@jwt_required
+def getIntegration(type):
+    integrations_collection = mongo.integrations.db.integrations
+
+    user = get_jwt_identity()
+
+    integration = integrations_collection.find({'user': user, 'type': type})
+
+    return jsonify(integration)
