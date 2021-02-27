@@ -1,5 +1,4 @@
 from flask import Blueprint, json, request, url_for, redirect, session, current_app, jsonify
-from ..wcapi import woocommerce
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from ..db import mongo
 from woocommerce import API
