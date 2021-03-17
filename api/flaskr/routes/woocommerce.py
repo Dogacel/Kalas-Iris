@@ -2,6 +2,9 @@ from flask import Blueprint, json, request, url_for, redirect, session, current_
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from ..db import mongo
 from woocommerce import API
+import urllib.request
+import requests
+from .image import mmfashionAPIAddress
 
 woocommerce_route = Blueprint('woocommerce_route', __name__)
 
@@ -72,7 +75,16 @@ def newProductCreated():
         images = payload['images']
     except: 
         return jsonify("An error occured on the payload"), 422
+    
+    # TODO: Forward the product images instead of uploading
+    annotations = list()
+    for image in images:
+        annotations.append(jsonify(requests.post(f'{mmfashionAPIAddress}/annotate',
+                                 files=urllib.request.urlretrieve(image['src'], image['name'])).json()))
 
+    for field, possible_values in annotations.items():
+        print(field, possible_values)
+    ### 
     return jsonify({'name': name, 'id': id, 'categories': categories, 'tags': tags, 'permalink': permalink, 'images': images})
 
 # Product Categories 
