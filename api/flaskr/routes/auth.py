@@ -86,8 +86,6 @@ def refresh():
     return Response(jsonify(ret))
 
 # Endpoint for revoking the current users access token
-
-
 @auth_route.route('/logout', methods=['DELETE'])
 @jwt_required
 def logout():

@@ -38,6 +38,16 @@ export function login(form, config = null) {
   return axios.post(`${flaskAPIAdress}/login`, fmData, config);
 }
 
+//delete access token
+export function logout(access_token) {
+  return axios.delete(`${flaskAPIAdress}/logout`, access_token);
+}
+
+//delete refresh token
+export function logout2(refresh_token) {
+  return axios.delete(`${flaskAPIAdress}/logout2`, refresh_token);//MIGHT NEED TO TO DATA, SEE: https://masteringjs.io/tutorials/axios/delete
+}
+
 export async function getCurrentUser(access_token) {
   try {
     const authStr = "Bearer ".concat(access_token);

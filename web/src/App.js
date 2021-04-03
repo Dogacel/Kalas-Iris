@@ -1,8 +1,8 @@
-import { Divider, Layout, Menu, Switch } from "antd";
+import { Divider, Layout, Menu, message, Switch } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import { WarningOutlined, CheckOutlined } from "@ant-design/icons";
-import { Route, Link, useLocation, Routes } from "react-router-dom";
+import { Route, Link, useLocation, Routes, Navigate, useNavigate } from "react-router-dom";
 import AnnotateView from "./views/AnnotateView";
 import IntegrationsView from "./views/IntegrationsView";
 import { isServerUp, upServer, downServer } from "./api/api";
@@ -14,16 +14,19 @@ import HomepageView from "./views/HomepageView";
 import DashboardView from "./views/DashboardView";
 import FashionAnnotationInfoView from "./views/FashionAnnotationInfoView";
 import { UserProvider } from "./components/UserContext";
+import MenuItem from "antd/lib/menu/MenuItem";
+import { logout, logout2 } from "./api/api";
 
 const { Header, Content, Footer } = Layout;
 
 function App() {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const menuLinks = [
     { to: "/annotate", text: "Image Annotation" },
     { to: "/integrations", text: "Integrations" },
-    { to: "/login", text: "Login" },
+    // { to: "/login", text: "Login" },
     { to: "/dashboard", text: "Dashboard" },
   ];
 
@@ -52,6 +55,30 @@ function App() {
   }, []);
 
   const [isShown] = useState(false);
+
+  function onLogout(e) {
+    logout(UserProvider.access_token)
+      .then(
+        r => {
+          message.success("Logged out.");
+          UserProvider.setAccessToken(null);
+          UserProvider.setRefreshToken(null);
+          // navigate("/", {message: "Logged out from " + UserProvider.username});
+          // UserProvider.setUsername(null);
+        }).catch(r => {
+          if (r.response) message.error(r.response.data);
+        });
+    logout2()
+      .then(r => {
+        message.success("Logged out.");
+        navigate("/", {message: "Logged out from " + UserProvider.username});
+          UserProvider.setUsername(null);
+      }).catch(r => {
+        if (r.response) message.error(r.response.data);
+      });
+  };
+
+  let username = UserProvider.username; 
 
   return (
     <UserProvider>
@@ -86,18 +113,16 @@ function App() {
                 </Menu.Item>
               ))}
             </>
-
-            {/* <Menu.Item>
-              <Dropdown overlay={dropdown1} placement="bottomCenter">
-                
-                  <a className="ant-dropdown-link" onClick={e => e.preventDefault()} href="/homepage">
-                    Fashion Annotation <DownOutlined />
-                  </a>
-                
-              </Dropdown>
-
-            </Menu.Item> */}
-
+            <>
+            <MenuItem>
+            {
+              username = UserProvider.username
+            }
+            {
+                (username === null) ? <Link to="/login">Login</Link> : <a onClick={onLogout}>Logout</a>
+            }
+            </MenuItem>
+            </>
             <Menu.SubMenu
               title={
                 <>
@@ -147,6 +172,7 @@ function App() {
             <Route path="/login" element={<LoginView />} />
             <Route path="/signup" element={<RegistrationForm />} />
             <Route path="/" element={<HomepageView />} />
+            <Route path="/homepage" element={<HomepageView />} />
             <Route path="/dashboard" element={<DashboardView />} />
             <Route
               path="/annotation-info"
