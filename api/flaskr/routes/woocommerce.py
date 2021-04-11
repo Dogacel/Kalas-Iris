@@ -7,6 +7,7 @@ import requests
 from .image import mmfashionAPIAddress
 from PIL import Image
 import os, os.path
+import base64
 
 woocommerce_route = Blueprint('woocommerce_route', __name__)
 
@@ -82,15 +83,11 @@ def newProductCreated():
     annotations = list()
     for image in images:
         # Download the image
-        urllib.request.urlretrieve(image['src'], image['name'])
-        
-        imageFile = Image.open(image['name'])
+        urllib.request.urlretrieve(image['src'], image['name']) 
+        files = {'file': open(image['name'], 'rb').read()}
         annotations.append(jsonify(requests.post(f'{mmfashionAPIAddress}/annotate',
-                                 files={'image' : imageFile}).json()))
-
-    for field, possible_values in annotations.items():
-        print(field, possible_values)
-    ### 
+                                 files=files).json()))
+    print(annotations)     
     return jsonify({'name': name, 'id': id, 'categories': categories, 'tags': tags, 'permalink': permalink, 'images': images})
 
 # Product Categories 
