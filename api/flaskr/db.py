@@ -1,9 +1,10 @@
 from flask_pymongo import PyMongo
 from flask import current_app
+import urllib
 import os
 
-DATABASE_USERNAME = os.getenv("DATABASE_USERNAME")
-DATABASE_PASSWORD = os.getenv("DATABASE_PASSWORD")
+DATABASE_USERNAME = urllib.parse.quote_plus(os.getenv("DATABASE_USERNAME"))
+DATABASE_PASSWORD = urllib.parse.quote_plus(os.getenv("DATABASE_PASSWORD"))
 
 
 class mongo:
