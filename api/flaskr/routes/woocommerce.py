@@ -79,15 +79,25 @@ def newProductCreated():
     except: 
         return jsonify("An error occured on the payload"), 422
     
-    # TODO: Forward the product images instead of uploading
     annotations = list()
     for image in images:
         # Download the image
         urllib.request.urlretrieve(image['src'], image['name']) 
-        files = {'file': open(image['name'], 'rb').read()}
-        annotations.append(jsonify(requests.post(f'{mmfashionAPIAddress}/annotate',
-                                 files=files).json()))
-    print(annotations)     
+        imageFile = open(image['name'], 'rb').read()
+        dictToSend = {'image': imageFile}
+        annotationResult = requests.post(f'{mmfashionAPIAddress}/annotate',files=dictToSend).json()
+        annotations.append(annotationResult)
+    
+    print(annotations)
+    """
+    for result in annotations:
+        for key in result.keys():
+            print(key.upper())
+            for i in range(0, 5):
+                max(stats.items(), key=operator.itemgetter(1))[0...4]
+
+                print(result[key])
+    """
     return jsonify({'name': name, 'id': id, 'categories': categories, 'tags': tags, 'permalink': permalink, 'images': images})
 
 # Product Categories 
