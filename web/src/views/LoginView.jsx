@@ -19,11 +19,17 @@ export default function LoginView() {
     login(values)
       .then(r => {
         message.success("Ok!");
+        
         setAccessToken(r.data.access_token);
-        setRefreshToken(r.data.refresh_token)
+        setRefreshToken(r.data.refresh_token);
+
+        localStorage.setItem('accessToken', r.data.access_token);
+        localStorage.setItem('refreshToken', r.data.refresh_token);
+
         getCurrentUser(r.data.access_token).then(r => {
           console.log("Received " + r.data['logged_in_as']);
           setUsername(r.data['logged_in_as']);
+          localStorage.setItem('username', r.data['logged_in_as'])
           navigate("/", { message: "Logged in as " + username });
         }).catch(r => {
           if (r.response) message.error(r.response.data)

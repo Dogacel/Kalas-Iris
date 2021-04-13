@@ -3,9 +3,10 @@ import React, {useState, createContext, useContext} from 'react';
 export const UserContext = createContext();
 
 export const UserProvider = props => {
-    const [username, setUsername] = useState('');
-    const [accessToken, setAccessToken] = useState('');
-    const [refreshToken, setRefreshToken] = useState('');
+
+    const [username, setUsername] = useState(String(localStorage.getItem('username')));
+    const [accessToken, setAccessToken] = useState(String(localStorage.getItem('accessToken')));
+    const [refreshToken, setRefreshToken] = useState(String(localStorage.getItem('refreshToken')));
 
     const value = {
         username, 
