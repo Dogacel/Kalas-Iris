@@ -38,6 +38,10 @@ export function login(form, config = null) {
   return axios.post(`${flaskAPIAdress}/login`, fmData, config);
 }
 
+export function logout(config = null) {
+  return axios.delete(`${flaskAPIAdress}/logout`, config)
+}
+
 export async function getCurrentUser(access_token) {
   try {
     const authStr = "Bearer ".concat(access_token);
