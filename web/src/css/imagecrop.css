@@ -1,0 +1,16 @@
+#wrapper {
+    display: inline-flex;
+}
+
+#left {
+    flex: 0 0 65%;
+    max-height: 60%;
+    max-width: 40%;
+}
+
+#right {
+    flex: 1;
+    margin-left: 10px;
+    border: dashed;
+}
+
