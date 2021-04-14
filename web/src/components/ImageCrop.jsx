@@ -56,15 +56,12 @@ export default function ImageCrop({ previewImage }) {
 
         const blob = new Promise((resolve, reject) => {
             canvas.toBlob(blob => {
-                blob.name = imgRef.current.uid;
+                blob.name = "croppedImage";
                 resolve(blob);
             }, 'image/jpeg', 1);
         })
-        console.log(blob)
-
-        getBase64(blob).then(f => {
-            setCropFile(f);
-        })
+        
+        setCropFile(blob)
         
     }, [completedCrop]);
 
