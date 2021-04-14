@@ -1,6 +1,7 @@
 import React from "react";
 import { Divider, Image, Col, Row} from 'antd';
 import ReactJson from 'react-json-view'
+import ImageCrop from "./ImageCrop";
 
 
 export default function FilePreview({ previewImage, previewJSON, previewVisible }) {
@@ -8,7 +9,7 @@ export default function FilePreview({ previewImage, previewJSON, previewVisible 
     <div>
       <Row gutter={32}>
         <Col>
-          <Image width={400} src={previewImage} visible={previewVisible}/>
+          <ImageCrop previewImage={previewImage}/>
         </Col>
         <Col>
           <Divider orientation="left">Results</Divider>

@@ -16,6 +16,7 @@
     "react-dom": "^17.0.1",
     "react-easy-crop": "^3.3.2",
     "react-flow-renderer": "^8.3.0",
+    "react-image-crop": "^8.6.6",
     "react-json-view": "^1.20.4",
     "react-router": "^6.0.0-beta.0",
     "react-router-dom": "^6.0.0-beta.0",

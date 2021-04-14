@@ -2,7 +2,6 @@ import { Upload, Progress } from "antd";
 import React, { useState } from "react";
 import "../api/api";
 import { annotateImage, uploadImage } from "../api/api";
-import ImgCrop from "antd-img-crop";
 
 function getBase64(file) {
   return new Promise((resolve, reject) => {
@@ -93,7 +92,6 @@ export default function FileUpload({ previewImage, setPreviewImage, setPreviewJS
 
   return (
     <div className="container">
-      <ImgCrop aspect={4/3} rotate={true} grid={true} quality={1}>
         <Upload
           accept="image/*"
           listType="picture-card"
@@ -105,7 +103,6 @@ export default function FileUpload({ previewImage, setPreviewImage, setPreviewJS
         >
           {defaultFileList.length >= 8 ? null : <div>Upload Image</div>}
         </Upload>
-      </ImgCrop>
       {progress > 0 ? <Progress percent={progress} /> : null}
     </div>
   );
