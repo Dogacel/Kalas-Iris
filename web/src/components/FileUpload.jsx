@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import "../api/api";
 import { annotateImage, uploadImage } from "../api/api";
 
-function getBase64(file) {
+export function getBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);

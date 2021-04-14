@@ -2,9 +2,13 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import "../css/imagecrop.css";
+import "../api/api";
+import { annotateImage } from '../api/api';
+import { getBase64 } from "./FileUpload";
 
-function generateAnnotation(crop) {
-
+function generateAnnotation(croppedImage) {
+    console.log(croppedImage);
+    annotateImage(croppedImage);
 }
 
 export default function ImageCrop({ previewImage }) {
@@ -12,6 +16,7 @@ export default function ImageCrop({ previewImage }) {
     const previewCanvasRef = useRef(null);
     const [crop, setCrop] = useState({});
     const [completedCrop, setCompletedCrop] = useState(null);
+    const [cropFile, setCropFile] = useState(null);
 
     const onLoad = useCallback((img) => {
         imgRef.current = img;
@@ -48,6 +53,19 @@ export default function ImageCrop({ previewImage }) {
             crop.width,
             crop.height
         );
+
+        const blob = new Promise((resolve, reject) => {
+            canvas.toBlob(blob => {
+                blob.name = imgRef.current.uid;
+                resolve(blob);
+            }, 'image/jpeg', 1);
+        })
+        console.log(blob)
+
+        getBase64(blob).then(f => {
+            setCropFile(f);
+        })
+        
     }, [completedCrop]);
 
     return (
@@ -62,25 +80,25 @@ export default function ImageCrop({ previewImage }) {
                 />
             </div>
             {completedCrop?.width !== 0 &&
-            <div id="right">
-                <canvas
-                    ref={previewCanvasRef}
-                    // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
-                    style={{
-                        width: Math.round(completedCrop?.width ?? 0),
-                        height: Math.round(completedCrop?.height ?? 0)
-                    }}
-                />  
+                <div id="right">
+                    <canvas
+                        ref={previewCanvasRef}
+                        // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
+                        style={{
+                            width: Math.round(completedCrop?.width ?? 0),
+                            height: Math.round(completedCrop?.height ?? 0)
+                        }}
+                    />
                     <button
                         type="button"
                         disabled={!completedCrop?.width || !completedCrop?.height}
                         onClick={() =>
-                            generateAnnotation(completedCrop)
+                            generateAnnotation(cropFile)
                         }
                     >
                         Annotate cropped image
-                    </button>  
-            </div>
+                    </button>
+                </div>
             }
         </div>
     );
