@@ -11,8 +11,8 @@ import "./css/menuBarStyle.css";
 import LoginView from "./views/LoginView";
 import RegistrationForm from "./views/SignupView";
 import HomepageView from "./views/HomepageView";
-import DashboardView from "./views/DashboardView";
-import FashionAnnotationInfoView from "./views/FashionAnnotationInfoView";
+import ReviewView from "./views/ReviewView";
+import ReviewHistoryView from "./views/ReviewHistoryView";
 import { UserProvider } from "./components/UserContext";
 
 const { Header, Content, Footer } = Layout;
@@ -23,8 +23,8 @@ function App() {
   const menuLinks = [
     { to: "/annotate", text: "Image Annotation" },
     { to: "/integrations", text: "Integrations" },
-    { to: "/login", text: "Login" },
-    { to: "/dashboard", text: "Dashboard" },
+    { to: "/review", text: "Review" },
+    { to: "/past_reviews", text: "Past Reviews" },
   ];
 
   const [switchState, setSwitchState] = useState(false);
@@ -65,7 +65,7 @@ function App() {
           >
             <>
               <Menu.Item id="menuBarStyle" key="menuBarStyle">
-                <Link to={"/homepage"}>
+                <Link to={"/"}>
                   <img
                     width={189}
                     height={43}
@@ -87,33 +87,15 @@ function App() {
               ))}
             </>
 
-            {/* <Menu.Item>
-              <Dropdown overlay={dropdown1} placement="bottomCenter">
-                
-                  <a className="ant-dropdown-link" onClick={e => e.preventDefault()} href="/homepage">
-                    Fashion Annotation <DownOutlined />
-                  </a>
-                
-              </Dropdown>
 
-            </Menu.Item> */}
-
-            <Menu.SubMenu
-              title={
-                <>
-                  <span>Fashion Annotation </span>
-                  <DownOutlined />
-                </>
-              }
-            >
-              <Menu.Item>
-                <Link to="/annotation-info">What is Fashion Annotation?</Link>
-              </Menu.Item>
-              <Menu.Item>
-                <Link to="/annotation-info">How it works</Link>
-              </Menu.Item>
-            </Menu.SubMenu>
-
+            <Menu.Item 
+              id="login-logout-item"
+              key={"/login"}>
+              <Link to={"/login"} id="Link" key="Link">
+                Login
+                {isShown}
+              </Link>
+            </Menu.Item>
             <Menu.Item
               id="cloud-menu-item"
               key="cloud-menu-item"
@@ -136,6 +118,7 @@ function App() {
                 unCheckedChildren={<WarningOutlined />}
                 defaultChecked
               />
+                
               (Server shuts down every hour at xx:00)
             </Menu.Item>
           </Menu>
@@ -147,11 +130,8 @@ function App() {
             <Route path="/login" element={<LoginView />} />
             <Route path="/signup" element={<RegistrationForm />} />
             <Route path="/" element={<HomepageView />} />
-            <Route path="/dashboard" element={<DashboardView />} />
-            <Route
-              path="/annotation-info"
-              element={<FashionAnnotationInfoView />}
-            />
+            <Route path="/review" element={<ReviewView />} />
+            <Route path="/past_reviews" element={<ReviewHistoryView />} />
           </Routes>
         </Content>
         <Divider />

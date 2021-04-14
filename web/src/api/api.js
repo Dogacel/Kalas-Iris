@@ -79,6 +79,28 @@ export async function getIntegrations(access_token) {
   return response;
 }
 
+export async function getAnnotationHistory() {
+  const response = await axios.get(`${flaskAPIAdress}/history`);
+  
+  return response;
+}
+
+export async function getReviewHistory() {
+  const response = await axios.get(`${flaskAPIAdress}/reviewed`);
+  
+  return response;
+}
+
+export async function sendAnnotationSuggestion(filename, suggestion) {
+  const response = await axios.post(`${flaskAPIAdress}/review/${filename}`, suggestion);
+
+  return response;
+}
+
+export function imlink(im) {
+  return `${flaskAPIAdress}/file/${im}`;
+}
+
 export async function isServerUp() {
   try {
     const response = await axios.get(`${mmfashionAPIAddress}/`, {
