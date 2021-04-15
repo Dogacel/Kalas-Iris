@@ -4,19 +4,28 @@ import 'react-image-crop/dist/ReactCrop.css';
 import "../css/imagecrop.css";
 import "../api/api";
 import { annotateImage } from '../api/api';
-import { getBase64 } from "./FileUpload";
+import ReactJson from 'react-json-view';
 
-function generateAnnotation(croppedImage) {
-    console.log(croppedImage);
-    annotateImage(croppedImage);
-}
+function generateAnnotation(canvas, crop) {
+    if (!crop || !canvas) {
+      return;
+    }
+    
+    return canvas.toBlob(
+      (blob) => {
+        console.log(blob)
+      },
+      'image/png',
+      1
+    );
+  }
 
 export default function ImageCrop({ previewImage }) {
     const imgRef = useRef(null);
     const previewCanvasRef = useRef(null);
     const [crop, setCrop] = useState({});
     const [completedCrop, setCompletedCrop] = useState(null);
-    const [cropFile, setCropFile] = useState(null);
+    const [cropAnnotation, setCropAnnotation] = useState(null);
 
     const onLoad = useCallback((img) => {
         imgRef.current = img;
@@ -52,17 +61,7 @@ export default function ImageCrop({ previewImage }) {
             0,
             crop.width,
             crop.height
-        );
-
-        const blob = new Promise((resolve, reject) => {
-            canvas.toBlob(blob => {
-                blob.name = "croppedImage";
-                resolve(blob);
-            }, 'image/jpeg', 1);
-        })
-        
-        setCropFile(blob)
-        
+        );  
     }, [completedCrop]);
 
     return (
@@ -90,11 +89,18 @@ export default function ImageCrop({ previewImage }) {
                         type="button"
                         disabled={!completedCrop?.width || !completedCrop?.height}
                         onClick={() =>
-                            generateAnnotation(cropFile)
+                            generateAnnotation(previewCanvasRef.current, completedCrop).then(result => {
+                                console.log(result)
+                                annotateImage(result).then(annotation => {
+                                    console.log(annotation.data)
+                                    setCropAnnotation(annotation.data)
+                                })
+                            })
                         }
                     >
                         Annotate cropped image
                     </button>
+                    {cropAnnotation && <ReactJson src={cropAnnotation}/>}
                 </div>
             }
         </div>

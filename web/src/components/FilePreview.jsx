@@ -1,5 +1,5 @@
 import React from "react";
-import { Divider, Image, Col, Row} from 'antd';
+import { Divider,Col, Row} from 'antd';
 import ReactJson from 'react-json-view'
 import ImageCrop from "./ImageCrop";
 
