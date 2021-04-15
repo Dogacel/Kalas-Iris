@@ -6,14 +6,15 @@ import "../api/api";
 import { annotateImage } from '../api/api';
 import ReactJson from 'react-json-view';
 
-function generateAnnotation(canvas, crop) {
+function generateAnnotation(canvas, crop, callback) {
     if (!crop || !canvas) {
       return;
     }
     
     return canvas.toBlob(
       (blob) => {
-        console.log(blob)
+        console.log(blob);
+        callback(blob);
       },
       'image/png',
       1
@@ -89,9 +90,9 @@ export default function ImageCrop({ previewImage }) {
                         type="button"
                         disabled={!completedCrop?.width || !completedCrop?.height}
                         onClick={() =>
-                            generateAnnotation(previewCanvasRef.current, completedCrop).then(result => {
-                                console.log(result)
-                                annotateImage(result).then(annotation => {
+                            generateAnnotation(previewCanvasRef.current, completedCrop, blob => {
+                                console.log(blob)
+                                annotateImage(blob).then(annotation => {
                                     console.log(annotation.data)
                                     setCropAnnotation(annotation.data)
                                 })
