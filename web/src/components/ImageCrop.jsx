@@ -8,18 +8,18 @@ import ReactJson from 'react-json-view';
 
 function generateAnnotation(canvas, crop, callback) {
     if (!crop || !canvas) {
-      return;
+        return;
     }
-    
+
     return canvas.toBlob(
-      (blob) => {
-        console.log(blob);
-        callback(blob);
-      },
-      'image/png',
-      1
+        (blob) => {
+            console.log(blob);
+            callback(blob);
+        },
+        'image/png',
+        1
     );
-  }
+}
 
 export default function ImageCrop({ previewImage }) {
     const imgRef = useRef(null);
@@ -62,7 +62,7 @@ export default function ImageCrop({ previewImage }) {
             0,
             crop.width,
             crop.height
-        );  
+        );
     }, [completedCrop]);
 
     return (
@@ -93,15 +93,23 @@ export default function ImageCrop({ previewImage }) {
                             generateAnnotation(previewCanvasRef.current, completedCrop, blob => {
                                 console.log(blob)
                                 annotateImage(blob).then(annotation => {
-                                    console.log(annotation.data)
-                                    setCropAnnotation(annotation.data)
+                                    const data = annotation.data
+
+                                    data.attributes = Object.entries(data.attributes)
+                                        .sort(([, a], [, b]) => b - a)
+                                        .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
+                                    data.categories = Object.entries(data.categories)
+                                        .sort(([, a], [, b]) => b - a)
+                                        .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
+                                    console.log(data)
+                                    setCropAnnotation(data);
                                 })
                             })
                         }
                     >
                         Annotate cropped image
                     </button>
-                    {cropAnnotation && <ReactJson src={cropAnnotation}/>}
+                    {cropAnnotation && <ReactJson src={cropAnnotation} />}
                 </div>
             }
         </div>
