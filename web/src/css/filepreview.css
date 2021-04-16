@@ -6,12 +6,10 @@
 
 #image-container {
     margin-right: auto;
-    flex: 0 0 65%
+    flex: 1;
 }
 
 #annotation-container {
-    min-width: none;
-    max-width: 50%;
-    flex: auto;
+    flex: 1;
     margin-left: auto;
 }
