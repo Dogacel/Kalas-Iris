@@ -53,7 +53,7 @@ export default function FileUpload({ previewImage, setPreviewImage, setPreviewJS
           .sort(([, a], [, b]) => b - a)
           .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
 
-        setPreviewJSON(data);
+          setPreviewJSON(data);
         setAnnotationResult(prevState => ({
           ...prevState,
           [file.uid]: data

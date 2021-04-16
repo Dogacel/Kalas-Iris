@@ -4,7 +4,7 @@ import 'react-image-crop/dist/ReactCrop.css';
 import "../css/imagecrop.css";
 import "../api/api";
 import { annotateImage } from '../api/api';
-import ReactJson from 'react-json-view';
+
 
 function generateAnnotation(canvas, crop, callback) {
     if (!crop || !canvas) {
