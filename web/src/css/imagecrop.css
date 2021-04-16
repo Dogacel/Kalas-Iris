@@ -5,8 +5,6 @@
 
 #left {
     flex: 0 0 50% 65%;
-    max-height: 60%;
-    max-width: 40%;
 }
 
 #right {
@@ -15,10 +13,10 @@
     background: linear-gradient(90deg, rgb(0, 0, 0) 50%, transparent 50%), linear-gradient(90deg, rgb(0, 0, 0) 50%, transparent 50%), linear-gradient(0deg, rgb(0, 0, 0) 50%, transparent 50%), linear-gradient(0deg, rgb(0, 0, 0) 50%, transparent 50%);
     background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
     background-size: 15px 4px, 15px 4px, 4px 15px, 4px 15px;
-    padding: 10px;
+    padding: 5px;
     animation: border-dance 8s infinite linear;
   }
-  
+
   @keyframes border-dance {
     0% {
       background-position: 0 0, 100% 100%, 0 100%, 100% 0;

@@ -1,0 +1,17 @@
+#preview-wrapper {
+    display: inline-flex;
+    text-align: center;
+    float: left;
+}
+
+#image-container {
+    margin-right: auto;
+    flex: 0 0 65%
+}
+
+#annotation-container {
+    min-width: none;
+    max-width: 50%;
+    flex: auto;
+    margin-left: auto;
+}

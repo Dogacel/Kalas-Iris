@@ -1,21 +1,32 @@
 import React from "react";
-import { Divider, Col, Row } from 'antd';
+import { Divider, Col } from 'antd';
 import ReactJson from 'react-json-view'
 import ImageCrop from "./ImageCrop";
+import "../css/filepreview.css";
 
 
-export default function FilePreview({ previewImage, previewJSON, setPreviewJSON}) {
+export default function FilePreview({ previewImage, previewJSON, setPreviewJSON }) {
   return (
-    <div>
-      <Row gutter={32}>
+    <div id="preview-wrapper">
+      <div id="image-container">
         <Col>
-          <ImageCrop previewImage={previewImage} setPreviewJSON={setPreviewJSON}/>
+          <ImageCrop previewImage={previewImage} setPreviewJSON={setPreviewJSON} />
+        </Col>
+      </div>
+      <div id="annotation-container">
+        <Col>
+          <Divider orientation="left">Attributes</Divider>
+          <ReactJson src={previewJSON.attributes} />
         </Col>
         <Col>
-          <Divider orientation="left">Results</Divider>
-          <ReactJson src={previewJSON} />
+          <Divider orientation="left">Categories</Divider>
+          <ReactJson src={previewJSON.categories} />
         </Col>
-      </Row>
-    </div>
+        <Col>
+          <Divider orientation="left">Colors</Divider>
+          <ReactJson src={previewJSON.colors} />
+        </Col>
+      </div>
+    </div >
   );
 }
