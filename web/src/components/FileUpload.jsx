@@ -52,7 +52,6 @@ export default function FileUpload({ previewImage, setPreviewImage, setPreviewJS
         data.categories = Object.entries(data.categories)
           .sort(([, a], [, b]) => b - a)
           .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
-
           setPreviewJSON(data);
         setAnnotationResult(prevState => ({
           ...prevState,

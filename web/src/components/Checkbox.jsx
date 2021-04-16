@@ -1,0 +1,19 @@
+import React from "react";
+import { Checkbox } from "antd";
+
+export default function CheckBoxList(props) {
+    const values = props.values;
+    var arr = Object.keys(values).map((key) => [key, values[key]]);
+    arr = arr.slice(0,5);
+
+    console.log(arr)
+    return (
+        <div>
+            {arr.slice(0,5).map(function (d) {
+                const key = d.toString().substring(0, d.toString().indexOf(",")).toUpperCase();
+                const val = d.toString().substring(d.toString().indexOf(",") + 1);
+                return (<Checkbox>{isNaN(parseInt(key)) ? key: parseInt(key) + 1 + "."} : {val} </Checkbox>)
+            })}
+        </div>
+    );
+}
