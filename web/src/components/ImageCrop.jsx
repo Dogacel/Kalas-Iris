@@ -4,7 +4,8 @@ import 'react-image-crop/dist/ReactCrop.css';
 import "../css/imagecrop.css";
 import "../api/api";
 import { annotateImage } from '../api/api';
-import ReactJson from 'react-json-view';
+import { useAnnotationContext } from "../components/AnnotationContext";
+
 
 function generateAnnotation(canvas, crop, callback) {
     if (!crop || !canvas) {
@@ -26,7 +27,11 @@ export default function ImageCrop({ previewImage }) {
     const previewCanvasRef = useRef(null);
     const [crop, setCrop] = useState({});
     const [completedCrop, setCompletedCrop] = useState(null);
-    const [cropAnnotation, setCropAnnotation] = useState(null);
+
+    const {
+        setImageAnnotation,
+    } = useAnnotationContext();
+ 
 
     const onLoad = useCallback((img) => {
         imgRef.current = img;
@@ -102,14 +107,13 @@ export default function ImageCrop({ previewImage }) {
                                         .sort(([, a], [, b]) => b - a)
                                         .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
                                     console.log(data)
-                                    setCropAnnotation(data);
+                                    setImageAnnotation(data);
                                 })
                             })
                         }
                     >
                         Annotate cropped image
                     </button>
-                    {cropAnnotation && <ReactJson src={cropAnnotation} />}
                 </div>
             }
         </div>

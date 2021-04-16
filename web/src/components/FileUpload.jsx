@@ -2,6 +2,7 @@ import { Upload, Progress } from "antd";
 import React, { useState } from "react";
 import "../api/api";
 import { annotateImage, uploadImage } from "../api/api";
+import { useAnnotationContext } from "./AnnotationContext";
 
 export function getBase64(file) {
   return new Promise((resolve, reject) => {
@@ -12,11 +13,15 @@ export function getBase64(file) {
   });
 }
 
-export default function FileUpload({ previewImage, setPreviewImage, setPreviewJSON }) {
+export default function FileUpload({ previewImage, setPreviewImage }) {
   const [defaultFileList, setDefaultFileList] = useState([]);
   const [progress, setProgress] = useState(0);
   const [annotationResult, setAnnotationResult] = useState({})
   const [previewImages, setPreviewImages] = useState({})
+
+  const {
+    setImageAnnotation,
+  } = useAnnotationContext();
 
   const uploadImageToServer = async options => {
     const { onSuccess, onError, file } = options;
@@ -53,7 +58,7 @@ export default function FileUpload({ previewImage, setPreviewImage, setPreviewJS
           .sort(([, a], [, b]) => b - a)
           .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
 
-        setPreviewJSON(data);
+          setImageAnnotation(data);
         setAnnotationResult(prevState => ({
           ...prevState,
           [file.uid]: data
@@ -68,7 +73,7 @@ export default function FileUpload({ previewImage, setPreviewImage, setPreviewJS
 
   const handlePreview = async file => {
     setPreviewImage(previewImages[file.originFileObj.uid])
-    setPreviewJSON(annotationResult[file.originFileObj.uid])
+    setImageAnnotation(annotationResult[file.originFileObj.uid])
   };
 
   const handleRemove = async file => {
@@ -76,16 +81,16 @@ export default function FileUpload({ previewImage, setPreviewImage, setPreviewJS
       if (defaultFileList.length > 1) {
         if (file.uid !== defaultFileList[0].uid) {
           setPreviewImage(previewImages[defaultFileList[0].originFileObj.uid])
-          setPreviewJSON(annotationResult[defaultFileList[0].originFileObj.uid])
+          setImageAnnotation(annotationResult[defaultFileList[0].originFileObj.uid])
         }
         else {
           setPreviewImage(previewImages[defaultFileList[defaultFileList.length - 1].originFileObj.uid])
-          setPreviewJSON(annotationResult[defaultFileList[defaultFileList.length - 1].originFileObj.uid])
+          setImageAnnotation(annotationResult[defaultFileList[defaultFileList.length - 1].originFileObj.uid])
         }
       }
       else {
         setPreviewImage("https://i.stack.imgur.com/y9DpT.jpg")
-        setPreviewJSON([""])
+        setImageAnnotation([""])
       }
     }
   }
