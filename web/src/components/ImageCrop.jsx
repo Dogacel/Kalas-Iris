@@ -4,7 +4,7 @@ import 'react-image-crop/dist/ReactCrop.css';
 import "../css/imagecrop.css";
 import "../api/api";
 import { annotateImage } from '../api/api';
-
+import { Button } from 'antd';
 
 function generateAnnotation(canvas, crop, callback) {
     if (!crop || !canvas) {
@@ -76,38 +76,44 @@ export default function ImageCrop({ previewImage, setPreviewJSON }) {
                 />
             </div>
             {completedCrop?.width !== 0 &&
-                <div id="right">
-                    <canvas
-                        ref={previewCanvasRef}
-                        // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
-                        style={{
-                            width: Math.round(completedCrop?.width ?? 0),
-                            height: Math.round(completedCrop?.height ?? 0)
-                        }}
-                    />
-                    <button
-                        type="button"
-                        disabled={!completedCrop?.width || !completedCrop?.height}
-                        onClick={() =>
-                            generateAnnotation(previewCanvasRef.current, completedCrop, blob => {
-                                console.log(blob)
-                                annotateImage(blob).then(annotation => {
-                                    const data = annotation.data
+                <div id ="rigt-container">
+                    <div id="right">
+                        <canvas
+                            ref={previewCanvasRef}
+                            // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
+                            style={{
+                                width: Math.round(completedCrop?.width ?? 0),
+                                height: Math.round(completedCrop?.height ?? 0)
+                            }}
+                        />
+                    </div>
+                    <div>
+                        <Button
+                            type="button"
+                            id="crop-annotate-button"
+                            disabled={!completedCrop?.width || !completedCrop?.height}
+                            onClick={() =>
+                                generateAnnotation(previewCanvasRef.current, completedCrop, blob => {
+                                    console.log(blob)
+                                    annotateImage(blob).then(annotation => {
+                                        const data = annotation.data
 
-                                    data.attributes = Object.entries(data.attributes)
-                                        .sort(([, a], [, b]) => b - a)
-                                        .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
-                                    data.categories = Object.entries(data.categories)
-                                        .sort(([, a], [, b]) => b - a)
-                                        .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
-                                    console.log(data)
-                                    setPreviewJSON(data);
+                                        data.attributes = Object.entries(data.attributes)
+                                            .sort(([, a], [, b]) => b - a)
+                                            .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
+                                        data.categories = Object.entries(data.categories)
+                                            .sort(([, a], [, b]) => b - a)
+                                            .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
+                                        console.log(data)
+                                        setPreviewJSON(data);
+                                    })
                                 })
-                            })
-                        }
-                    >
-                        Annotate cropped image
-                    </button>
+                            }
+                        >
+                            Annotate cropped image
+
+                        </Button>
+                    </div>
                 </div>
             }
         </div>
