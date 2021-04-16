@@ -21,12 +21,11 @@ function generateAnnotation(canvas, crop, callback) {
     );
 }
 
-export default function ImageCrop({ previewImage }) {
+export default function ImageCrop({ previewImage, setPreviewJSON }) {
     const imgRef = useRef(null);
     const previewCanvasRef = useRef(null);
     const [crop, setCrop] = useState({});
     const [completedCrop, setCompletedCrop] = useState(null);
-    const [cropAnnotation, setCropAnnotation] = useState(null);
 
     const onLoad = useCallback((img) => {
         imgRef.current = img;
@@ -102,14 +101,13 @@ export default function ImageCrop({ previewImage }) {
                                         .sort(([, a], [, b]) => b - a)
                                         .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
                                     console.log(data)
-                                    setCropAnnotation(data);
+                                    setPreviewJSON(data);
                                 })
                             })
                         }
                     >
                         Annotate cropped image
                     </button>
-                    {cropAnnotation && <ReactJson src={cropAnnotation} />}
                 </div>
             }
         </div>

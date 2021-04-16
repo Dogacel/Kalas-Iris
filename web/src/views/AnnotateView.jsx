@@ -15,7 +15,7 @@ export default function AnnotateView() {
   return (
     <Row>
       <Col span={18}>
-        <FilePreview previewImage={previewImage} previewJSON={previewJSON} />
+        <FilePreview previewImage={previewImage} previewJSON={previewJSON} setPreviewJSON={setPreviewJSON}/>
       </Col>
       <Col span={6}>
         <FileUpload
