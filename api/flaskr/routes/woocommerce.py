@@ -7,10 +7,7 @@ import requests
 from .image import mmfashionAPIAddress
 
 woocommerce_route = Blueprint('woocommerce_route', __name__)
-
 # Authenticate
-
-
 def withAuthWC(currentUser):
     integrations = mongo.integrations.db.integrations
     try:
@@ -33,12 +30,9 @@ def withAuthWC(currentUser):
         wp_api=True,
         version="wc/v3"
     )
-
     return wcapi
 
 # Products
-
-
 @woocommerce_route.route("/createProduct", methods=['POST'])
 @jwt_required
 def createProduct():
@@ -76,8 +70,6 @@ def listAllProducts():
 def newProductCreated():
     payload = request.get_json()
     current_user = get_jwt_identity()
-    wc_api = withAuthWC(current_user)
-    print(current_user)
     try:
         #name = payload['name']
         id = payload['id']
@@ -115,22 +107,12 @@ def newProductCreated():
     best_category = max(product_categories,
                         key=lambda key: product_categories[key])
 
-    # Create the product category
-    try:
-        category_data = {
-            "name": best_category
-        }
-        wc_api.post("products/categories", category_data)
-    except:
-        print("Could not create category") 
-
-
     # Create Product Data to Update the Product
     product_data = {'categories': {'name': best_category},
                     'tags': list(best_attributes + product_colors)}
 
     # Update the product
-    return jsonify(wc_api.put(f'products/{id}', product_data).json())
+    return withAuthWC(current_user).put(f'products/{id}', product_data).json()
 
 
 # Product Categories
