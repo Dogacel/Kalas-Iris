@@ -15,7 +15,6 @@ def withAuthWC(currentUser):
             {"user": currentUser, "type": "woo"})
     except:
         return jsonify("Could not find integration for the user")
-    print(integration_info)
     try:
         websiteURL = integration_info["websiteURL"]
         consumerKey = integration_info["consumerKey"]
@@ -66,16 +65,16 @@ def listAllProducts():
 
 
 @woocommerce_route.route("/newProductCreated", methods=['POST'])
-@jwt_required
 def newProductCreated():
     payload = request.get_json()
     current_user = get_jwt_identity()
+    print("Current User: ", current_user)
     try:
-        #name = payload['name']
+        name = payload['name']
         id = payload['id']
-        #categories = payload['categories']
-        #tags = payload['tags']
-        #permalink = payload['permalink']
+        categories = payload['categories']
+        tags = payload['tags']
+        permalink = payload['permalink']
         images = payload['images']
     except:
         return jsonify("An error occured on the payload"), 422
@@ -112,7 +111,7 @@ def newProductCreated():
                     'tags': list(best_attributes + product_colors)}
 
     # Update the product
-    return withAuthWC(current_user).put(f'products/{id}', product_data).json()
+    return jsonify(withAuthWC(current_user).put("products/" + id, product_data).json())
 
 
 # Product Categories
