@@ -1,35 +1,31 @@
-#wrapper {
-    display: flex;
-    text-align: center;
+.right {
+  background: linear-gradient(90deg, rgb(0, 0, 0) 50%, transparent 50%), linear-gradient(90deg, rgb(0, 0, 0) 50%, transparent 50%), linear-gradient(0deg, rgb(0, 0, 0) 50%, transparent 50%), linear-gradient(0deg, rgb(0, 0, 0) 50%, transparent 50%);
+  background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+  background-size: 15px 4px, 15px 4px, 4px 15px, 4px 15px;
+  padding: 5px;
+  animation: border-dance 8s infinite linear;
 }
 
-#left {
-    flex: 1;
-}
-
-#right {
-    background: linear-gradient(90deg, rgb(0, 0, 0) 50%, transparent 50%), linear-gradient(90deg, rgb(0, 0, 0) 50%, transparent 50%), linear-gradient(0deg, rgb(0, 0, 0) 50%, transparent 50%), linear-gradient(0deg, rgb(0, 0, 0) 50%, transparent 50%);
-    background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
-    background-size: 15px 4px, 15px 4px, 4px 15px, 4px 15px;
-    padding: 5px;
-    animation: border-dance 8s infinite linear;
+@keyframes border-dance {
+  0% {
+    background-position: 0 0, 100% 100%, 0 100%, 100% 0;
   }
 
-  @keyframes border-dance {
-    0% {
-      background-position: 0 0, 100% 100%, 0 100%, 100% 0;
-    }
-    100% {
-      background-position: 100% 0, 0 100%, 0 0, 100% 100%;
-    }
-}
-
-#rigt-container {
-    margin-left: 10px;
-    text-align: center;
-    flex: 1;
+  100% {
+    background-position: 100% 0, 0 100%, 0 0, 100% 100%;
+  }
 }
 
 #crop-annotate-button {
-    margin: 5px auto;
+  margin: 5px auto;
+}
+
+#right-container{
+  text-align: center;
+  max-width: 60%;
+}
+
+#left {
+  max-height: 80%;
+  max-width: 60%;
 }

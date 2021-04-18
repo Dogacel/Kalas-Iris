@@ -29,6 +29,9 @@ export default function ImageCrop({ previewImage, setPreviewJSON }) {
 
     const onLoad = useCallback((img) => {
         imgRef.current = img;
+        setCompletedCrop(null);
+        setCrop({ width: 0, height: 0 });
+        return false;
     }, []);
 
     useEffect(() => {
@@ -75,9 +78,9 @@ export default function ImageCrop({ previewImage, setPreviewJSON }) {
                     onComplete={(c) => setCompletedCrop(c)}
                 />
             </div>
-            {completedCrop?.width !== 0 &&
-                <div id ="rigt-container">
-                    <div id="right">
+            {completedCrop !== null &&
+                <div id ="right-container">
+                    <div class="right">
                         <canvas
                             ref={previewCanvasRef}
                             // Rounding is important so the canvas width and height matches/is a multiple for sharpness.
@@ -111,7 +114,6 @@ export default function ImageCrop({ previewImage, setPreviewJSON }) {
                             }
                         >
                             Annotate cropped image
-
                         </Button>
                     </div>
                 </div>

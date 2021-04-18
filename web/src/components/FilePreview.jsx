@@ -17,17 +17,17 @@ export default function FilePreview({ previewImage, previewJSON, setPreviewJSON 
         <Col>
           <Divider orientation="left">Attributes</Divider>
           <ReactJson src={previewJSON.attributes} />
-          {previewJSON.attributes && <CheckBox values={previewJSON.attributes} />}
+          {previewJSON.attributes && <CheckBox values={previewJSON?.attributes} />}
         </Col>
         <Col>
           <Divider orientation="left">Categories</Divider>
           <ReactJson src={previewJSON.categories} />
-          {previewJSON.attributes && <CheckBox values={previewJSON.categories} />}
+          {previewJSON.attributes && <CheckBox values={previewJSON?.categories} />}
         </Col>
         <Col>
           <Divider orientation="left">Colors</Divider>
           <ReactJson src={previewJSON.colors} />
-          {previewJSON.attributes && <CheckBox values={previewJSON.colors} />}
+          {previewJSON.attributes && <CheckBox values={previewJSON?.colors} />}
         </Col>
       </div>
     </div >

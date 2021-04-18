@@ -5,6 +5,7 @@
 }
 
 #image-container {
+    text-align: center;
     margin-right: auto;
     flex: 1;
 }
