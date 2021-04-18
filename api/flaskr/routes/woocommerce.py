@@ -67,7 +67,7 @@ def listAllProducts():
 @woocommerce_route.route("/newProductCreated", methods=['POST'])
 def newProductCreated():
     payload = request.get_json()
-    current_user = get_jwt_identity()
+    current_user = session.get("username")
     print("Current User: ", current_user)
     try:
         name = payload['name']
@@ -111,7 +111,7 @@ def newProductCreated():
                     'tags': list(best_attributes + product_colors)}
 
     # Update the product
-    return jsonify(withAuthWC(current_user).put("products/" + id, product_data).json())
+    return jsonify(withAuthWC(current_user).put(f'products/{id}', product_data).json())
 
 
 # Product Categories
