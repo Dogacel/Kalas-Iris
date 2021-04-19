@@ -1,7 +1,7 @@
-import { Divider, Layout, Menu, Switch } from "antd";
+import { Divider, Layout, Menu, Switch, message } from "antd";
 import { useEffect, useState } from "react";
 import { WarningOutlined, CheckOutlined } from "@ant-design/icons";
-import { Route, Link, useLocation, Routes } from "react-router-dom";
+import { Route, Link, useLocation, Routes, useNavigationState} from "react-router-dom";
 import AnnotateView from "./views/AnnotateView";
 import IntegrationsView from "./views/IntegrationsView";
 import { isServerUp, upServer, downServer } from "./api/api";
@@ -26,17 +26,22 @@ function App() {
 
   const menuLinks = [
     { to: "/annotate", text: "Image Annotation" },
-    { to: "/integrations", text: "Integrations" },
     { to: "/review", text: "Review" },
     { to: "/past_reviews", text: "Past Reviews" },
   ];
+
+  if (username) {
+    menuLinks.splice(1, 0, { to: "/integrations", text: "Integrations" });
+  }
 
   const [switchState, setSwitchState] = useState(false);
   const [loading, setLoading] = useState(true);
   const [stall, setStall] = useState(false);
 
+
   useEffect(() => {
     const intervalCheck = () => {
+      
       setLoading(true);
       if (!stall) {
         isServerUp().then(r => {
@@ -54,6 +59,11 @@ function App() {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+
+  if (location.state && location.state.message) {
+    message.success(location.message);
+  }
 
   const [isShown] = useState(false);
 
