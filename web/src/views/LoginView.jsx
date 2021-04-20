@@ -1,5 +1,6 @@
 import { Form, Input, Button, Checkbox, Col, Row, Image, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { login, getCurrentUser } from "../api/api";
 import { useUserContext } from "../components/UserContext";
@@ -8,22 +9,34 @@ export default function LoginView() {
   const navigate = useNavigate();
 
   const {
-    username, 
+    username,
     setUsername,
     setAccessToken,
     setRefreshToken
   } = useUserContext();
+
+  useEffect(() => {
+    if (username) {
+      navigate("/", { message: "Logged in as " + username });
+    }
+  }, [])
 
   const onFinish = values => {
     console.log("Sent values of form: ", values);
     login(values)
       .then(r => {
         message.success("Ok!");
+
         setAccessToken(r.data.access_token);
-        setRefreshToken(r.data.refresh_token)
+        setRefreshToken(r.data.refresh_token);
+
+        localStorage.setItem('accessToken', r.data.access_token);
+        localStorage.setItem('refreshToken', r.data.refresh_token);
+
         getCurrentUser(r.data.access_token).then(r => {
           console.log("Received " + r.data['logged_in_as']);
           setUsername(r.data['logged_in_as']);
+          localStorage.setItem('username', r.data['logged_in_as'])
           navigate("/", { message: "Logged in as " + username });
         }).catch(r => {
           if (r.response) message.error(r.response.data)
@@ -34,17 +47,20 @@ export default function LoginView() {
       });
   };
 
+
+
+
   return (
     <Row type="flex" align="center">
       <Col md={18} lg={6}>
-      <div>
-        <Image
-          width={380}
-          height={110}
-          src={process.env.PUBLIC_URL + '/ki-black-on-white-logo.jpeg'}
-          preview={false}
-        />
-      </div>
+        <div>
+          <Image
+            width={380}
+            height={110}
+            src={process.env.PUBLIC_URL + '/ki-black-on-white-logo.jpeg'}
+            preview={false}
+          />
+        </div>
         <Form
           name="normal_login"
           className="login-form"

@@ -5,6 +5,9 @@
     cursor: default;
 }
 
+#login-logout-item{
+  float: right;
+}
 
 #login-button {
     width: 100%;

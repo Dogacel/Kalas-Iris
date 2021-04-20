@@ -66,7 +66,7 @@ def login():
     if login_user:
         if bcrypt.check_password_hash(login_user['password'], password):
             session['username'] = username
-            expires = datetime.timedelta(hours=1)
+            expires = datetime.timedelta(weeks=1)
             tokens = {
                 'access_token': create_access_token(identity=username, expires_delta=False),
                 'refresh_token': create_refresh_token(identity=username)
