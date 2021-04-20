@@ -33,7 +33,8 @@ def withAuthWC(currentUser, websiteURL=None):
         consumer_key=consumerKey,
         consumer_secret=consumerSecret,
         wp_api=True,
-        version="wc/v3"
+        version="wc/v3",
+        query_string_auth=True
     )
     return wcapi
 
@@ -112,12 +113,34 @@ def newProductCreated():
     best_category = max(product_categories,
                         key=lambda key: product_categories[key])
 
-    # Create Product Data to Update the Product
-    product_data = {'categories': {'name': best_category},
-                    'tags': list(best_attributes + product_colors)}
+    # Prepare tag_data array
+    tag_data = []
+    for elem in best_attributes:
+        obj = {'name': elem}
+        tag_data.append(obj)
+    for elem in product_colors:
+        obj = {'name': elem}
+        tag_data.append(obj)
+
+    category_obj = { 
+        "name": best_category
+    }
+    
+    # Get the Category ID
+    print("Creating product")
+    category_response = withAuthWC(None, websiteURL=websiteURL).post("products/categories", category_obj).json()
+    print(category_response)
+    category_id = category_response["data"]["resource_id"]
+
+    # Create Product and Category Data Dictionaries to Update the Product
+    product_data = {'tags': tag_data}
+    category_data = {'id': category_id}
+    categories_arr = []
+    categories_arr.append(category_data)
 
     # Update the product
-    print(jsonify(withAuthWC(None, websiteURL=websiteURL).put(f'products/{id}', product_data).json()))
+    print(withAuthWC(None, websiteURL=websiteURL).put(f'products/{id}', product_data).json())
+    print(withAuthWC(None, websiteURL=websiteURL).put(f'products/{id}', {'categories': categories_arr}).json())
     return "Ok"
 
 
