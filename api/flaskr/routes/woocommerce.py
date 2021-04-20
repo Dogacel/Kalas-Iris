@@ -5,14 +5,20 @@ from woocommerce import API
 import urllib.request
 import requests
 from .image import mmfashionAPIAddress
+import json
 
 woocommerce_route = Blueprint('woocommerce_route', __name__)
 # Authenticate
-def withAuthWC(currentUser):
+def withAuthWC(currentUser, websiteURL=None):
     integrations = mongo.integrations.db.integrations
     try:
-        integration_info = integrations.find_one(
+        if websiteURL is None:
+            integration_info = integrations.find_one(
             {"user": currentUser, "type": "woo"})
+        else:
+            integration_info = integrations.find_one(
+            {"websiteURL": websiteURL, "type": "woo"})
+
     except:
         return jsonify("Could not find integration for the user")
     try:
@@ -67,8 +73,8 @@ def listAllProducts():
 @woocommerce_route.route("/newProductCreated", methods=['POST'])
 def newProductCreated():
     payload = request.get_json()
-    current_user = session.get("username")
-    print("Current User: ", current_user)
+    websiteURL = request.headers.get('X-WC-Webhook-Source')
+
     try:
         name = payload['name']
         id = payload['id']
@@ -111,7 +117,8 @@ def newProductCreated():
                     'tags': list(best_attributes + product_colors)}
 
     # Update the product
-    return jsonify(withAuthWC(current_user).put(f'products/{id}', product_data).json())
+    print(jsonify(withAuthWC(None, websiteURL=websiteURL).put(f'products/{id}', product_data).json()))
+    return "Ok"
 
 
 # Product Categories
