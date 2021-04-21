@@ -1,6 +1,5 @@
 import React from "react";
-import { Divider, Col, Row } from 'antd';
-import ReactJson from 'react-json-view'
+import { Divider, Col, Button } from 'antd';
 import ImageCrop from "./ImageCrop";
 import CheckBox from "./Checkbox";
 import "../css/filepreview.css";
@@ -22,10 +21,11 @@ export default function FilePreview({ previewImage, previewJSON, setPreviewJSON 
           <Divider orientation="left">Categories</Divider>
           {previewJSON.attributes && <CheckBox values={previewJSON?.categories} />}
         </Col>
-        <Col>
+        <Col style={{marginBottom: 5}}>
           <Divider orientation="left">Colors</Divider>
           {previewJSON.attributes && <CheckBox values={previewJSON?.colors} />}
         </Col>
+      <Button shape="round">Submit Suggestions</Button>
       </div>
     </div >
   );
