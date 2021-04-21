@@ -12,7 +12,11 @@ export default function CheckBoxList(props) {
             {arr.slice(0,5).map(function (d) {
                 const key = d.toString().substring(0, d.toString().indexOf(",")).toUpperCase();
                 const val = d.toString().substring(d.toString().indexOf(",") + 1);
-                return (<Checkbox>{isNaN(parseInt(key)) ? key: parseInt(key) + 1 + "."} : {val} </Checkbox>)
+                return ( 
+                <div style={{marginBottom: 5}}>
+                    <Checkbox>{isNaN(parseInt(key)) ? key: parseInt(key) + 1} : {val} </Checkbox>
+                </div>
+                )
             })}
         </div>
     );
