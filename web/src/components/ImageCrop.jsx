@@ -95,6 +95,7 @@ export default function ImageCrop({ previewImage, setPreviewJSON }) {
                             type="button"
                             id="crop-annotate-button"
                             disabled={!completedCrop?.width || !completedCrop?.height}
+                            shape="round"
                             onClick={() =>
                                 generateAnnotation(previewCanvasRef.current, completedCrop, blob => {
                                     console.log(blob)
