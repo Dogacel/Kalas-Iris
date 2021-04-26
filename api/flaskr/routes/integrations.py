@@ -45,4 +45,4 @@ def getIntegration(type):
 
     integration = integrations_collection.find({'user': user, 'type': type})
 
-    return jsonify(integration)
+    return jsonify(dumps(integration))
