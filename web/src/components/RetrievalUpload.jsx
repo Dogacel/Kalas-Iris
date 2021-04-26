@@ -46,13 +46,14 @@ export default function RetrievalUpload({ previewImage, setPreviewImage, retriev
     uploadImageRetrieval(file, config)
       .then(f => {
         const paths = f.data["paths"]
-        console.log("paths: ", f.data["paths"]);
-        paths.map(element => setRetrievedImages(state => [element, ...state]))
+        console.log("paths: ", paths);
+        f.data["paths"].map(element => setRetrievedImages(state => [...state, element]))
         setRetrievalResult(prevState => ({
           ...prevState,
           [file.uid]: paths
         })
-      )})
+      )
+    })
       .catch(e => onError(e));
   };
 
