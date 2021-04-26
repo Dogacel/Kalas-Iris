@@ -16,7 +16,7 @@ export function uploadImageRetrieval(image, config = null){
   const fmData = new FormData();
   fmData.append("image", image);
 
-  return axios.post(`${flaskAPIAdress}/retrieve`, fmData, config);
+  return axios.post("http://34.91.142.201/retrieve", fmData, config);
 }
 
 export function annotateImage(image, config = null) {

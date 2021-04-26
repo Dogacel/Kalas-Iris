@@ -12,11 +12,10 @@ export function getBase64(file) {
   });
 }
 
-export default function RetrievalUpload({ previewImage, setPreviewImage, setImageGallery }) {
+export default function RetrievalUpload({ previewImage, setPreviewImage, retrievedImages, setRetrievedImages }) {
   const [defaultFileList, setDefaultFileList] = useState([]);
   const [progress, setProgress] = useState(0);
-  //const [annotationResult, setAnnotationResult] = useState({})
-  const [similarImages, setSimilarImages] = useState({})
+  const [retrievalResult, setRetrievalResult] = useState({})
   const [previewImages, setPreviewImages] = useState({})
 
   const uploadImageToServer = async options => {
@@ -35,6 +34,7 @@ export default function RetrievalUpload({ previewImage, setPreviewImage, setImag
     uploadImage(file, config)
       .then(f => {
         onSuccess(f);
+        setRetrievedImages([]);
         getBase64(file).then(e => setPreviewImage(e));
         getBase64(file).then(e => setPreviewImages(prevState => ({
           ...prevState,
@@ -45,9 +45,14 @@ export default function RetrievalUpload({ previewImage, setPreviewImage, setImag
 
     uploadImageRetrieval(file, config)
       .then(f => {
-        const paths = f.paths;
-        setSimilarImages(paths);
-      })
+        const paths = f.data["paths"]
+        console.log("paths: ", f.data["paths"]);
+        paths.map(element => setRetrievedImages(state => [element, ...state]))
+        setRetrievalResult(prevState => ({
+          ...prevState,
+          [file.uid]: paths
+        })
+      )})
       .catch(e => onError(e));
   };
 
@@ -57,7 +62,7 @@ export default function RetrievalUpload({ previewImage, setPreviewImage, setImag
 
   const handlePreview = async file => {
     setPreviewImage(previewImages[file.originFileObj.uid])
-    setImageGallery(similarImages[file.originFileObj.uid])
+    setRetrievedImages(retrievalResult[file.originFileObj.uid])
   };
 
   const handleRemove = async file => {
@@ -65,19 +70,16 @@ export default function RetrievalUpload({ previewImage, setPreviewImage, setImag
       if (defaultFileList.length > 1) {
         if (file.uid !== defaultFileList[0].uid) {
           setPreviewImage(previewImages[defaultFileList[0].originFileObj.uid])
-          //setPreviewJSON(annotationResult[defaultFileList[0].originFileObj.uid])
-          setSimilarImages(similarImages[defaultFileList[0].originFileObj.uid])
+          setRetrievedImages(retrievalResult[defaultFileList[0].originFileObj.uid])
         }
         else {
           setPreviewImage(previewImages[defaultFileList[defaultFileList.length - 1].originFileObj.uid])
-          //setPreviewJSON(annotationResult[defaultFileList[defaultFileList.length - 1].originFileObj.uid])
-          setSimilarImages(similarImages[defaultFileList[defaultFileList.length - 1].originFileObj.uid])
+          setRetrievedImages(retrievalResult[defaultFileList[defaultFileList.length - 1].originFileObj.uid])
         }
       }
       else {
         setPreviewImage("https://i.stack.imgur.com/y9DpT.jpg")
-        //setPreviewJSON([""])
-        setSimilarImages([""])
+        setRetrievedImages([""])
       }
     }
   }

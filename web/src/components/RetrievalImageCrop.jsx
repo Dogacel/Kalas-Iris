@@ -21,7 +21,7 @@ function fetchSimilarImages(canvas, crop, callback) {
     );
 }
 
-export default function RetrievalImageCrop({ previewImage, setPreviewImages }) {
+export default function RetrievalImageCrop({ previewImage,  retrievedImages }) {
     const imgRef = useRef(null);
     const previewCanvasRef = useRef(null);
     const [crop, setCrop] = useState({});
@@ -79,7 +79,7 @@ export default function RetrievalImageCrop({ previewImage, setPreviewImages }) {
                 />
             </div>
             {completedCrop !== null &&
-                <div id ="right-container">
+                <div id="right-container">
                     <div class="right">
                         <canvas
                             ref={previewCanvasRef}
@@ -96,20 +96,16 @@ export default function RetrievalImageCrop({ previewImage, setPreviewImages }) {
                             id="crop-annotate-button"
                             disabled={!completedCrop?.width || !completedCrop?.height}
                             shape="round"
-                            //Retrieve similar images and setImageGallery 
-                                //fetchSimilarImages => 
-                                onClick={() =>
+                            onClick={() =>
                                 fetchSimilarImages(previewCanvasRef.current, completedCrop, blob => {
                                     console.log(blob)
                                     uploadImageRetrieval(blob).then(r => {
-                                        const paths = r.paths
-
-                                        setPreviewImages(paths);
+                                        r.data["paths"].forEach(element => retrievedImages.push(element));
                                     })
                                 })
                             }
                         >
-                            Retrieve Similar Images for Crop
+                            Retrieve Similar Products for Crop
                         </Button>
                     </div>
                 </div>

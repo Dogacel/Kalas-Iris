@@ -13,7 +13,7 @@ import RegistrationForm from "./views/SignupView";
 import HomepageView from "./views/HomepageView";
 import ReviewView from "./views/ReviewView";
 import ReviewHistoryView from "./views/ReviewHistoryView";
-import RetrivalView from "./views/RetrievalView";
+import RetrievalView from "./views/RetrievalView";
 import { useUserContext } from "./components/UserContext";
 
 const { Header, Content, Footer } = Layout;
@@ -148,7 +148,7 @@ function App() {
           <Route path="/" element={<HomepageView />} />
           <Route path="/review" element={<ReviewView />} />
           <Route path="/past_reviews" element={<ReviewHistoryView />} />
-          <Route path="/retrieval" element={<RetrivalView />} />
+          <Route path="/retrieval" element={<RetrievalView />} />
         </Routes>
       </Content>
       <Divider />
