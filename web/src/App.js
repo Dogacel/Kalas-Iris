@@ -13,6 +13,7 @@ import RegistrationForm from "./views/SignupView";
 import HomepageView from "./views/HomepageView";
 import ReviewView from "./views/ReviewView";
 import ReviewHistoryView from "./views/ReviewHistoryView";
+import RetrivalView from "./views/RetrievalView";
 import { useUserContext } from "./components/UserContext";
 
 const { Header, Content, Footer } = Layout;
@@ -28,6 +29,7 @@ function App() {
     { to: "/annotate", text: "Image Annotation" },
     { to: "/review", text: "Review" },
     { to: "/past_reviews", text: "Past Reviews" },
+    { to: "/retrieval", text: "Image Retrieval"}
   ];
 
   if (username) {
@@ -146,6 +148,7 @@ function App() {
           <Route path="/" element={<HomepageView />} />
           <Route path="/review" element={<ReviewView />} />
           <Route path="/past_reviews" element={<ReviewHistoryView />} />
+          <Route path="/retrieval" element={<RetrivalView />} />
         </Routes>
       </Content>
       <Divider />
