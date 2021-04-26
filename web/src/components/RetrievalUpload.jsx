@@ -1,7 +1,7 @@
 import { Upload, Progress } from "antd";
 import React, { useState } from "react";
 import "../api/api";
-import { annotateImage, uploadImage } from "../api/api";
+import { uploadImageRetrieval, uploadImage } from "../api/api";
 
 export function getBase64(file) {
   return new Promise((resolve, reject) => {
@@ -16,7 +16,7 @@ export default function RetrievalUpload({ previewImage, setPreviewImage, setImag
   const [defaultFileList, setDefaultFileList] = useState([]);
   const [progress, setProgress] = useState(0);
   //const [annotationResult, setAnnotationResult] = useState({})
-  // const [similarImages, setSimilarImages] = useState({})
+  const [similarImages, setSimilarImages] = useState({})
   const [previewImages, setPreviewImages] = useState({})
 
   const uploadImageToServer = async options => {
@@ -42,27 +42,13 @@ export default function RetrievalUpload({ previewImage, setPreviewImage, setImag
         })))
       })
       .catch(e => onError(e));
-    /** 
-     * 
-     * FetchSimilarImages.then(setImageGallery)
-    annotateImage(file, config)
+
+    uploadImageRetrieval(file, config)
       .then(f => {
-        const data = f.data;
-
-        data.attributes = Object.entries(data.attributes)
-          .sort(([, a], [, b]) => b - a)
-          .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
-        data.categories = Object.entries(data.categories)
-          .sort(([, a], [, b]) => b - a)
-          .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
-          //setPreviewJSON(data);
-        setAnnotationResult(prevState => ({
-          ...prevState,
-          [file.uid]: data
-        }));
+        const paths = f.paths;
+        setSimilarImages(paths);
       })
-      .catch(e => onError(e));*/
-
+      .catch(e => onError(e));
   };
 
   const handleOnChange = ({ file, fileList }) => {
@@ -71,7 +57,7 @@ export default function RetrievalUpload({ previewImage, setPreviewImage, setImag
 
   const handlePreview = async file => {
     setPreviewImage(previewImages[file.originFileObj.uid])
-    //setPreviewJSON(annotationResult[file.originFileObj.uid])
+    setImageGallery(similarImages[file.originFileObj.uid])
   };
 
   const handleRemove = async file => {
@@ -80,15 +66,18 @@ export default function RetrievalUpload({ previewImage, setPreviewImage, setImag
         if (file.uid !== defaultFileList[0].uid) {
           setPreviewImage(previewImages[defaultFileList[0].originFileObj.uid])
           //setPreviewJSON(annotationResult[defaultFileList[0].originFileObj.uid])
+          setSimilarImages(similarImages[defaultFileList[0].originFileObj.uid])
         }
         else {
           setPreviewImage(previewImages[defaultFileList[defaultFileList.length - 1].originFileObj.uid])
           //setPreviewJSON(annotationResult[defaultFileList[defaultFileList.length - 1].originFileObj.uid])
+          setSimilarImages(similarImages[defaultFileList[defaultFileList.length - 1].originFileObj.uid])
         }
       }
       else {
         setPreviewImage("https://i.stack.imgur.com/y9DpT.jpg")
         //setPreviewJSON([""])
+        setSimilarImages([""])
       }
     }
   }

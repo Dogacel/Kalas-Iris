@@ -3,7 +3,7 @@ import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import "../css/imagecrop.css";
 import "../api/api";
-import { annotateImage } from '../api/api';
+import { uploadImageRetrieval } from '../api/api';
 import { Button } from 'antd';
 
 function fetchSimilarImages(canvas, crop, callback) {
@@ -96,28 +96,20 @@ export default function RetrievalImageCrop({ previewImage, setPreviewImages }) {
                             id="crop-annotate-button"
                             disabled={!completedCrop?.width || !completedCrop?.height}
                             shape="round"
-                            /*  Retrieve similar images and setImageGallery 
-                                fetchSimilarImages => 
+                            //Retrieve similar images and setImageGallery 
+                                //fetchSimilarImages => 
                                 onClick={() =>
-                                
-                                generateAnnotation(previewCanvasRef.current, completedCrop, blob => {
+                                fetchSimilarImages(previewCanvasRef.current, completedCrop, blob => {
                                     console.log(blob)
-                                    annotateImage(blob).then(annotation => {
-                                        const data = annotation.data
+                                    uploadImageRetrieval(blob).then(r => {
+                                        const paths = r.paths
 
-                                        data.attributes = Object.entries(data.attributes)
-                                            .sort(([, a], [, b]) => b - a)
-                                            .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
-                                        data.categories = Object.entries(data.categories)
-                                            .sort(([, a], [, b]) => b - a)
-                                            .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
-                                        console.log(data)
-                                        //setPreviewJSON(data);
+                                        setPreviewImages(paths);
                                     })
                                 })
-                            }*/
+                            }
                         >
-                            Annotate cropped image
+                            Retrieve Similar Images for Crop
                         </Button>
                     </div>
                 </div>

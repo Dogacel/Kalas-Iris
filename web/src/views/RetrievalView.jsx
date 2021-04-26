@@ -1,6 +1,5 @@
 import { Row, Col, Carousel, Image } from "antd";
 import React, { useState } from "react";
-import FilePreview from "../components/FilePreview";
 import RetrievalUpload from "../components/FileUpload";
 import RetrievalImageCrop from "../components/ImageCrop";
 
