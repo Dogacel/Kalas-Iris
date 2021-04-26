@@ -21,7 +21,7 @@ function fetchSimilarImages(canvas, crop, callback) {
     );
 }
 
-export default function RetrievalImageCrop({ previewImage,  retrievedImages }) {
+export default function RetrievalImageCrop({ previewImage,  retrievedImages, setRetrievedImages }) {
     const imgRef = useRef(null);
     const previewCanvasRef = useRef(null);
     const [crop, setCrop] = useState({});
@@ -99,8 +99,11 @@ export default function RetrievalImageCrop({ previewImage,  retrievedImages }) {
                             onClick={() =>
                                 fetchSimilarImages(previewCanvasRef.current, completedCrop, blob => {
                                     console.log(blob)
+                                    setRetrievedImages([]);
                                     uploadImageRetrieval(blob).then(r => {
-                                        r.data["paths"].forEach(element => retrievedImages.push(element));
+                                        const paths = r.data["paths"];
+                                        console.log("cropped paths: ", paths);
+                                        paths.map(element => setRetrievedImages(state => [element, ...state]))
                                     })
                                 })
                             }

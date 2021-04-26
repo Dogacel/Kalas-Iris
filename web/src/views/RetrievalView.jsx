@@ -19,7 +19,7 @@ export default function RetrievalView() {
             <RetrievalImageCrop previewImage={previewImage} retrievedImages={retrievedImages} setRetrievedImages={setRetrievedImages} />
           </div>
           <div id="child">
-            {retrievedImages.length !== 0 &&
+            {retrievedImages.length !== 0 && 
               <Carousel
                 autoplay={true}
                 centerMode={true}

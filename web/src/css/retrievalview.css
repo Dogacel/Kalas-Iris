@@ -1,8 +1,10 @@
 #child {
-    width: 50%;
     float: left;
 
 }  
+#wrapper {
+    display: inline-block;
+}
 #carousel-content {
     text-align: 'center';
 }
