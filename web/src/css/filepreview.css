@@ -1,0 +1,16 @@
+#preview-wrapper {
+    display: inline-flex;
+    text-align: center;
+    float: left;
+}
+
+#image-container {
+    text-align: center;
+    margin-right: auto;
+    flex: 1;
+}
+
+#annotation-container {
+    flex: 1;
+    margin-left: auto;
+}

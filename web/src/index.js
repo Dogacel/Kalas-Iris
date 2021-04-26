@@ -8,7 +8,7 @@ import { UserProvider } from "./components/UserContext";
 ReactDOM.render(
   <Router>
     <UserProvider>
-    <App />
+        <App />
     </UserProvider>
   </Router>,
   document.getElementById("root")
