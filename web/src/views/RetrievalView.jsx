@@ -1,4 +1,4 @@
-import { Row, Col, Carousel, Image } from "antd";
+import { Row, Col, Carousel, Image, Spin } from "antd";
 import React, { useState } from "react";
 import RetrievalImageCrop from "../components/RetrievalImageCrop";
 import RetrievalUpload from "../components/RetrievalUpload";
@@ -16,6 +16,7 @@ export default function RetrievalView() {
     return (
         <Row>
             <Col span={18}>
+                <div id="wrapper">
                 <div class="first">
                     <RetrievalImageCrop previewImage={previewImage} retrievedImages={retrievedImages} setRetrievedImages={setRetrievedImages} />
                 </div>
@@ -26,10 +27,10 @@ export default function RetrievalView() {
                             centerPadding={-20}
                             centerMode={true}
                         >
-                            {retrievedImages.map((imgSrc, index) => <div style={{textAlign: "left"}}><Image src={"https://via.placeholder.com/25x50"} key={index} /> </div>)}
-                        </Carousel>
+                            {retrievedImages.map((imgSrc, index) => <Image src={"http://34.91.142.201/img/In-shop/Img/" + imgSrc} key={index} />)}                        </Carousel>
                 </div>
                 }
+                </div>
             </Col>
             <Col span={6}>
                 <RetrievalUpload
@@ -38,6 +39,7 @@ export default function RetrievalView() {
                     previewImage={previewImage}
                     retrievedImages={retrievedImages}
                 />
+               {retrievedImages.length === 0 && <Spin tip="Searching for similar images. This will take a while." size="large"/> }
             </Col>
         </Row>
     );
