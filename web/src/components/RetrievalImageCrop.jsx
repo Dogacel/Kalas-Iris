@@ -3,10 +3,10 @@ import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import "../css/imagecrop.css";
 import "../api/api";
-import { annotateImage } from '../api/api';
+import { uploadImageRetrieval } from '../api/api';
 import { Button } from 'antd';
 
-function generateAnnotation(canvas, crop, callback) {
+function fetchSimilarImages(canvas, crop, callback) {
     if (!crop || !canvas) {
         return;
     }
@@ -21,7 +21,7 @@ function generateAnnotation(canvas, crop, callback) {
     );
 }
 
-export default function ImageCrop({ previewImage, setPreviewJSON, setAnnotatingImages }) {
+export default function RetrievalImageCrop({ previewImage, setRetrievedImages, setFetchingImages }) {
     const imgRef = useRef(null);
     const previewCanvasRef = useRef(null);
     const [crop, setCrop] = useState({});
@@ -79,7 +79,7 @@ export default function ImageCrop({ previewImage, setPreviewJSON, setAnnotatingI
                 />
             </div>
             {completedCrop !== null &&
-                <div id ="right-container">
+                <div id="right-container">
                     <div class="right">
                         <canvas
                             ref={previewCanvasRef}
@@ -97,26 +97,19 @@ export default function ImageCrop({ previewImage, setPreviewJSON, setAnnotatingI
                             disabled={!completedCrop?.width || !completedCrop?.height}
                             shape="round"
                             onClick={() =>
-                                generateAnnotation(previewCanvasRef.current, completedCrop, blob => {
+                                fetchSimilarImages(previewCanvasRef.current, completedCrop, blob => {
                                     console.log(blob)
-                                    setAnnotatingImages(true);
-                                    annotateImage(blob).then(annotation => {
-                                        const data = annotation.data
-
-                                        data.attributes = Object.entries(data.attributes)
-                                            .sort(([, a], [, b]) => b - a)
-                                            .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
-                                        data.categories = Object.entries(data.categories)
-                                            .sort(([, a], [, b]) => b - a)
-                                            .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
-                                        console.log(data)
-                                        setPreviewJSON(data);
-                                        setAnnotatingImages(false);
+                                    setRetrievedImages([]);
+                                    setFetchingImages(true);
+                                    uploadImageRetrieval(blob).then(r => {
+                                        const paths = r.data["paths"];
+                                        console.log("cropped paths: ", paths);
+                                        paths.map(element => setRetrievedImages(state => [element, ...state]))
                                     })
                                 })
                             }
                         >
-                            Annotate cropped image
+                            Retrieve Similar Products for Crop
                         </Button>
                     </div>
                 </div>

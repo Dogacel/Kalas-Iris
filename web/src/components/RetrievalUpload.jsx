@@ -1,7 +1,7 @@
 import { Upload, Progress } from "antd";
 import React, { useState } from "react";
 import "../api/api";
-import { annotateImage, uploadImage } from "../api/api";
+import { uploadImageRetrieval, uploadImage } from "../api/api";
 
 export function getBase64(file) {
   return new Promise((resolve, reject) => {
@@ -12,10 +12,10 @@ export function getBase64(file) {
   });
 }
 
-export default function FileUpload({ previewImage, setPreviewImage, setPreviewJSON, setAnnotatingImages }) {
+export default function RetrievalUpload({ previewImage, setPreviewImage, retrievedImages, setRetrievedImages, setFetchingImages }) {
   const [defaultFileList, setDefaultFileList] = useState([]);
   const [progress, setProgress] = useState(0);
-  const [annotationResult, setAnnotationResult] = useState({})
+  const [retrievalResult, setRetrievalResult] = useState({})
   const [previewImages, setPreviewImages] = useState({})
 
   const uploadImageToServer = async options => {
@@ -34,7 +34,8 @@ export default function FileUpload({ previewImage, setPreviewImage, setPreviewJS
     uploadImage(file, config)
       .then(f => {
         onSuccess(f);
-        setAnnotatingImages(true);
+        setRetrievedImages([]);
+        setFetchingImages(true);
         getBase64(file).then(e => setPreviewImage(e));
         getBase64(file).then(e => setPreviewImages(prevState => ({
           ...prevState,
@@ -43,23 +44,17 @@ export default function FileUpload({ previewImage, setPreviewImage, setPreviewJS
       })
       .catch(e => onError(e));
 
-    annotateImage(file, config)
+    uploadImageRetrieval(file, config)
       .then(f => {
-        const data = f.data;
-
-        data.attributes = Object.entries(data.attributes)
-          .sort(([, a], [, b]) => b - a)
-          .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
-        data.categories = Object.entries(data.categories)
-          .sort(([, a], [, b]) => b - a)
-          .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
-          setPreviewJSON(data);
-          setAnnotatingImages(false);
-        setAnnotationResult(prevState => ({
+        const paths = f.data["paths"]
+        console.log("paths: ", paths);
+        f.data["paths"].map(element => setRetrievedImages(state => [...state, element]))
+        setRetrievalResult(prevState => ({
           ...prevState,
-          [file.uid]: data
-        }));
-      })
+          [file.uid]: paths
+        })
+      )
+    })
       .catch(e => onError(e));
   };
 
@@ -68,26 +63,27 @@ export default function FileUpload({ previewImage, setPreviewImage, setPreviewJS
   };
 
   const handlePreview = async file => {
-    setPreviewImage(previewImages[file.originFileObj.uid])
-    setPreviewJSON(annotationResult[file.originFileObj.uid])
+    setPreviewImage(previewImages[file.originFileObj.uid]);
+    setRetrievedImages(retrievalResult[file.originFileObj.uid]);
   };
 
   const handleRemove = async file => {
     if (file.originFileObj.uid !== previewImage.uid) {
       if (defaultFileList.length > 1) {
         if (file.uid !== defaultFileList[0].uid) {
-          setPreviewImage(previewImages[defaultFileList[0].originFileObj.uid])
-          setPreviewJSON(annotationResult[defaultFileList[0].originFileObj.uid])
+          setPreviewImage(previewImages[defaultFileList[0].originFileObj.uid]);
+          setRetrievedImages(retrievalResult[defaultFileList[0].originFileObj.uid]);
         }
         else {
-          setPreviewImage(previewImages[defaultFileList[defaultFileList.length - 1].originFileObj.uid])
-          setPreviewJSON(annotationResult[defaultFileList[defaultFileList.length - 1].originFileObj.uid])
+          setPreviewImage(previewImages[defaultFileList[defaultFileList.length - 1].originFileObj.uid]);
+          setRetrievedImages(retrievalResult[defaultFileList[defaultFileList.length - 1].originFileObj.uid]);
         }
       }
       else {
         setPreviewImage("https://i.stack.imgur.com/y9DpT.jpg")
-        setPreviewJSON([""])
-        setAnnotatingImages(false);
+        const emptyArray = []
+        setRetrievedImages(emptyArray);
+        setFetchingImages(false);
       }
     }
   }

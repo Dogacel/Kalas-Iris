@@ -1,0 +1,13 @@
+.first {
+    max-width: 50%;
+    max-height: 50%;
+    float: left;
+}
+
+.slick-track{
+    margin:0 auto;
+}
+
+.second{
+    margin-right: 10%;
+}
