@@ -1,9 +1,11 @@
-import { Row, Col, Carousel, Image, Spin } from "antd";
+import { Row, Col, Carousel, Image, Spin, Typography } from "antd";
 import React, { useState } from "react";
 import RetrievalImageCrop from "../components/RetrievalImageCrop";
 import RetrievalUpload from "../components/RetrievalUpload";
+import RetrievalCarousel from "../components/RetrievalCarousel";
 import "../css/retrievalview.css";
 
+const { Title } = Typography;
 //                             {retrievedImages.map((imgSrc, index) => <Image src={"http://34.91.142.201/img/In-shop/Img/" + imgSrc} key={index} />)}
 
 export default function RetrievalView() {
@@ -12,24 +14,25 @@ export default function RetrievalView() {
     const [previewImage, setPreviewImage] = useState(
         "https://i.stack.imgur.com/y9DpT.jpg"
     );
+    const [fetchingImages, setFetchingImages] = useState(false);
 
     return (
         <Row>
             <Col span={18}>
                 <div id="wrapper">
-                <div class="first">
-                    <RetrievalImageCrop previewImage={previewImage} retrievedImages={retrievedImages} setRetrievedImages={setRetrievedImages} />
-                </div>
-                {retrievedImages.length !== 0 &&
-                <div class="second">
-                        <Carousel
-                            autoplay={true}
-                            centerPadding={-20}
-                            centerMode={true}
-                        >
-                            {retrievedImages.map((imgSrc, index) => <Image src={"http://34.91.142.201/img/In-shop/Img/" + imgSrc} key={index} />)}                        </Carousel>
-                </div>
-                }
+                    <div class="first">
+                        <RetrievalImageCrop
+                            previewImage={previewImage}
+                            retrievedImages={retrievedImages}
+                            setRetrievedImages={setRetrievedImages}
+                        />
+                    </div>
+                    {retrievedImages.length > 0 &&
+                        <div class="second">
+                            <Title level={2}>Similar Products</Title>
+                            <RetrievalCarousel setFetchingImages={setFetchingImages} images={retrievedImages}/>
+                        </div>
+                    }
                 </div>
             </Col>
             <Col span={6}>
@@ -38,8 +41,9 @@ export default function RetrievalView() {
                     setRetrievedImages={setRetrievedImages}
                     previewImage={previewImage}
                     retrievedImages={retrievedImages}
+                    setFetchingImages={setFetchingImages}
                 />
-               {retrievedImages.length === 0 && <Spin tip="Searching for similar images. This will take a while." size="large"/> }
+                {fetchingImages && <Spin tip="Searching similar products. This might take a while." />}
             </Col>
         </Row>
     );

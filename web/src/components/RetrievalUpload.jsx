@@ -12,7 +12,7 @@ export function getBase64(file) {
   });
 }
 
-export default function RetrievalUpload({ previewImage, setPreviewImage, retrievedImages, setRetrievedImages }) {
+export default function RetrievalUpload({ previewImage, setPreviewImage, retrievedImages, setRetrievedImages, setFetchingImages }) {
   const [defaultFileList, setDefaultFileList] = useState([]);
   const [progress, setProgress] = useState(0);
   const [retrievalResult, setRetrievalResult] = useState({})
@@ -35,6 +35,7 @@ export default function RetrievalUpload({ previewImage, setPreviewImage, retriev
       .then(f => {
         onSuccess(f);
         setRetrievedImages([]);
+        setFetchingImages(true);
         getBase64(file).then(e => setPreviewImage(e));
         getBase64(file).then(e => setPreviewImages(prevState => ({
           ...prevState,
