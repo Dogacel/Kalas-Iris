@@ -25,6 +25,7 @@ export default function RetrievalView() {
                             previewImage={previewImage}
                             retrievedImages={retrievedImages}
                             setRetrievedImages={setRetrievedImages}
+                            setFetchingImages={setFetchingImages}
                         />
                     </div>
                     {retrievedImages.length > 0 &&

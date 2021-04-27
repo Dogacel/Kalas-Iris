@@ -81,7 +81,8 @@ export default function RetrievalUpload({ previewImage, setPreviewImage, retriev
       }
       else {
         setPreviewImage("https://i.stack.imgur.com/y9DpT.jpg")
-        setRetrievedImages([""])
+        const emptyArray = []
+        setRetrievedImages(emptyArray)
       }
     }
   }
