@@ -9,7 +9,7 @@ export default function RetrievalCarousel({ images, setFetchingImages }) {
     return (
         <Carousel
             autoplay={true}
-            centerPadding={20}
+            centerPadding={0}
             centerMode={true}
             dots={false}
         >

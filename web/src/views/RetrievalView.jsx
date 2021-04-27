@@ -1,4 +1,4 @@
-import { Row, Col, Carousel, Image, Spin, Typography } from "antd";
+import { Row, Col, Spin, Typography } from "antd";
 import React, { useState } from "react";
 import RetrievalImageCrop from "../components/RetrievalImageCrop";
 import RetrievalUpload from "../components/RetrievalUpload";
