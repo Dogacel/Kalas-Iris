@@ -44,7 +44,7 @@ export default function RetrievalView() {
                     retrievedImages={retrievedImages}
                     setFetchingImages={setFetchingImages}
                 />
-                {fetchingImages && <Spin tip="Searching similar products. This might take a while." />}
+                {fetchingImages && <Spin tip="Searching similar products. This might take a while." size="large"/>}
             </Col>
         </Row>
     );

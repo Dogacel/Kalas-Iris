@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Checkbox } from "antd";
 
 export default function CheckBoxList(props) {
     const values = props.values;
     var arr = Object.keys(values).map((key) => [key, values[key]]);
     arr = arr.slice(0,5);
+    const setAnnotatingImages = () => props.setAnnotatingImages;
+
+    useEffect(() => {
+        setAnnotatingImages(false);
+    }, [])
 
     console.log(arr)
     return (

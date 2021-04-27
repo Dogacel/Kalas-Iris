@@ -12,7 +12,7 @@ export function getBase64(file) {
   });
 }
 
-export default function FileUpload({ previewImage, setPreviewImage, setPreviewJSON }) {
+export default function FileUpload({ previewImage, setPreviewImage, setPreviewJSON, setAnnotatingImages }) {
   const [defaultFileList, setDefaultFileList] = useState([]);
   const [progress, setProgress] = useState(0);
   const [annotationResult, setAnnotationResult] = useState({})
@@ -34,6 +34,7 @@ export default function FileUpload({ previewImage, setPreviewImage, setPreviewJS
     uploadImage(file, config)
       .then(f => {
         onSuccess(f);
+        setAnnotatingImages(true);
         getBase64(file).then(e => setPreviewImage(e));
         getBase64(file).then(e => setPreviewImages(prevState => ({
           ...prevState,
@@ -53,6 +54,7 @@ export default function FileUpload({ previewImage, setPreviewImage, setPreviewJS
           .sort(([, a], [, b]) => b - a)
           .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
           setPreviewJSON(data);
+          setAnnotatingImages(false);
         setAnnotationResult(prevState => ({
           ...prevState,
           [file.uid]: data
@@ -85,6 +87,7 @@ export default function FileUpload({ previewImage, setPreviewImage, setPreviewJS
       else {
         setPreviewImage("https://i.stack.imgur.com/y9DpT.jpg")
         setPreviewJSON([""])
+        setAnnotatingImages(false);
       }
     }
   }

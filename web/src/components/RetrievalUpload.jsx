@@ -63,26 +63,27 @@ export default function RetrievalUpload({ previewImage, setPreviewImage, retriev
   };
 
   const handlePreview = async file => {
-    setPreviewImage(previewImages[file.originFileObj.uid])
-    setRetrievedImages(retrievalResult[file.originFileObj.uid])
+    setPreviewImage(previewImages[file.originFileObj.uid]);
+    setRetrievedImages(retrievalResult[file.originFileObj.uid]);
   };
 
   const handleRemove = async file => {
     if (file.originFileObj.uid !== previewImage.uid) {
       if (defaultFileList.length > 1) {
         if (file.uid !== defaultFileList[0].uid) {
-          setPreviewImage(previewImages[defaultFileList[0].originFileObj.uid])
-          setRetrievedImages(retrievalResult[defaultFileList[0].originFileObj.uid])
+          setPreviewImage(previewImages[defaultFileList[0].originFileObj.uid]);
+          setRetrievedImages(retrievalResult[defaultFileList[0].originFileObj.uid]);
         }
         else {
-          setPreviewImage(previewImages[defaultFileList[defaultFileList.length - 1].originFileObj.uid])
-          setRetrievedImages(retrievalResult[defaultFileList[defaultFileList.length - 1].originFileObj.uid])
+          setPreviewImage(previewImages[defaultFileList[defaultFileList.length - 1].originFileObj.uid]);
+          setRetrievedImages(retrievalResult[defaultFileList[defaultFileList.length - 1].originFileObj.uid]);
         }
       }
       else {
         setPreviewImage("https://i.stack.imgur.com/y9DpT.jpg")
         const emptyArray = []
-        setRetrievedImages(emptyArray)
+        setRetrievedImages(emptyArray);
+        setFetchingImages(false);
       }
     }
   }

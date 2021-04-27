@@ -21,7 +21,7 @@ function generateAnnotation(canvas, crop, callback) {
     );
 }
 
-export default function ImageCrop({ previewImage, setPreviewJSON }) {
+export default function ImageCrop({ previewImage, setPreviewJSON, setAnnotatingImages }) {
     const imgRef = useRef(null);
     const previewCanvasRef = useRef(null);
     const [crop, setCrop] = useState({});
@@ -99,6 +99,7 @@ export default function ImageCrop({ previewImage, setPreviewJSON }) {
                             onClick={() =>
                                 generateAnnotation(previewCanvasRef.current, completedCrop, blob => {
                                     console.log(blob)
+                                    setAnnotatingImages(true);
                                     annotateImage(blob).then(annotation => {
                                         const data = annotation.data
 
@@ -110,6 +111,7 @@ export default function ImageCrop({ previewImage, setPreviewJSON }) {
                                             .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
                                         console.log(data)
                                         setPreviewJSON(data);
+                                        setAnnotatingImages(false);
                                     })
                                 })
                             }
