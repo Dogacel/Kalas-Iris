@@ -8,11 +8,13 @@ import CheckBox from "./Checkbox";
 export default function FilePreview({ previewImage, previewJSON, setPreviewJSON, setAnnotatingImages, currentFileName }) {
   const [selectedResults, setSelectedResults] = useState([])
   const [submittingSuggestions, setSubmittingSuggestions] = useState(false);
+  const [attributeCheckboxArray, setAttributeCheckboxArray] = useState(new Array(5).fill(false));
 
   const submitSuggestions = () => {
     setSubmittingSuggestions(true);
     console.log("Current file name: ", currentFileName);
     console.log("Selected results: ", selectedResults);
+    
     sendAnnotationSuggestion(currentFileName, selectedResults).then(r => {
       setSubmittingSuggestions(false);
       notification['success']({
@@ -48,7 +50,16 @@ export default function FilePreview({ previewImage, previewJSON, setPreviewJSON,
                     const keyValue = d.toString().substring(0, d.toString().indexOf(",")).toUpperCase();
                     const val = d.toString().substring(d.toString().indexOf(",") + 1).substring(0, 5);
                     return (
-                      <CheckBox key={index} keyValue={keyValue} val={val} setAnnotatingImages={setAnnotatingImages} selectedResults={selectedResults} setSelectedResults={setSelectedResults} />
+                      <CheckBox 
+                        key={index} 
+                        keyValue={keyValue}
+                        val={val} 
+                        setAnnotatingImages={setAnnotatingImages} 
+                        selectedResults={selectedResults} 
+                        setSelectedResults={setSelectedResults} 
+                        setCheckboxArray={setAttributeCheckboxArray}
+                        checkboxArray={attributeCheckboxArray}
+                        />
                     )
                   })}
               </div>
