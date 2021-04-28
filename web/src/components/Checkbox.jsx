@@ -1,28 +1,27 @@
 import React, { useEffect } from "react";
 import { Checkbox } from "antd";
 
-export default function CheckBoxList(props) {
-    const values = props.values;
-    var arr = Object.keys(values).map((key) => [key, values[key]]);
-    arr = arr.slice(0,5);
+export default function CheckBox(props) {
     const setAnnotatingImages = () => props.setAnnotatingImages;
+    const setSelectedResults = () => props.setSelectedResults;
+    const keyValue = props.keyValue;
+    const val = props.val;
+
+    const onChange = (e) => {
+        if (e.target.checked) {
+            const selectedValue = isNaN(parseInt(keyValue)) ? keyValue : val
+            console.log("SelectedValue: ", selectedValue)
+            isNaN(parseInt(keyValue)) ? setSelectedResults(state => [...state, selectedValue]) : setSelectedResults(state => [...state, selectedValue])
+        }
+    }
 
     useEffect(() => {
         setAnnotatingImages(false);
     }, [])
 
-    console.log(arr)
     return (
-        <div>
-            {arr.slice(0,5).map(function (d) {
-                const key = d.toString().substring(0, d.toString().indexOf(",")).toUpperCase();
-                const val = d.toString().substring(d.toString().indexOf(",") + 1).substring(0,5);
-                return ( 
-                <div style={{marginBottom: 5}}>
-                    <Checkbox>{isNaN(parseInt(key)) ? key: parseInt(key) + 1} : {val} </Checkbox>
-                </div>
-                )
-            })}
+        <div style={{ marginBottom: 5 }}>
+            <Checkbox onChange={onChange}>{isNaN(parseInt(keyValue)) ? keyValue : parseInt(keyValue) + 1} : {val} </Checkbox>
         </div>
     );
 }
