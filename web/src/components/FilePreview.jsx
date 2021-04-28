@@ -8,7 +8,11 @@ import CheckBox from "./Checkbox";
 export default function FilePreview({ previewImage, previewJSON, setPreviewJSON, setAnnotatingImages, currentFileName }) {
   const [selectedResults, setSelectedResults] = useState([])
   const [submittingSuggestions, setSubmittingSuggestions] = useState(false);
-  const [attributeCheckboxArray, setAttributeCheckboxArray] = useState(new Array(5).fill(false));
+  // "checked" attribute of each checkbox will be set according to the attributeCheckBoxArray[index]
+  // The value for each checbox is filled according to the "index" value in the map function -> attributeCheckBoxArray[i] = ith AttributeCheckbox.checked 
+  // The value at each index will be updated at the onChange prop in the Checkbox component
+  // The issue is: the attributeCheckboxArray and key value are undefined at the checkbox component.
+  const [attributeCheckboxArray, setAttributeCheckboxArray] = useState(new Array(5).fill(false)); 
 
   const submitSuggestions = () => {
     setSubmittingSuggestions(true);
