@@ -11,7 +11,8 @@ export default function FilePreview({ previewImage, previewJSON, setPreviewJSON,
   const submitSuggestions = () => {
     console.log("Current file name: ", currentFileName);
     console.log("Selected results: ", selectedResults);
-    sendAnnotationSuggestion(currentFileName, previewJSON)
+    sendAnnotationSuggestion(currentFileName, selectedResults)
+    setSelectedResults([]);
   }
 
   return (
@@ -32,7 +33,7 @@ export default function FilePreview({ previewImage, previewJSON, setPreviewJSON,
                     const keyValue = d.toString().substring(0, d.toString().indexOf(",")).toUpperCase();
                     const val = d.toString().substring(d.toString().indexOf(",") + 1).substring(0, 5);
                     return (
-                      <CheckBox key={index} keyValue={keyValue} val={val} setAnnotatingImages={setAnnotatingImages} setSelectedResults={setSelectedResults} />
+                      <CheckBox key={index} keyValue={keyValue} val={val} setAnnotatingImages={setAnnotatingImages} selectedResults={selectedResults} setSelectedResults={setSelectedResults} />
                     )
                   })}
               </div>
@@ -47,7 +48,7 @@ export default function FilePreview({ previewImage, previewJSON, setPreviewJSON,
                     const keyValue = d.toString().substring(0, d.toString().indexOf(",")).toUpperCase();
                     const val = d.toString().substring(d.toString().indexOf(",") + 1).substring(0, 5);
                     return (
-                      <CheckBox key={index} keyValue={keyValue} val={val} setAnnotatingImages={setAnnotatingImages} setSelectedResults={setSelectedResults} />
+                      <CheckBox key={index} keyValue={keyValue} val={val} setAnnotatingImages={setAnnotatingImages} selectedResults={selectedResults} setSelectedResults={setSelectedResults} />
                     )
                   })}
               </div>
@@ -62,7 +63,7 @@ export default function FilePreview({ previewImage, previewJSON, setPreviewJSON,
                     const keyValue = d.toString().substring(0, d.toString().indexOf(",")).toUpperCase();
                     const val = d.toString().substring(d.toString().indexOf(",") + 1).substring(0, 5);
                     return (
-                      <CheckBox key={index} keyValue={keyValue} val={val} setAnnotatingImages={setAnnotatingImages} setSelectedResults={setSelectedResults} />
+                      <CheckBox key={index} keyValue={keyValue} val={val} setAnnotatingImages={setAnnotatingImages} selectedResults={selectedResults} setSelectedResults={setSelectedResults} />
                     )
                   })}
               </div>
