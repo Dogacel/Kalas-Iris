@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Divider, Col, Row, Button } from 'antd';
+import { Divider, Col, Row, Button, Spin, notification } from 'antd';
 import ImageCrop from "./ImageCrop";
 import "../css/filepreview.css";
 import { sendAnnotationSuggestion } from "../api/api";
@@ -7,11 +7,26 @@ import CheckBox from "./Checkbox";
 
 export default function FilePreview({ previewImage, previewJSON, setPreviewJSON, setAnnotatingImages, currentFileName }) {
   const [selectedResults, setSelectedResults] = useState([])
+  const [submittingSuggestions, setSubmittingSuggestions] = useState(false);
 
   const submitSuggestions = () => {
+    setSubmittingSuggestions(true);
     console.log("Current file name: ", currentFileName);
     console.log("Selected results: ", selectedResults);
-    sendAnnotationSuggestion(currentFileName, selectedResults)
+    sendAnnotationSuggestion(currentFileName, selectedResults).then(r => {
+      setSubmittingSuggestions(false);
+      notification['success']({
+        message: "Success.",
+        description: "Annotation suggestion saved.",
+        placement: "bottomRight"
+      });
+    }).catch(e => {
+      notification['error']({
+        message: "Error.",
+        description: e,
+        placement: "bottomRight"
+      });
+    })
     setSelectedResults([]);
   }
 
@@ -72,6 +87,7 @@ export default function FilePreview({ previewImage, previewJSON, setPreviewJSON,
         </Row>
         <Row style={{ "paddingTop": "64px" }}>
           <Button shape="round" onClick={submitSuggestions}>Submit Suggestions</Button>
+          {submittingSuggestions && <Spin size="large" tip="Submitting suggestions."/>}
         </Row>
       </Col>
     </div >
