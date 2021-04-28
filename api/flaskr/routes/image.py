@@ -9,7 +9,7 @@ import requests
 from bson.json_util import dumps
 
 image_route = Blueprint('image_route', __name__)
-mmfashionAPIAddress = "http://34.107.125.106"
+mmfashionAPIAddress = "http://34.91.142.201"
 
 
 @image_route.route('/uploadProductImage', methods=(['POST']))

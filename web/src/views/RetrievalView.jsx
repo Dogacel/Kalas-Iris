@@ -18,24 +18,22 @@ export default function RetrievalView() {
 
     return (
         <Row>
-            <Col span={18}>
-                <div id="wrapper">
-                    <div class="first">
+            <Col span={retrievedImages.length > 0 ? 10 : 18}>
+
                         <RetrievalImageCrop
                             previewImage={previewImage}
                             retrievedImages={retrievedImages}
                             setRetrievedImages={setRetrievedImages}
                             setFetchingImages={setFetchingImages}
                         />
-                    </div>
-                    {retrievedImages.length > 0 &&
-                        <div class="second">
-                            <Title level={2}>Similar Products</Title>
-                            <RetrievalCarousel setFetchingImages={setFetchingImages} images={retrievedImages}/>
-                        </div>
-                    }
-                </div>
+                    
             </Col>
+            {retrievedImages.length > 0 &&
+                        <Col class="second" span={8}>
+                            <Title level={2}>Similar Products</Title>
+                            <RetrievalCarousel setFetchingImages={setFetchingImages} images={retrievedImages} />
+                        </Col>
+                    }
             <Col span={6}>
                 <RetrievalUpload
                     setPreviewImage={setPreviewImage}
@@ -44,7 +42,7 @@ export default function RetrievalView() {
                     retrievedImages={retrievedImages}
                     setFetchingImages={setFetchingImages}
                 />
-                {fetchingImages && <Spin tip="Searching similar products. This might take a while." size="large"/>}
+                {fetchingImages && <Spin tip="Searching similar products. This might take a while." size="large" />}
             </Col>
         </Row>
     );

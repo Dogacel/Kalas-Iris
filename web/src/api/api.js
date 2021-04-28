@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const flaskAPIAdress = "http://localhost:5000";
-const mmfashionAPIAddress = "http://34.107.125.106";
+const mmfashionAPIAddress = "http://34.91.142.201";
 const functionAddress =
   "http://europe-west3-mmfashion-299621.cloudfunctions.net";
 

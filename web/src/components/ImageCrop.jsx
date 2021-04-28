@@ -69,7 +69,7 @@ export default function ImageCrop({ previewImage, setPreviewJSON, setAnnotatingI
 
     return (
         <div className="App" id="wrapper">
-            <div id="left">
+            <div style={{maxWidth: "400px", maxHeight: "600px", marginRight: "32px"}}>
                 <ReactCrop
                     src={previewImage}
                     onImageLoaded={onLoad}
@@ -80,7 +80,7 @@ export default function ImageCrop({ previewImage, setPreviewJSON, setAnnotatingI
             </div>
             {completedCrop !== null &&
                 <div id ="right-container">
-                    <div class="right">
+                    <div>
                         <canvas
                             ref={previewCanvasRef}
                             // Rounding is important so the canvas width and height matches/is a multiple for sharpness.

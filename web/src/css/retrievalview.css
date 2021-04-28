@@ -1,7 +1,7 @@
 .first {
     max-width: 50%;
     max-height: 50%;
-    float: left;
+    /* float: left; */
 }
 
 .slick-track{
@@ -10,4 +10,5 @@
 
 .second{
     margin-right: 10%;
+    /* max-width: 400px; */
 }
