@@ -12,7 +12,7 @@ export function getBase64(file) {
   });
 }
 
-export default function FileUpload({ previewImage, setPreviewImage, setPreviewJSON, setAnnotatingImages }) {
+export default function FileUpload({ previewImage, setPreviewImage, setPreviewJSON, setAnnotatingImages, setCurrentFileName }) {
   const [defaultFileList, setDefaultFileList] = useState([]);
   const [progress, setProgress] = useState(0);
   const [annotationResult, setAnnotationResult] = useState({})
@@ -35,6 +35,7 @@ export default function FileUpload({ previewImage, setPreviewImage, setPreviewJS
       .then(f => {
         onSuccess(f);
         setAnnotatingImages(true);
+        setCurrentFileName(file.name)
         getBase64(file).then(e => setPreviewImage(e));
         getBase64(file).then(e => setPreviewImages(prevState => ({
           ...prevState,
@@ -70,6 +71,7 @@ export default function FileUpload({ previewImage, setPreviewImage, setPreviewJS
   const handlePreview = async file => {
     setPreviewImage(previewImages[file.originFileObj.uid])
     setPreviewJSON(annotationResult[file.originFileObj.uid])
+    setCurrentFileName(file.originFileObj.name)
   };
 
   const handleRemove = async file => {
@@ -78,16 +80,19 @@ export default function FileUpload({ previewImage, setPreviewImage, setPreviewJS
         if (file.uid !== defaultFileList[0].uid) {
           setPreviewImage(previewImages[defaultFileList[0].originFileObj.uid])
           setPreviewJSON(annotationResult[defaultFileList[0].originFileObj.uid])
+          setCurrentFileName(defaultFileList[0].originFileObj.name)
         }
         else {
           setPreviewImage(previewImages[defaultFileList[defaultFileList.length - 1].originFileObj.uid])
           setPreviewJSON(annotationResult[defaultFileList[defaultFileList.length - 1].originFileObj.uid])
+          setCurrentFileName(defaultFileList[defaultFileList.length -1].originFileObj.name)
         }
       }
       else {
         setPreviewImage("https://i.stack.imgur.com/y9DpT.jpg")
         setPreviewJSON([""])
         setAnnotatingImages(false);
+        setCurrentFileName("")
       }
     }
   }

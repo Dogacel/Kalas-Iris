@@ -12,28 +12,26 @@ export default function ReviewHistoryView() {
     useEffect(() => {
         getReviewHistory().then((history) => setAnnos(history.data));
         // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, []);
+    }, []);
 
     return (
-        <div>
-            <Row>
-                <Col span={4} offset={7}>
-                    <Pagination simple current={index+1} total={annos.length} defaultPageSize={1} onChange={(page, pagesize) => {setIndex(page-1)}}/>
-                </Col>
-            </Row>
-            <Row>
-
-            {annos.length > 0 &&
+        <div style={{ textAlign: "center" }}>
             <Col>
-                <Image width={500} src={imlink(annos[index].file_name)}/>
-                {annos[index].annotation.map(e => 
-                <Tag className="edit-tag"
-                    key={e}
-                    closable={false}>{e}</Tag>
-                )}
-            </Col>}
-            </Row>
-                
+                {annos.length > 0 &&
+                    <Col>
+                        {annos[index].annotation.map(e =>
+                            <Tag className="edit-tag"
+                                key={e}
+                                closable={false}>{e}</Tag>
+                        )}
+                        <Col style={{marginBottom: 32, marginTop: 32}}>
+                            <Image width={500} src={imlink(annos[index].file_name)} />
+                        </Col>
+                    </Col>}
+                <Col>
+                    <Pagination simple current={index + 1} total={annos.length} defaultPageSize={1} onChange={(page, pagesize) => { setIndex(page - 1) }} />
+                </Col>
+            </Col>
         </div>
     );
 

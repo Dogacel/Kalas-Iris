@@ -11,13 +11,19 @@ export default function AnnotateView() {
   const [previewImage, setPreviewImage] = useState(
     "https://i.stack.imgur.com/y9DpT.jpg"
   );
-
+  const [currentFileName, setCurrentFileName] = useState("");
   const [annotatingImages, setAnnotatingImages] = useState(false);
 
   return (
     <Row>
       <Col span={18}>
-        <FilePreview previewImage={previewImage} previewJSON={previewJSON} setPreviewJSON={setPreviewJSON} setAnnotatingImages={setAnnotatingImages}/>
+        <FilePreview 
+          previewImage={previewImage} 
+          previewJSON={previewJSON} 
+          setPreviewJSON={setPreviewJSON} 
+          setAnnotatingImages={setAnnotatingImages}
+          currentFileName={currentFileName}
+          />
       </Col>
       <Col span={6}>
         <FileUpload
@@ -25,6 +31,7 @@ export default function AnnotateView() {
           setPreviewJSON={setPreviewJSON}
           previewImage={previewImage}
           setAnnotatingImages={setAnnotatingImages}
+          setCurrentFileName={setCurrentFileName}
         />
         {annotatingImages && <Spin tip="Annotating image. Please wait." size="large"/>}
       </Col>
