@@ -6,7 +6,6 @@ import RetrievalCarousel from "../components/RetrievalCarousel";
 import "../css/retrievalview.css";
 
 const { Title } = Typography;
-//                             {retrievedImages.map((imgSrc, index) => <Image src={"http://34.91.142.201/img/In-shop/Img/" + imgSrc} key={index} />)}
 
 export default function RetrievalView() {
 
