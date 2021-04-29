@@ -8,11 +8,9 @@ import CheckBox from "./Checkbox";
 export default function FilePreview({ previewImage, previewJSON, setPreviewJSON, setAnnotatingImages, currentFileName }) {
   const [selectedResults, setSelectedResults] = useState([])
   const [submittingSuggestions, setSubmittingSuggestions] = useState(false);
-  // "checked" attribute of each checkbox will be set according to the attributeCheckBoxArray[index]
-  // The value for each checbox is filled according to the "index" value in the map function -> attributeCheckBoxArray[i] = ith AttributeCheckbox.checked 
-  // The value at each index will be updated at the onChange prop in the Checkbox component
-  // The issue is: the attributeCheckboxArray and key value are undefined at the checkbox component.
-  const [attributeCheckboxArray, setAttributeCheckboxArray] = useState(new Array(5).fill(false)); 
+  const [attributeCheckboxArray, setAttributeCheckboxArray] = useState([false, false, false, false, false]); 
+  const [categoryCheckboxArray, setCategoryCheckboxArray] = useState([false, false, false, false, false]); 
+  const [colorCheckboxArray, setColorCheckboxArray] = useState([false, false, false, false, false]); 
 
   const submitSuggestions = () => {
     setSubmittingSuggestions(true);
@@ -55,6 +53,7 @@ export default function FilePreview({ previewImage, previewJSON, setPreviewJSON,
                     const val = d.toString().substring(d.toString().indexOf(",") + 1).substring(0, 5);
                     return (
                       <CheckBox 
+                        index={index}
                         key={index} 
                         keyValue={keyValue}
                         val={val} 
@@ -78,7 +77,15 @@ export default function FilePreview({ previewImage, previewJSON, setPreviewJSON,
                     const keyValue = d.toString().substring(0, d.toString().indexOf(",")).toUpperCase();
                     const val = d.toString().substring(d.toString().indexOf(",") + 1).substring(0, 5);
                     return (
-                      <CheckBox key={index} keyValue={keyValue} val={val} setAnnotatingImages={setAnnotatingImages} selectedResults={selectedResults} setSelectedResults={setSelectedResults} />
+                      <CheckBox    index={index}
+                      key={index} 
+                      keyValue={keyValue}
+                      val={val} 
+                      setAnnotatingImages={setAnnotatingImages} 
+                      selectedResults={selectedResults} 
+                      setSelectedResults={setSelectedResults} 
+                      setCheckboxArray={setCategoryCheckboxArray}
+                      checkboxArray={categoryCheckboxArray}/>
                     )
                   })}
               </div>
@@ -93,7 +100,15 @@ export default function FilePreview({ previewImage, previewJSON, setPreviewJSON,
                     const keyValue = d.toString().substring(0, d.toString().indexOf(",")).toUpperCase();
                     const val = d.toString().substring(d.toString().indexOf(",") + 1).substring(0, 5);
                     return (
-                      <CheckBox key={index} keyValue={keyValue} val={val} setAnnotatingImages={setAnnotatingImages} selectedResults={selectedResults} setSelectedResults={setSelectedResults} />
+                      <CheckBox    index={index}
+                      key={index} 
+                      keyValue={keyValue}
+                      val={val} 
+                      setAnnotatingImages={setAnnotatingImages} 
+                      selectedResults={selectedResults} 
+                      setSelectedResults={setSelectedResults} 
+                      setCheckboxArray={setColorCheckboxArray}
+                      checkboxArray={colorCheckboxArray}/>
                     )
                   })}
               </div>

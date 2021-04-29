@@ -1,15 +1,7 @@
 import React, { useEffect } from "react";
 import { Checkbox } from "antd";
 
-export default function CheckBox(props) {
-    const setAnnotatingImages = props.setAnnotatingImages;
-    const setSelectedResults = props.setSelectedResults;
-    const setCheckboxArray = props.setCheckboxArray;
-    const checkboxArray = props.checkboxArray;
-    const selectedResults = props.selectedResults;
-    const keyValue = props.keyValue;
-    const val = props.val;
-    const key = props.key;
+export default function CheckBox({setAnnotatingImages, setSelectedResults, setCheckboxArray, checkboxArray, selectedResults, keyValue, val, index}) {
 
     const onChange = (e) => {
         const selectedValue = isNaN(parseInt(keyValue)) ? keyValue : val
@@ -17,27 +9,32 @@ export default function CheckBox(props) {
             console.log("Checked: ", selectedValue)
             setSelectedResults([...selectedResults, selectedValue]);
             const newArr = [...checkboxArray]
-            checkboxArray[key] = true;
+            newArr[index] = true;
+            console.log("New Arr: ", newArr);
             setCheckboxArray(newArr);
         } 
         if (!e.target.checked){
             console.log("Unchecked: ", selectedValue)
             setSelectedResults(selectedResults.filter(item => item !== selectedValue));
             const newArr = [...checkboxArray]
-            checkboxArray[key] = false;
-
+            newArr[index] = false;
             setCheckboxArray(newArr);
         }
     }
 
     useEffect(() => {
-        console.log("Key: ", key);
+        console.log("Key: ", index);
+        console.log(checkboxArray);
         setAnnotatingImages(false);
     }, [])
 
     return (
         <div style={{ marginBottom: 5 }}>
-            <Checkbox checked={checkboxArray[key]} key={key} onChange={onChange}>{isNaN(parseInt(keyValue)) ? keyValue : parseInt(keyValue) + 1} : {val} </Checkbox>
+            <Checkbox 
+                checked={checkboxArray[index]} 
+                key={index} onChange={onChange}>
+                    {isNaN(parseInt(keyValue)) ? keyValue : parseInt(keyValue) + 1} : {val} 
+            </Checkbox>
         </div>
     );
 }
