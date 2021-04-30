@@ -36,6 +36,20 @@ $ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bas
 $ nvm install 14.4 # Install the required npm version
 ```
 
+#### Flutter 2.0.5
+
+Install flutter from [source](https://flutter.dev/docs/get-started/install) and follow the instructions given.
+
+Spin up an Android emulator or connect your Android device and enable USB debugging.
+
+Run the application using the following command:
+
+```bash
+$ cd mobile
+$ flutter pub get
+$ flutter run
+```
+
 ### Pre-Build configuration
 
 
@@ -127,8 +141,51 @@ $ cd mmfashion
 $ sudp python app.py
 ```
 
-- [React](https://reactjs.org/tutorial/tutorial.html)
-- [Flask](https://flask.palletsprojects.com/en/1.1.x/tutorial/) (Ignore blueprints, we have react)
-- [MMFashion](https://github.com/open-mmlab/mmfashion)
-- [MongoDB](https://www.mongodb.com)
-- [AntDesign](https://ant.design/)
+## 3) Using Web Interface
+
+### Annotating Clothing Images
+![](docs/imgs/manual/web_annotate.png)
+
+
+### Suggesting Better Annotations
+
+
+
+### Reviewing Suggestions
+![](docs/imgs/manual/review_instructions.png)
+
+### Retrieving Similar Products
+![](docs/imgs/manual/web_retrieve.png)
+
+## 4) Enabling Auto Annotation For E-Commerce Websites
+
+### Signing Up To Kalas-Iris Services
+
+### Woo Commerce API Key setup
+
+### Adding API Key to Kalas-Iris
+
+### Woo Commerce Demo Flow
+
+## 5) Using Mobile Interface
+
+### Installing the APK
+
+### Taking and Editing a Photo
+<div style="text-align:center">
+<img src="docs/imgs/manual/app_camera.png" style="width:300px; margin-right:100px"/>
+<img src="docs/imgs/manual/app_crop.png" style="width:300px;"/>
+</div>
+
+### Using the Annotation Service
+
+<div style="text-align:center">
+<img src="docs/imgs/manual/app_gallery.png" style="width:300px;"/>
+<img src="docs/imgs/manual/app_annotate.png" style="width:300px;"/>
+</div>
+
+
+### Using the Retrieval Service
+<div style="text-align:center">
+<img src="docs/imgs/manual/app_retrieve.png" style="width:300px;"/>
+</div>
