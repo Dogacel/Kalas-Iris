@@ -50,6 +50,17 @@ $ flutter pub get
 $ flutter run
 ```
 
+### Ngrok 
+Install and setup [Ngrok](https://dashboard.ngrok.com/signup) by following the instructions.
+
+After following the instructions for installing and connecting your account. Use the following command to expose the port where the Flask App is running (5000 by default).
+
+```bash
+$ ./ngrok http 5000
+```
+
+You can also install and use the [Visual Studio Code Extension of Ngrok](https://marketplace.visualstudio.com/items?itemName=philnash.ngrok-for-vscode). Follow the listed instructions and make sure to give the correct port number for the Flask App.
+
 ### Pre-Build configuration
 
 
@@ -188,13 +199,55 @@ The website can be accesed at `http://localhost:5000` on your browser.
 
 ## 4) Enabling Auto Annotation For E-Commerce Websites
 
-### Signing Up To Kalas-Iris Services
+### Registering To Kalas-Iris Services
 
-### Woo Commerce API Key setup
+![](docs/imgs/manual/login.png) 
+1. Click on the "Login" tab. 
+
+![](docs/imgs/manual/signup.png)
+2. Click to "Signup Now". It will redirect you to the signup page.
+
+![](docs/imgs/manual/complete_register.png) 
+3. Fill the user credentials.
+
+4. Click "Signup". Upon success, you will be redirected to the login screen.
+
+![](docs/imgs/manual/complete_login.png) 
+
+5. Enter your username and password.
+
+6. Click login to enter to the system.
+
+### WooCommerce API Key setup
+Refer to the [WooCommerce Documentation](https://docs.woocommerce.com/document/woocommerce-rest-api/) to setup your WooCommerce API.  
 
 ### Adding API Key to Kalas-Iris
 
-### Woo Commerce Demo Flow
+![](docs/imgs/manual/click-integrations.png)
+1. Click on the "Integrations" tab.
+
+2. Click to "WooCommerce".
+
+![](docs/imgs/manual/submit-woocommerce-info.png)
+3. Enter the url of your website, and the consumer key and consumer secret you receieved from WooCommerce.
+
+4. Click submit to add your integration information to Kalas-Iris.
+
+### WooCommerce Demo Flow
+
+1. Create a Webhook on WooCommerce by following [these steps](https://docs.woocommerce.com/document/webhooks/)
+
+![](docs/imgs/manual/ngrok-terminal.png)
+
+2. Launch Ngrok with the port number used by the Flask App. Ngrok will then give you the exposed URL for the back-end.
+
+![](docs/imgs/manual/webhook-credentials.png)
+
+3. Make sure you choose "Product created" for Topic and enter `http://$LINK_FROM_NGROK/newProductCreated` for the "Delivery URL" and "Active" for Status. 
+
+![](docs/imgs/manual/annotated-product.png)
+
+4. Congrats, now when you create a product with its name and image, it will be annotated automatically. 
 
 ## 5) Using Mobile Interface
 
