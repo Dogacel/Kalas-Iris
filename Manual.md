@@ -202,15 +202,19 @@ The website can be accesed at `http://localhost:5000` on your browser.
 ### Registering To Kalas-Iris Services
 
 ![](docs/imgs/manual/login.png) 
-1. Click on the "Login" tab. 
+
+1. Click on the "Login" tab.
 
 ![](docs/imgs/manual/signup.png)
-2. Click to "Signup Now". It will redirect you to the signup page.
+
+2. Click to "Signup Now". It will redirect you to the signup page. 
 
 ![](docs/imgs/manual/complete_register.png) 
+
 3. Fill the user credentials.
 
 4. Click "Signup". Upon success, you will be redirected to the login screen.
+
 
 ![](docs/imgs/manual/complete_login.png) 
 
