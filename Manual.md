@@ -172,20 +172,21 @@ $ sudp python app.py
 ### Installing the APK
 
 ### Taking and Editing a Photo
+
 <div style="text-align:center">
-<img src="docs/imgs/manual/app_camera.png" style="width:300px; margin-right:100px"/>
-<img src="docs/imgs/manual/app_crop.png" style="width:300px;"/>
+<img src="docs/imgs/manual/app_camera.png" width="300px" style="width:300px; margin-right:100px"/>
+<img src="docs/imgs/manual/app_crop.png" width="300px" style="width:300px;"/>
 </div>
 
 ### Using the Annotation Service
 
 <div style="text-align:center">
-<img src="docs/imgs/manual/app_gallery.png" style="width:300px;"/>
-<img src="docs/imgs/manual/app_annotate.png" style="width:300px;"/>
+<img src="docs/imgs/manual/app_gallery.png" width="300px" style="width:300px;"/>
+<img src="docs/imgs/manual/app_annotate.png" width="300px" style="width:300px;"/>
 </div>
 
 
 ### Using the Retrieval Service
-<div style="text-align:center">
-<img src="docs/imgs/manual/app_retrieve.png" style="width:300px;"/>
+<div text-align="center" style="text-align:center">
+<img src="docs/imgs/manual/app_retrieve.png" width="300px" style="width:300px;"/>
 </div>
