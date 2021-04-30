@@ -38,7 +38,14 @@ export default function FilePreview({ previewImage, previewJSON, setPreviewJSON,
     <div id="preview-wrapper">
       <div id="image-container">
         <Col>
-          <ImageCrop previewImage={previewImage} setPreviewJSON={setPreviewJSON} setAnnotatingImages={setAnnotatingImages} />
+          <ImageCrop 
+            previewImage={previewImage}
+            setPreviewJSON={setPreviewJSON} 
+            setAnnotatingImages={setAnnotatingImages} 
+            setAttributeCheckboxArray={setAttributeCheckboxArray}
+            setCategoryCheckboxArray={setCategoryCheckboxArray}
+            setColorCheckboxArray={setColorCheckboxArray} 
+            />
         </Col>
       </div>
       <Col>
