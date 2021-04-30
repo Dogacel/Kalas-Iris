@@ -116,7 +116,7 @@ export default function LoginView() {
             >
               Log in
             </Button>
-            Or <Link to="/signup"> register now!</Link>
+            Or <Link to="/signup"> sign up now!</Link>
           </Form.Item>
         </Form>
       </Col>
