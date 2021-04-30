@@ -263,8 +263,8 @@ Head over to [http://kalas-iris.com/app.apk](http://kalas-iris.com/app.apk) to d
 ### Taking and Editing a Photo
 
 <div style="text-align:center">
-<img src="docs/imgs/manual/app_camera.png" width="300px" style="width:300px; margin-right:100px"/>
-<img src="docs/imgs/manual/app_crop.png" width="300px" style="width:300px;"/>
+<img src="docs/imgs/manual/app_camera.png" width="250px" style="width:300px;"/>
+<img src="docs/imgs/manual/app_crop.png" width="250px" style="width:300px;"/>
 </div>
 
 Once you open the app, you will be welcomed with a camera view.
@@ -286,8 +286,8 @@ After you take a picture, you will see an image editor.
 ### Using the Annotation Service
 
 <div style="text-align:center">
-<img src="docs/imgs/manual/app_gallery.png" width="300px" style="width:300px;"/>
-<img src="docs/imgs/manual/app_annotate.png" width="300px" style="width:300px;"/>
+<img src="docs/imgs/manual/app_gallery.png" width="250px" style="width:300px;"/>
+<img src="docs/imgs/manual/app_annotate.png" width="250px" style="width:300px;"/>
 </div>
 
 Once you crop your image, or click the button on the gallery view button on your camera view, you will see the image information page. In this page you can preview your image or use one of our services using the previewed image.
@@ -309,7 +309,7 @@ After you annotate your image you will see the annotation result page.
 
 ### Using the Retrieval Service
 <div text-align="center" style="text-align:center">
-<img src="docs/imgs/manual/app_retrieve.png" width="300px" style="width:300px;"/>
+<img src="docs/imgs/manual/app_retrieve.png" width="250px" style="width:300px;"/>
 </div>
 
 1. A sliding widget shows you the similar images the service found.
