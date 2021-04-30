@@ -103,6 +103,9 @@ export default function ImageCrop({ previewImage, setPreviewJSON, setAnnotatingI
                                 generateAnnotation(previewCanvasRef.current, completedCrop, blob => {
                                     console.log(blob)
                                     setAnnotatingImages(true);
+                                    setAttributeCheckboxArray([false, false, false, false, false]);
+                                    setCategoryCheckboxArray([false, false, false, false, false]);
+                                    setColorCheckboxArray([false, false, false, false, false]);
                                     annotateImage(blob).then(annotation => {
                                         const data = annotation.data
 

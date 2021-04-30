@@ -16,6 +16,9 @@ export default function FilePreview({ previewImage, previewJSON, setPreviewJSON,
     setSubmittingSuggestions(true);
     console.log("Current file name: ", currentFileName);
     console.log("Selected results: ", selectedResults);
+    setAttributeCheckboxArray([false, false, false, false, false]);
+    setCategoryCheckboxArray([false, false, false, false, false]);
+    setColorCheckboxArray([false, false, false, false, false]);
     
     sendAnnotationSuggestion(currentFileName, selectedResults).then(r => {
       setSubmittingSuggestions(false);
