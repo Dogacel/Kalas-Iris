@@ -230,9 +230,10 @@ Refer to the [WooCommerce Documentation](https://docs.woocommerce.com/document/w
 ![](docs/imgs/manual/click-integrations.png)
 1. Click on the "Integrations" tab.
 
+![](docs/imgs/manual/submit-woocommerce-info.png)
+
 2. Click to "WooCommerce".
 
-![](docs/imgs/manual/submit-woocommerce-info.png)
 3. Enter the url of your website, and the consumer key and consumer secret you receieved from WooCommerce.
 
 4. Click submit to add your integration information to Kalas-Iris.
