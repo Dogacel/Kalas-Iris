@@ -143,19 +143,48 @@ $ sudp python app.py
 
 ## 3) Using Web Interface
 
+The website can be accesed at `http://localhost:5000` on your browser.
+
 ### Annotating Clothing Images
 ![](docs/imgs/manual/web_annotate.png)
+1. Click on the Image Annotation tab to access the image annotation page.
 
+2. Click Upload image to upload a new image. Upload image will be automatically annotated. You can also hover over the images and delete or preview them.
+
+3. Drag your mouse around the picture to draw a bounding box to the clothing item you want to annotate.
+
+4. Click on the annotate cropped image button to re-annotate the image. This time only the cropped image will be annotated.
 
 ### Suggesting Better Annotations
 
+6. You can see the suggested Attributes, Categories and Colors from these colums. You select the correct annotations via the checkbox corresponding to it. The selected annotations can be saved.
+
+7. Click the button in order to save the suggested annotations for the image. Those annotations are saved in our backend services for improving the performance of the model.
 
 
 ### Reviewing Suggestions
 ![](docs/imgs/manual/review_instructions.png)
 
+1. Click on the 'Past Reviews' tab to see which suggestions has been made to the automatically annotated products.
+
+2. Type the index of the item or paginate using the left and right arrows to see other suggested annotations.
+
+3. The suggested annotations are shown on this top row.
+
+4. The image of the annotation is shown here.
+
 ### Retrieving Similar Products
 ![](docs/imgs/manual/web_retrieve.png)
+
+1. Click on the 'Image Retrieval' tab for searching the similar items by a given image.
+
+2. Click Upload image to upload a new image. Upload image will be automatically used to find similar products. This process might take a while depending on your gallery size. You can also hover over the images and delete or preview them.
+
+3. Drag your mouse around the picture to draw a bounding box to the clothing item you want to search for.
+
+4. Click on the retrieve similar products for crop button to re-search the image. This time only the cropped image will be searched.
+
+5. This slider shows you the retrieved similar items. You can use arrow keys to go right or left. Also the slider automatically changes images periodically.
 
 ## 4) Enabling Auto Annotation For E-Commerce Websites
 
@@ -171,12 +200,30 @@ $ sudp python app.py
 
 ### Installing the APK
 
+Head over to [http://kalas-iris.com/app.apk](http://kalas-iris.com/app.apk) to download the APK for your device.
+
 ### Taking and Editing a Photo
 
 <div style="text-align:center">
 <img src="docs/imgs/manual/app_camera.png" width="300px" style="width:300px; margin-right:100px"/>
 <img src="docs/imgs/manual/app_crop.png" width="300px" style="width:300px;"/>
 </div>
+
+Once you open the app, you will be welcomed with a camera view.
+
+1. Select whether you want to use the front-facing camera or the back-facing camera.
+
+2. Click the camera icon to take a picture. Taking a picture will automatically forward you to the cropping view.
+
+3. You can see the last taken picture under this gallery view. Click on the picture to show image gallery view.
+
+After you take a picture, you will see an image editor.
+
+1. You can select the aspect ratio, cropped area and rotation using the tools provided on the bottom bar.
+
+2. Click on the approval icon to continue with the cropped image.
+
+3. Click on the cancel icon to use the uncropped image.
 
 ### Using the Annotation Service
 
@@ -185,8 +232,28 @@ $ sudp python app.py
 <img src="docs/imgs/manual/app_annotate.png" width="300px" style="width:300px;"/>
 </div>
 
+Once you crop your image, or click the button on the gallery view button on your camera view, you will see the image information page. In this page you can preview your image or use one of our services using the previewed image.
+
+1. Click the Annotate Image button to annotate the image.
+
+2. Click the Retrieve Similar Products button to search for similar products.
+
+After you annotate your image you will see the annotation result page.
+
+1. Found colors can be seen on the top row slider.
+
+2. Predicted categories can be seen on the left column.
+
+3. Predicted attributes can be seen on the right column.
+
+4. Click to go back to the image preview view.
+
 
 ### Using the Retrieval Service
 <div text-align="center" style="text-align:center">
 <img src="docs/imgs/manual/app_retrieve.png" width="300px" style="width:300px;"/>
 </div>
+
+1. A sliding widget shows you the similar images the service found.
+
+2. Click to go back to the image preview view.
