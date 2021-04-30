@@ -1,7 +1,9 @@
 import React from 'react';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Typography, notification } from 'antd';
 import { createIntegration } from '../api/api';
 import { useUserContext } from "../components/UserContext";
+
+const { Title } = Typography;
 
 export default function WooIntegration() {
     const { accessToken } = useUserContext();
@@ -15,11 +17,25 @@ export default function WooIntegration() {
             "consumerKey": values["consumerKey"],
             "consumerSecret": values["consumerSecret"]
         }
-        createIntegration(accessToken, data);
+
+        createIntegration(accessToken, data).then(r => {
+            notification['success']({
+                message: "Success.",
+                description: "Saved Integration Credentials.",
+                placement: "bottomRight"
+              });
+            }).catch(e => {
+              notification['error']({
+                message: "Error.",
+                description: "Could not save integration credentials.",
+                placement: "bottomRight"
+              });
+            })
     }
 
     return (
         <div className="WooCommerce">
+            <Title level={3}>Enter Your WooCommerce Integration Credentials</Title>
             <Form 
                 onFinish={onFinish}
                 initialValues={{

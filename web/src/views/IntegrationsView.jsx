@@ -34,16 +34,6 @@ export default function IntegrationsView() {
           defaultOpenKeys={["subcred", "subapp"]}
           style={{ width: 256, marginRight: 32 }}
         >
-          <SubMenu key="subcred" icon={<MailOutlined />} title="Credentials">
-            <Menu.ItemGroup key="g1" title="Item 1">
-              <Menu.Item key="1">Option 1</Menu.Item>
-              <Menu.Item key="2">Option 2</Menu.Item>
-            </Menu.ItemGroup>
-            <Menu.ItemGroup key="g2" title="Item 2">
-              <Menu.Item key="3">Option 3</Menu.Item>
-              <Menu.Item key="4">Option 4</Menu.Item>
-            </Menu.ItemGroup>
-          </SubMenu>
           <SubMenu
             key="subapp"
             icon={<AppstoreOutlined />}
@@ -53,13 +43,13 @@ export default function IntegrationsView() {
               <Link to="woo">WooCommerce</Link>
             </Menu.Item>
             <Menu.Item key="nop">
-              <Link to="nop">NopCommerce</Link>
+              <div>NopCommerce - Coming Soon</div>
             </Menu.Item>
             <Menu.Item key="wix">
-              <Link to="wix">Wix</Link>
+              <div>Wix - Coming Soon</div>
             </Menu.Item>
             <Menu.Item key="shopyify">
-              <Link to="shopify">Shopify</Link>
+              <div>Shopify - Coming Soon</div>
             </Menu.Item>
           </SubMenu>
           <SubMenu
@@ -67,30 +57,17 @@ export default function IntegrationsView() {
             icon={<SettingOutlined />}
             title="Custom Integrations"
           >
-            <SubMenu key="sub3" title="Submenu">
-              <Menu.Item key="7">Option 7</Menu.Item>
-              <Menu.Item key="8">Option 8</Menu.Item>
-            </SubMenu>
-            <Menu.Item key="9">Option 9</Menu.Item>
-            <Menu.Item key="10">Option 10</Menu.Item>
-            <Menu.Item key="11">Option 11</Menu.Item>
-            <Menu.Item key="12">Option 12</Menu.Item>
+            <Menu.Item key="9">Coming Soon</Menu.Item>
           </SubMenu>
         </Menu>
       </Col>
       <Col>
         <Title>Server Integrations</Title>
-        <Button
-          onClick={() => createIntegration(accessToken, { name: new Date() })}
-        >
-          Create random integration.
-        </Button>
-        <ReactJson src={{ integrations }} />
         <Routes>
           <Route path="woo" element={<WooIntegration/>} />
-          <Route path="nop" element={<div>Nop</div>} />
-          <Route path="wix" element={<div>Wix</div>} />
-          <Route path="shopify" element={<div>Shopify</div>} />
+          <Route path="nop"/>
+          <Route path="wix"/>
+          <Route path="shopify"/>
         </Routes>
       </Col>
     </Row>
