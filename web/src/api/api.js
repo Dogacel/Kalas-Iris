@@ -49,6 +49,10 @@ export function logout(config = null) {
   return axios.delete(`${flaskAPIAdress}/logout`, config)
 }
 
+export function logout2(config = null){
+  return axios.delete(`${flaskAPIAdress}/logout2`, config)
+}
+
 export async function getCurrentUser(access_token) {
   try {
     const authStr = "Bearer ".concat(access_token);
