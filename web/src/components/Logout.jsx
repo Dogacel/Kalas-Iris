@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { logout } from "../api/api";
+import { logout, logout2 } from "../api/api";
 import { useUserContext } from "../components/UserContext";
 
 export default function Logout() {
@@ -9,19 +9,35 @@ export default function Logout() {
     const {
         setUsername,
         setAccessToken,
-        setRefreshToken
+        setRefreshToken,
+        accessToken, 
+        refreshToken
     } = useUserContext();
 
+    const authStr = "Bearer ".concat(accessToken);
+    const config = {
+        headers: { Authorization: authStr },
+    };
+
+    const refreshStr = "Bearer ".concat(refreshToken);
+    const refreshConfig = {
+        headers: { Authorization: refreshStr},
+    };
+
     useEffect(() => {
-        logout().then(() => {
+        logout2(refreshConfig).then(() => {
+            setRefreshToken("");
+        }).catch(() => {
+            setRefreshToken("")
+        });
+
+        logout(config).then(() => {
             setUsername("");
             setAccessToken("");
-            setRefreshToken("");
             navigate("/", { message: "Logged out." });
         }).catch(() => {
             setUsername("");
             setAccessToken("");
-            setRefreshToken("");
             navigate("/", { message: "You are not logged in!" });
         });
     }, []);

@@ -21,7 +21,7 @@ function generateAnnotation(canvas, crop, callback) {
     );
 }
 
-export default function ImageCrop({ previewImage, setPreviewJSON, setAnnotatingImages }) {
+export default function ImageCrop({ previewImage, setPreviewJSON, setAnnotatingImages, setAttributeCheckboxArray, setCategoryCheckboxArray, setColorCheckboxArray }) {
     const imgRef = useRef(null);
     const previewCanvasRef = useRef(null);
     const [crop, setCrop] = useState({});
@@ -31,6 +31,9 @@ export default function ImageCrop({ previewImage, setPreviewJSON, setAnnotatingI
         imgRef.current = img;
         setCompletedCrop(null);
         setCrop({ width: 0, height: 0 });
+        setAttributeCheckboxArray([false, false, false, false, false]);
+        setCategoryCheckboxArray([false, false, false, false, false]);
+        setColorCheckboxArray([false, false, false, false, false]);
         return false;
     }, []);
 
@@ -100,6 +103,9 @@ export default function ImageCrop({ previewImage, setPreviewJSON, setAnnotatingI
                                 generateAnnotation(previewCanvasRef.current, completedCrop, blob => {
                                     console.log(blob)
                                     setAnnotatingImages(true);
+                                    setAttributeCheckboxArray([false, false, false, false, false]);
+                                    setCategoryCheckboxArray([false, false, false, false, false]);
+                                    setColorCheckboxArray([false, false, false, false, false]);
                                     annotateImage(blob).then(annotation => {
                                         const data = annotation.data
 

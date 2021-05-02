@@ -16,6 +16,9 @@ export default function FilePreview({ previewImage, previewJSON, setPreviewJSON,
     setSubmittingSuggestions(true);
     console.log("Current file name: ", currentFileName);
     console.log("Selected results: ", selectedResults);
+    setAttributeCheckboxArray([false, false, false, false, false]);
+    setCategoryCheckboxArray([false, false, false, false, false]);
+    setColorCheckboxArray([false, false, false, false, false]);
     
     sendAnnotationSuggestion(currentFileName, selectedResults).then(r => {
       setSubmittingSuggestions(false);
@@ -38,7 +41,14 @@ export default function FilePreview({ previewImage, previewJSON, setPreviewJSON,
     <div id="preview-wrapper">
       <div id="image-container">
         <Col>
-          <ImageCrop previewImage={previewImage} setPreviewJSON={setPreviewJSON} setAnnotatingImages={setAnnotatingImages} />
+          <ImageCrop 
+            previewImage={previewImage}
+            setPreviewJSON={setPreviewJSON} 
+            setAnnotatingImages={setAnnotatingImages} 
+            setAttributeCheckboxArray={setAttributeCheckboxArray}
+            setCategoryCheckboxArray={setCategoryCheckboxArray}
+            setColorCheckboxArray={setColorCheckboxArray} 
+            />
         </Col>
       </div>
       <Col>

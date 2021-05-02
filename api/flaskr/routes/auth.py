@@ -93,7 +93,7 @@ def refresh():
 def logout():
     jti = get_raw_jwt()['jti']
     blacklist.add(jti)
-    return Response(jsonify({"msg": "Successfully logged out"}))
+    return jsonify({"msg": "Successfully logged out"}), 200
 
 
 # Endpoint for revoking the current users refresh token
@@ -102,7 +102,7 @@ def logout():
 def logout2():
     jti = get_raw_jwt()['jti']
     blacklist.add(jti)
-    return Response(jsonify({"msg": "Successfully logged out"}))
+    return jsonify({"msg": "Successfully logged out"}), 200
 
 @jwt.token_in_blacklist_loader
 def check_if_token_in_blacklist(decrypted_token):
