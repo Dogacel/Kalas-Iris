@@ -108,7 +108,7 @@ export default function FilePreview({ previewImage, previewJSON, setPreviewJSON,
                 {
                   Object.keys(previewJSON?.colors).map((key) => [key, previewJSON?.colors[key]]).slice(0, 5).map(function (d, index) {
                     const keyValue = d.toString().substring(0, d.toString().indexOf(",")).toUpperCase();
-                    const val = d.toString().substring(d.toString().indexOf(",") + 1).substring(0, 5);
+                    const val = d.toString().substring(d.toString().indexOf(",") + 1);
                     return (
                       <CheckBox    index={index}
                       key={index} 

@@ -89,8 +89,11 @@ def newProductCreated():
     annotations = list()
     for image in images:
         # Download the image
-        urllib.request.urlretrieve(image['src'], image['name'])
-        imageFile = open(image['name'], 'rb').read()
+        imageName = image['name']
+        if not imageName.endswith(".jpg"):
+            imageName += ".jpg"
+        urllib.request.urlretrieve(image['src'], imageName)
+        imageFile = open(imageName, 'rb').read()
         dictToSend = {'image': imageFile}
         annotationResult = requests.post(
             f'{mmfashionAPIAddress}/annotate', files=dictToSend).json()
@@ -100,9 +103,9 @@ def newProductCreated():
     product_categories = annotations[0]['categories']
     product_colors = annotations[0]['colors']
 
-    # Get the top10 from product_attributes
+    # Get the top3 from product_attributes
     best_attributes = []
-    for _ in range(0, 10):
+    for _ in range(0, 5):
         max_attribute = max(product_attributes,
                             key=lambda key: product_attributes[key])
         best_attributes.append(max_attribute)
